@@ -7,9 +7,9 @@ user_id bigint primary key
 ,User_name  VARCHAR(50) NOT NULL
 ,Password   VARCHAR(100) NOT NULL
 ,email_id   VARCHAR(100) NOT NULL
-,dob        DATETIME
-,department VARCHAR(50)
-,semester  VARCHAR(20)
+,dob        DATETIME DEFAULT NULL
+,department VARCHAR(50) NOT NULL
+,semester  VARCHAR(20) NOT NULL
 ,gender     VARCHAR(6)
 ,role       VARCHAR(30) 
 ,Reg_Type   CHAR(1) 
