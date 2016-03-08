@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>ITUBuzz</display-name>
+  <welcome-file-list>
+    <welcome-file>LoginAndRegister.jsp</welcome-file>
+    <welcome-file>HomePage.jsp</welcome-file>
+    <welcome-file>RegisterLogin.jsp</welcome-file>
+    <welcome-file>LogOut.jsp</welcome-file>
+  </welcome-file-list>
+  <!-- login mapping -->
+  <servlet>
+    <servlet-name>login</servlet-name>
+    <servlet-class>com.itubuzz.webapp.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>login</servlet-name>
+    <url-pattern>/loginServlet</url-pattern>
+  </servlet-mapping>
+ <!-- register mapping -->
+  <servlet>
+    <servlet-name>registerUser</servlet-name>
+    <servlet-class>com.itubuzz.webapp.RegisterUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>registerUser</servlet-name>
+    <url-pattern>/RegisterUserServlet</url-pattern>
+  </servlet-mapping>
+</web-app>
