@@ -6,8 +6,8 @@
     <welcome-file>HomePage.jsp</welcome-file>
     <welcome-file>RegisterLogin.jsp</welcome-file>
     <welcome-file>LogOut.jsp</welcome-file>
+    <welcome-file>ResetPassword.jsp</welcome-file>
   </welcome-file-list>
-  <!-- login mapping -->
   <servlet>
     <servlet-name>login</servlet-name>
     <servlet-class>com.itubuzz.webapp.LoginServlet</servlet-class>
@@ -16,7 +16,6 @@
     <servlet-name>login</servlet-name>
     <url-pattern>/loginServlet</url-pattern>
   </servlet-mapping>
- <!-- register mapping -->
   <servlet>
     <servlet-name>registerUser</servlet-name>
     <servlet-class>com.itubuzz.webapp.RegisterUserServlet</servlet-class>
@@ -24,5 +23,29 @@
   <servlet-mapping>
     <servlet-name>registerUser</servlet-name>
     <url-pattern>/RegisterUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PostDataServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.PostDataServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PostDataServlet</servlet-name>
+    <url-pattern>/PostDataServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ReteriveAllPostServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.ReteriveAllPostServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReteriveAllPostServlet</servlet-name>
+    <url-pattern>/ReteriveAllPostServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ResetPasswordServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.ResetPasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResetPasswordServlet</servlet-name>
+    <url-pattern>/ResetPasswordServlet</url-pattern>
   </servlet-mapping>
 </web-app>

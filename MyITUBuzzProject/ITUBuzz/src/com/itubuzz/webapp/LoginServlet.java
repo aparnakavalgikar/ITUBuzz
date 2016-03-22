@@ -7,8 +7,7 @@ package com.itubuzz.webapp;
  */
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
-
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,16 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.itubuzz.dao.LoginDAO;
+import com.itubuzz.dao.RetrievePostDAO;
+import com.itubuzz.valueobjects.Post;
 
 /**
  * Servlet implementation class Login
  */
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-  
-    
-
+	private ArrayList<Post> complete_post_data;
+	
     /**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * this method allows us to get the email id and password entered by the user and compare it with valid database entries
@@ -43,27 +42,31 @@ public class LoginServlet extends HttpServlet {
 	        PrintWriter out = response.getWriter();    
 	          
 	        String eMail=request.getParameter("user_name");    
-	        String password=request.getParameter("password"); 
+	        String password=request.getParameter("login_password"); 
 	        
 	        String name = null;
-	        
-            Date date = new Date();
-	  
+	        complete_post_data = new ArrayList<Post>();
+	        complete_post_data = RetrievePostDAO.retrievePostedData();
+			System.out.println(complete_post_data.toString());
+            
 	       if(LoginDAO.validate(eMail, password)){ 
 	    	   HttpSession session = request.getSession(false);  
-	           if(session!=null)  
-	        	    name = LoginDAO.UserNameDetails();
-	           session.setAttribute("name", name);
-	           session.setAttribute("calendar", date.toString());
+	           if(session!=null)  {
+	        	   if(complete_post_data != null){
+	               name = LoginDAO.UserNameDetails();
+	           session.setAttribute("name", name);   
+	           session.setAttribute("post_updated_value", complete_post_data);
 	            RequestDispatcher rd=request.getRequestDispatcher("HomePage.jsp");    
-	            rd.forward(request,response);    
+	            rd.forward(request,response);  
+	        	   }
 	}
 	       else{    
 	                
 	            RequestDispatcher rd=request.getRequestDispatcher("LoginAndRegister.jsp");    
 	            rd.include(request,response);    
 	        }    
-	  
+	           
+	       }
 	        out.close();   
 
 	

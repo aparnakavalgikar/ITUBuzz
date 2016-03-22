@@ -65,20 +65,22 @@ public class RegisterUserServlet extends HttpServlet {
 		String firstName = request.getParameter("first_name");
         String middleName = request.getParameter("middle_name");
         String lastName = request.getParameter("last_name");
-        String eMailId = request.getParameter("e_mail_id");
-        String newPassword = request.getParameter("new_password");
-        String reEnterPassword = request.getParameter("re_enter_password");
+        String eMailId = null;
+        String newPassword = null;
+        String reEnterPassword = null;
         String month = request.getParameter("month");
         String day = request.getParameter("day_of_month");
         String year = request.getParameter("birthday_year");
-        String date = month+"/"+day+"/"+year;
-        String dept = request.getParameter("department");
-        String sem = request.getParameter("semester");
+        String dob = year+"-"+month+"-"+day;
+        String dept = null;
+        String sem = request.getParameter("semester_student");
         String month_of_passing = request.getParameter("month_of_passing");
         String year_of_passing = request.getParameter("year_of_passing");
-        String passYear = month_of_passing+"/"+year_of_passing;
+        String passYear = year_of_passing+"-"+month_of_passing+"-"+00;
         String userType = request.getParameter("register");
-        System.out.println("birth date is :"+date);
+      
+        System.out.println("month :"+month+"  day :"+day+" year :"+year);
+        System.out.println("birth date is :"+dob);
         System.out.println("radio button selected is : "+userType);
         System.out.println("year of passing is :"+passYear);
         
@@ -92,26 +94,36 @@ public class RegisterUserServlet extends HttpServlet {
         session.setAttribute("name", name);
 		
         if(userType.equalsIgnoreCase("currentStudent")){
-        	if(EMailIdValidator.validateUserEmailId(eMailId, userType)){
         		if(sem != null){
-        	role = "student";
-        	}
+        		eMailId = request.getParameter("e_mail_id_student");
+        		newPassword = request.getParameter("new_password_student");
+        		reEnterPassword = request.getParameter("re_enter_password_student");
+        		dept = request.getParameter("department_student");
+        		if(EMailIdValidator.validateUserEmailId(eMailId, userType)){
+        	        role = "student";
+        	    }
+        		else {
+        			session.invalidate();
+                    request.setAttribute("errorMessage", "Please enter a valid EMail Id");
+                    RequestDispatcher rd = request.getRequestDispatcher("LoginAndRegister.jsp");
+                    rd.forward(request, response); 
+        		}
+        		}
         		else {
         			session.invalidate();
                     request.setAttribute("errorMessage", "Please select a Trimester");
                     RequestDispatcher rd = request.getRequestDispatcher("LoginAndRegister.jsp");
                     rd.forward(request, response); 
         		}
-        	}
-        	else{
-                session.invalidate();
-                request.setAttribute("errorMessageEMail", "Invalid E-Mail Id! If you are a Student or Faculty, please enter E-Mail in the format : sample@itu.com !");
-                RequestDispatcher rd = request.getRequestDispatcher("LoginAndRegister.jsp");
-                rd.forward(request, response);          
-            }
+        	
+        	
         }
         else if (userType.equalsIgnoreCase("alumni")){
+        	dept = request.getParameter("department_alumni");
         	if(dept != null && passYear  != null){
+        		eMailId = request.getParameter("e_mail_id_alumni");
+        		newPassword = request.getParameter("new_password_alumni");
+        		reEnterPassword = request.getParameter("re_enter_password_alumni");
         	role = "Alumni";
         }
         	else{
@@ -122,6 +134,10 @@ public class RegisterUserServlet extends HttpServlet {
         	}
         }
         else if (userType.equalsIgnoreCase("faculty")){
+        	eMailId = request.getParameter("e_mail_id_faculty");
+    		newPassword = request.getParameter("new_password_faculty");
+    		reEnterPassword = request.getParameter("re_enter_password_faculty");
+    		dept = request.getParameter("department_faculty");
         	if(EMailIdValidator.validateUserEmailId(eMailId, userType)){
         	role = "Faculty";
         	}
@@ -137,7 +153,7 @@ public class RegisterUserServlet extends HttpServlet {
         		if(PasswordValidator.validateUserPasswords(newPassword, reEnterPassword,eMailId)){
                  if(NameValidator.validateUserNames(firstName,middleName,lastName)){
                   if(dept != null){
-        	      if(RegisterUserDAO.enterUserCredentials(firstName,middleName,lastName,newPassword,eMailId,dept,sem,role))
+        	      if(RegisterUserDAO.enterUserCredentials(firstName,middleName,lastName,newPassword,eMailId,dob,dept,sem,passYear,role))
         			{
         		      RequestDispatcher rd=request.getRequestDispatcher("RegisterLogin.jsp");    
    	                  rd.forward(request,response); 

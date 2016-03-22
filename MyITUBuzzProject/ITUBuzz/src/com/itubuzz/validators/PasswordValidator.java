@@ -23,7 +23,8 @@ public class PasswordValidator {
 		// entered password should not be the same as the email id
 		if(!(newPassword.equals(eMailId) && reEnterPassword.equals(eMailId)))	
 			// restricting password length between 8 to 20
-		if(newPassword.length()>=8 && reEnterPassword.length()>=8 && newPassword.length()<=20 && reEnterPassword.length()<=20){
+			System.out.println("length of password : "+newPassword.length());
+		if(newPassword.length()>=8  && newPassword.length()<=20){
 			String upperCaseChars = "(.*[A-Z].*)";
 			// validating that password contains at least one Upper case letter
 	        if (newPassword.matches(upperCaseChars) ){

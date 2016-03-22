@@ -1,7 +1,6 @@
 package com.itubuzz.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +15,7 @@ public class RegisterUserDAO {
 
 	public static boolean enterUserCredentials( String firstName, String middleName,
 			 String lastName, String newPassword,
-			String eMailId, String dept, String sem,
+			String eMailId, String dob, String dept, String trimester, String yop,
 			 String role ) {
 		// TODO Auto-generated method stub
 		    boolean status = false;
@@ -33,9 +32,9 @@ public class RegisterUserDAO {
 	            conn = DriverManager  
 	                    .getConnection(DB_URL, userName, password);  
 	            
-	            	    if(firstName != null && lastName != null && newPassword != null && eMailId != null && dept != null && sem != null && role != null){
+	            	    if(firstName != null && lastName != null && newPassword != null && eMailId != null && dept != null && trimester != null && role != null){
 	            PreparedStatement ps=conn.prepareStatement(  
-	            		"insert into usertest(first_name, middle_name, last_name, password, email_id, department, semester, role) values(?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);  
+	            		"insert into userLogin(first_name, middle_name, last_name, password, e_mail_id, date_of_birth, department, trimester, year_of_passing, user_type) values(?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);  
 	            		
 	            		
 	            		ps.setString(1,firstName);
@@ -43,9 +42,11 @@ public class RegisterUserDAO {
 	            		ps.setString(3, lastName);
 	            		ps.setString(4, newPassword);
 	            		ps.setString(5,eMailId);
-	            		ps.setString(6, dept);
-	            		ps.setString(7, sem);
-	            		ps.setString(8, role);
+	            		ps.setString(6, dob);
+	            		ps.setString(7, dept);
+	            		ps.setString(8, trimester);
+	            		ps.setString(9, yop);
+	            		ps.setString(10, role);
 	            		
 	            		ps.executeUpdate(); 
 	            		

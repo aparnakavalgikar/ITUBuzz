@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;  
 import java.sql.SQLException; 
 
-import javax.servlet.http.HttpSession;
 
 public class LoginDAO { 
 	
@@ -31,7 +30,7 @@ public class LoginDAO {
                     .getConnection(DB_URL, userName, password);  
   
             pst = conn  
-                    .prepareStatement("select * from usertest where email_id=? and password=?");  
+                    .prepareStatement("select * from userLogin where e_mail_id=? and password=?");  
             pst.setString(1, eMail);  
             pst.setString(2, password1);  
   
