@@ -57,7 +57,7 @@
         	var buttonfields = ['cancel','save'];
         	for(j=0;j<buttonfields.length;j++){
 	        	var n = document.getElementsByName(buttonfields[j]);
-	          	for(i = 0;i < n.length; ++i) {
+	          	for(i = 0;i < n.length; i++) {
 	                 n[i].style.visibility = "hidden";     
 	             }
         	}
@@ -210,34 +210,35 @@
          	
          	
          	if(document.getElementById('role_hidden').value == "student"){
-         		document.getElementById('day_of_month').value = dob_day;
-         		document.getElementById('month').value = dob_month;
-         		document.getElementById('birthday_year').value = dob_year;
-         		document.getElementById('dept').value = dept;
-         		document.getElementById('sem').value = sem;
+         		$('#student1 #day_of_month').val(dob_day);
+         		$('#student1 #month').val(dob_month);
+         		$('#student1 #birthday_year').val(dob_year);
+         		$('#student1 #dept').val(dept);
+         		$('#student1 #sem').val(sem);
          		DisableUserfieldsOnViewProfile();
          		currentUserTypeCheck();
-         		document.getElementById('eMailId').disabled = true;
+         		$('#student1 #eMailId').prop('disabled', true);
+         		//document.getElementById('eMailId').disabled = true;
          		
          	}else if(document.getElementById('role_hidden').value == "alumni"){	
-         		document.getElementById('day_of_month').value = dob_day;
-         		document.getElementById('month').value = dob_month;
-         		document.getElementById('birthday_year').value = dob_year;
-         		document.getElementById('month_of_passing').value = yop_month;
-         		document.getElementById('year_of_passing').value = yop_year;
-         		document.getElementById('dept').value = dept;
+         		$('#alumni1 #day_of_month').val(dob_day);
+         		$('#alumni1 #month').val(dob_month);
+         		$('#alumni1 #birthday_year').val(dob_year);
+         		$('#alumni1 #dept').val(dept);
+         		$('#alumni1 #month_of_passing').val(yop_month);
+         		$('#alumni1 #year_of_passing').val(yop_year);
          		currentUserTypeCheck();
-         		document.getElementById('eMailId').disabled = true;
+         		$('#alumni1 #eMailId').prop('disabled', true);
          		DisableUserfieldsOnViewProfile();
          	}else if(document.getElementById('role_hidden').value == "faculty"){
-         		document.getElementById('day_of_month').value = dob_day;
-         		document.getElementById('month').value = dob_month;
-         		document.getElementById('birthday_year').value = dob_year;
-         		document.getElementById('dept').value = dept;
-         		document.getElementById('sem').value = sem;
-         		currentUserTypeCheck();
-         		document.getElementById('eMailId').disabled = true;
+         		$('#faculty1 #day_of_month').val(dob_day);
+         		$('#faculty1 #month').val(dob_month);
+         		$('#faculty1 #birthday_year').val(dob_year);
+         		$('#faculty1 #dept').val(dept);
          		DisableUserfieldsOnViewProfile();
+         		currentUserTypeCheck();
+         		$('#faculty1 #eMailId').prop('disabled', true);
+         		
          	}
          	
          	//document.body.appendChild(img);
@@ -1054,9 +1055,9 @@
                   </td>
                </tr>
                <tr>
-                  <td>Departments*  : </td>
+                  <td>Department* : </td>
                   <td>
-                     <select  multiple name="department" id="dept">
+                     <select  name="department" id="dept" >
                         <option  value="Select">--select--</option>
                         <option  value="Software">MS in Software Engineering</option>
                         <option  value="Electrical">MS in Computer/Electrical Engineering</option>
@@ -1064,23 +1065,19 @@
                         <option  value="EngMgt">MS in Engineering Management</option>
                         <option  value="IntSc">MS in Interdisciplinary Science</option>
                         <option  value="MBA">Masters of Business Administration</option>
-                        <option  value="Finance">Finance</option>
-                        <option  value="Addmission">Admission</option>
-                        <option  value="ISO">International Students Office</option>
-                        <option  value="Library">Library</option>
                      </select>
                   </td>
                </tr>
             </table>
             <br>
+            <center>
+               <input type="submit" name="save" id="save" value="Save"/>
+               <input type="button" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
+               <input type="button" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
+            </center>
             <script type="text/javascript">
                selectedValues();
             </script>
-            <center>
-               <input type="submit" name="save" id="save" value="Save"/>
-               <input type="submit" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
-               <input type="button" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
-            </center>
          </div>
       </form>
    </body>
