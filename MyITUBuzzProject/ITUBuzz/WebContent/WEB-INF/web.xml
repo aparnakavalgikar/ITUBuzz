@@ -48,4 +48,22 @@
     <servlet-name>ResetPasswordServlet</servlet-name>
     <url-pattern>/ResetPasswordServlet</url-pattern>
   </servlet-mapping>
+  <!-- fetch profile mapping -->
+  <servlet>
+    <servlet-name>fetchProfile</servlet-name>
+    <servlet-class>com.itubuzz.webapp.FetchProfileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>fetchProfile</servlet-name>
+    <url-pattern>/FetchProfileServlet</url-pattern>
+  </servlet-mapping>
+  <!-- update profile mapping-->
+   <servlet>
+    <servlet-name>updateProfile</servlet-name>
+    <servlet-class>com.itubuzz.webapp.ProfileUpdateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>updateProfile</servlet-name>
+    <url-pattern>/ProfileUpdateServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
