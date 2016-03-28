@@ -33,7 +33,7 @@
          
          function DisableUserfieldsOnViewProfile()
          {
-        	var fields = ['first_name','middle_name','last_name','e_mail_id','day_of_month','month','birthday_year','department','sem','month_of_passing','year_of_passing'];
+        	var fields = ['first_name','middle_name','last_name','e_mail_id','day_of_month','month','birthday_year','department','semester','month_of_passing','year_of_passing'];
         	for(j=0;j<fields.length;j++){
 	        	var n = document.getElementsByName(fields[j]);
 	          	for(i = 0;i < n.length; ++i) {
@@ -66,7 +66,7 @@
          }
          function EnableUserfieldsOnEditProfile()
          {
-        	var fields = ['first_name','middle_name','last_name','day_of_month','month','birthday_year','department','sem','month_of_passing','year_of_passing','e_mail_id'];
+        	var fields = ['first_name','middle_name','last_name','day_of_month','month','birthday_year','department','semester','month_of_passing','year_of_passing','e_mail_id'];
          	for(j=0;j<fields.length;j++){
  	        	var n = document.getElementsByName(fields[j]);
  	          	for(i = 0;i < n.length; ++i) {
