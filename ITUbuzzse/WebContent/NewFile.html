@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+
+function displayComment(parentid) {
+	var parent = document.getElementById(parentid);
+
+	var childs = parent.childNodes;
+	var childid = 0;
+	var lastChildid = 0;
+	var childiv = null;
+	var num = 0;
+	
+    for (i = 0; i < childs.length; i++) {
+         if ( childs[i].nodeName == "DIV" ){
+
+        	 lastChildid = childs[i].id;
+        	 num = num + 1;
+         }
+    }
+	
+    
+    
+    if ( num == 0 ) {
+    	var num = num + 1;	
+    	childid = parentid.toString().concat(num.toString());
+
+    } else {
+    	childid = parseInt(lastChildid) + 1;
+
+    }
+    
+    
+	childiv = document.createElement("div");
+	childiv.setAttribute('id', childid);
+	var node1 = document.createElement("textarea");
+	var node2 = document.createElement("button");
+	node2.innerHTML = childid;
+	
+	childiv.appendChild(node1);
+	childiv.appendChild(node2);
+	
+	parent.appendChild(childiv);
+
+	console.log("First"  + childiv.getAttribute('id'));
+
+	while (childiv.parentNode.parentNode.getAttribute('id') != null) {
+		childiv = childiv.parentNode;
+	}
+    console.log("root parent is"  + childiv.getAttribute('id'));
+		
+	node2.onclick = function () {
+		var parentid = node2.parentNode.getAttribute('id');
+		displayComment(parentid);
+	};
+	
+
+}
+
+</script>
+</head>
+
+<body>
+<div id="1">
+<textarea id="text"></textarea>
+<button id ="submit" onclick="displayComment(1)">Submit</button> <br/>
+</div>
+
+</body>
+</html>
