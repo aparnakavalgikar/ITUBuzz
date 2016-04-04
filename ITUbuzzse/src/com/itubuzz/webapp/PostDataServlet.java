@@ -21,7 +21,7 @@ import com.itubuzz.valueobjects.*;
  */
 public class PostDataServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ArrayList<PostVO> all_post_data;
+	private ArrayList<PostVO> all_post_data = null;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -47,27 +47,30 @@ public class PostDataServlet extends HttpServlet {
 		String post_text = null;
 		response.setContentType("text/html"); 
 		PrintWriter out = response.getWriter(); 
-		HttpSession session = request.getSession(false); 
+		HttpSession session = request.getSession(false);
 		post_text = request.getParameter("post_text");	
 		String user_id = request.getParameter("log_user_id");
+		String post_name=request.getParameter("log_user_name");
 		
-		if(post_text.length()>0){
-			if(PostDAO.postdataCred(post_text,user_id)){ 
-				 all_post_data = new ArrayList<PostVO>();
-				 all_post_data = RetrievePostDAO.retrievePostedData();
-				 session.setAttribute("all_posts", all_post_data);
-				 System.out.println("In Qaforum data" + all_post_data.toString());
-				 RequestDispatcher rd=request.getRequestDispatcher("HomePage.jsp");      
-		         rd.forward(request,response);
-	             }    
-			}
-			else {
-  	    	  session.invalidate();
-                 request.setAttribute("errorMessage", "Please type a post");
-                 RequestDispatcher rd = request.getRequestDispatcher("HomePage.jsp");
-                 rd.forward(request, response);
-  	          }
-		
+		if (session.getAttribute("recordInsertedSuccessfully") == null ) {
+			if(post_text.length()>0){
+				if(PostDAO.postdataCred(post_text,user_id,post_name)){
+					 session.setAttribute("recordInsertedSuccessfully","true");
+					 all_post_data = new ArrayList<PostVO>();
+					 all_post_data = RetrievePostDAO.retrievePostedData();
+					 session.setAttribute("all_posts", all_post_data);
+					 System.out.println("In Qaforum data" + all_post_data.toString());
+					 RequestDispatcher rd=request.getRequestDispatcher("HomePage.jsp");      
+			         rd.forward(request,response);
+		             }    
+				}
+				else {
+	  	    	  session.invalidate();
+	                 request.setAttribute("errorMessage", "Please type a post");
+	                 RequestDispatcher rd = request.getRequestDispatcher("HomePage.jsp");
+	                 rd.forward(request, response);
+				}
+		}
 		out.close(); 
 	}
 }

@@ -25,8 +25,8 @@ import com.itubuzz.valueobjects.*;
  */
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ArrayList<PostVO> all_post_data;
-	private ArrayList<ReplyVO> all_reply_data;
+	private ArrayList<PostVO> all_post_data= null;
+	private ArrayList<ReplyVO> all_reply_data= null;
 	
     /**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,11 +40,34 @@ public class LoginServlet extends HttpServlet {
 		response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
+        String eMail=null;
+        String password = null;
         
         List<UserVO> user_list= new ArrayList<UserVO>();
-        String eMail=request.getParameter("user_name");    
-        String password=request.getParameter("login_password");
+        
+        if(request.getParameter("user_name").isEmpty()){
+        	request.setAttribute("errorMessageLogin", "E-mail id cannot be null!");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
+		    requestDispatcher.forward(request, response);
+		    return;
+        }
+        else{
+        eMail=request.getParameter("user_name");     
+        }   
+
+        if(request.getParameter("login_password").isEmpty()){
+        	request.setAttribute("errorMessageLogin", "Password cannot be null!");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
+		    requestDispatcher.forward(request, response);
+		    return;
+        }
+        else{
+        	password=request.getParameter("login_password");
+        }
+        
+        if(eMail !=null && password !=null){
         user_list = LoginDAO.validate(eMail, password);
+        }
         
         all_post_data = new ArrayList<PostVO>();
         all_post_data = RetrievePostDAO.retrievePostedData();
@@ -59,6 +82,7 @@ public class LoginServlet extends HttpServlet {
         		   for(UserVO user : user_list){
         			   session.setAttribute("name", user.getFirst_name());
         			   session.setAttribute("user_id", user.getUser_id());
+        			   session.setAttribute("log_user_name", user.getFirst_name());
 		           }
 
         		   session.setAttribute("all_posts", all_post_data);

@@ -19,7 +19,7 @@ import com.itubuzz.valueobjects.*;
  */
 public class ReplyDataServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ArrayList<ReplyVO> all_reply_data;
+	private ArrayList<ReplyVO> all_reply_data = null;
     /**
      * @see HttpServlet#HttpServlet()
      */
