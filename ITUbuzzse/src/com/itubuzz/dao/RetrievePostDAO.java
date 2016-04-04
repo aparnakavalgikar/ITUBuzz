@@ -21,8 +21,10 @@ public class RetrievePostDAO {
     final String DB_URL="jdbc:mysql://127.0.0.1:3306/itubuzz"; 
     String driver = "com.mysql.jdbc.Driver";  
     String userName = "root";  
-    String password = "root"; 
+    String password = "root";
+    
     ArrayList<PostVO> post_list=new ArrayList<PostVO>();
+    
     try {  
         Class.forName(driver).newInstance();  
         conn = DriverManager  
@@ -40,10 +42,10 @@ public class RetrievePostDAO {
             p.post_id = rs.getInt(1);
             p.post_text = rs.getString(2);
             p.log_user_id=rs.getInt(3);
+            p.log_user_name=rs.getString(4);
         
             post_list.add(p);
-            
-        
+                
             System.out.println("post list is "+post_list.size());
             System.out.println(post_list.toString());
         }
@@ -76,6 +78,3 @@ public class RetrievePostDAO {
     return post_list;  
 	} 
 }
-
-	
-
