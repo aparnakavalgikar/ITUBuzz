@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="java.util.ArrayList,java.util.Iterator,com.itubuzz.valueobjects.SearchVO" %>
+<%@ page import="java.util.ArrayList,java.util.Iterator,com.itubuzz.valueobjects.*" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,7 +38,6 @@ function displayReply() {
 
 document.getElementById("date").innerHTML = Date();
 </script>
-
   
 </head>
 
@@ -58,7 +58,12 @@ document.getElementById("date").innerHTML = Date();
 			</form>
 			<table>
 			 <tr>
-			  <td><button class="questionbutton" onclick="window.document.location.href='Question.jsp'"><img src="question_mark.png" id="questionimage"/><br />Ask Question</button></td>
+			 <td>
+			 	<form id="getforumdata" action="GetforumServlet" method="get">
+			 		<button class="questionbutton" onclick="window.document.location.href='Question.jsp'"><img src="question_mark.png" id="questionimage"/><br />Ask Question</button>
+			 		<input type="hidden" name="loggedInUser" id="loggedInUser" value="<%=session.getAttribute("name")%>">
+			 	</form>
+			  </td>
 			  <td>
 			   <div class="dropdown">
 			  	<button class="profilebutton">
@@ -91,39 +96,58 @@ document.getElementById("date").innerHTML = Date();
 	</div>
 
 <%
-   	@SuppressWarnings("unchecked")
-   	ArrayList<SearchVO> dbooks=(ArrayList<SearchVO>)session.getAttribute("search_values");
-    Iterator<SearchVO> list=dbooks.iterator();
+	String postorque = (String)session.getAttribute("postorque");
+	if (postorque.matches("post")) {
+   		@SuppressWarnings("unchecked")
+   		ArrayList<SearchVO> dbooks=(ArrayList<SearchVO>)session.getAttribute("search_values");
+    	Iterator<SearchVO> list=dbooks.iterator();
     
-    if (!list.hasNext()){
+    	if (!list.hasNext()){
 %>
-	<div class="post">
-        <textarea  id="postdisplaytext" name="postdisplaytext" tabindex="101" readonly="readonly">Sorry, No matching results found..</textarea>
-	</div>
-    <br />
+			<div class="post">
+        		<textarea  id="postdisplaytext" name="postdisplaytext" tabindex="101" readonly="readonly">Sorry, No matching results found..</textarea>
+			</div>
+    		<br />
 <% 
-    }
-    else {
-    	while(list.hasNext()) {
-    		SearchVO b=(SearchVO)list.next();
+    	}
+    	else {
+    		while(list.hasNext()) {
+    			SearchVO b=(SearchVO)list.next();
 %>
- 	<div class="post">
- 		<div class="postby">
-     		Posted by: <%= session.getAttribute("name") %><br/>
-     		On: <p id="date"></p> 
-     	</div>
-        <textarea  id="postdisplaytext" name="postdisplaytext" tabindex="101" readonly="readonly"><%=b.search_value%></textarea>
-        <input type="hidden" id="post_id" name="post_id" value="<%= b.search_value %>">
-    	<button id="like" onclick="displayCounter()">Like</button>
-    	<button id="reply" onclick="displayReply()">Reply</button>
-    	<textarea id="reply_text" name="reply_text" style="display:none" class="hide" placeholder="Comment..."></textarea>
-    	<input type="submit" id="reply_button" name="reply_button" value="Submit" style="display:none" class="hide">
-    </div>	
-    <br />
+ 				<div class="post">
+ 					<div class="postby">
+     					Posted by: <%= session.getAttribute("name") %><br/> 
+     				</div>
+        			<textarea  id="postdisplaytext" name="postdisplaytext" tabindex="101" readonly="readonly"><%=b.search_value%></textarea>
+        			<input type="hidden" id="post_id" name="post_id" value="<%= b.search_value %>">
+    				<button id="like" onclick="displayCounter()">Like</button>
+    				<button id="reply" onclick="displayReply()">Reply</button>
+    				<textarea id="reply_text" name="reply_text" style="display:none" class="hide" placeholder="Comment..."></textarea>
+    				<input type="submit" id="reply_button" name="reply_button" value="Submit" style="display:none" class="hide">
+    			</div>	
+    			<br />    			
 
 <%
     		}
     	}
-%>    
+    } else if (postorque.matches("que")) {
+       	@SuppressWarnings("unchecked")
+    	ArrayList<QuestionVO> questions=(ArrayList<QuestionVO>)session.getAttribute("all_questions");
+        Iterator<QuestionVO> q_list= questions.iterator();
+        
+        while(q_list.hasNext()) {
+    		QuestionVO q=(QuestionVO)q_list.next();
+    %>
+    		<div id="<%= q.question_id %>" class="question_list">
+      			<a id="displayquestion" name="displayquestion" href="GetAnstoQueServlet?question_id=<%= q.question_id %>"><%=q.question_text%></a>
+      			<br />
+      			<input type="hidden" name="question_id" id="question_id" value="<%= q.question_id %>">
+        	</div>	
+        	<br />
+    <%
+        }
+    }
+    %>
+
 </body>
 </html>

@@ -34,6 +34,7 @@ onload=function(){
 			  <tr>
                <td><input type="text" name="search" id="search" class="searchtext" placeholder="Search ITUBuzz"></td>
                <td><input type="image" src="search.png" alt="Submit" class="searchbutton"></td>
+               <td><input type="hidden" name="postorque" value="que"></td>
               </tr>
 			 </table>
 			</form>

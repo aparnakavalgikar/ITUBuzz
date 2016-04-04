@@ -186,6 +186,7 @@ function displayReplyTree(rootparentid, childid, reply_text, immparentid, userid
 			  <tr>
                <td><input type="text" name="search" id="search" class="searchtext" placeholder="Search ITUBuzz"></td>
                <td><input type="image" src="search.png" alt="Submit" class="searchbutton"></td>
+               <td><input type="hidden" name="postorque" value="post"></td>
               </tr>
 			 </table>
 			</form>
@@ -244,12 +245,16 @@ function displayReplyTree(rootparentid, childid, reply_text, immparentid, userid
     while(p_list.hasNext()) {
 		PostVO p=(PostVO)p_list.next();
 %>
+	
 		<div id="<%= p.post_id %>" class="post">
-		<p id="postby">Posted by: <%=session.getAttribute("user_id")%></p>
-  			<textarea id="displaypost" name="displaypost" readonly="readonly"><%=p.post_text%></textarea>
-    		<button id="replybutton" onclick="displayReply(<%= p.post_id %>)">Reply</button>
-    		<button id="likebutton">Like</button>
-    	</div>	
+			<p id="postby">Posted by: <%=p.log_user_name%></p>
+			<textarea id="displaypost" name="displaypost" readonly="readonly"><%=p.post_text%></textarea>
+			<input type="hidden" name="post_id" value="<%=p.post_id%>">
+			<input type="hidden" name="log_user_id" value="<%=p.log_user_id %>">
+			<label id="likebutton" onclick="displayCounter()"><u><i class="fa fa-thumbs-up"></i></u></label>
+			<button id="replybutton" onclick="displayCounter()">Like</button>
+			<button id="replybutton" onclick="displayReply(<%=p.post_id %>)">Reply</button>    
+		</div>					
     	<br />
 <%
     }
@@ -270,8 +275,10 @@ function displayReplyTree(rootparentid, childid, reply_text, immparentid, userid
 	    		if ( p.post_id == r.post_id ) {
     			
 %>
+	
   	 				<script> displayReplyTree(<%= r.post_id %>, <%= r.reply_id%>, "<%= r.reply_text%>", <%= r.immparent_id %>,<%= r.log_user_id%>); </script>
-        			<br />
+    
+	
 <%
        			} 
 			}
