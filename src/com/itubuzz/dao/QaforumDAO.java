@@ -90,9 +90,13 @@ public class QaforumDAO {
 	            Class.forName(driver).newInstance();  
 	            conn = DriverManager  
 	                    .getConnection(DB_URL, userName, password);  
-	  
+	   /**
+	    * Removed Generated key functionality as there is no return value
+	    * @author Kavya
+	    * edited on : 04/04/2016
+	    */
 	            PreparedStatement ps=conn.prepareStatement(  
-	            		"insert into answers(answer_id, answer_text, immparent_id, question_id, log_user_id) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);  
+	            		"insert into answers(answer_id, answer_text, immparent_id, question_id, log_user_id) values(?,?,?,?,?)");  
        			  
 	            		ps.setLong(1, answerId);
 	            		ps.setString(2, answer_text);
@@ -101,11 +105,7 @@ public class QaforumDAO {
 	            		ps.setInt(5, userId);
 	            		ps.executeUpdate();
 	           
-	            rs = ps.getGeneratedKeys();
-
-                if(rs != null && rs.next()){
-                    status = true;
-                }
+	            
 	  
 	        } catch (Exception e) {  
 	            System.out.println(e);  
@@ -124,13 +124,7 @@ public class QaforumDAO {
 	                    e.printStackTrace();  
 	                }  
 	            }  
-	            if (rs != null) {  
-	                try {  
-	                    rs.close();  
-	                } catch (SQLException e) {  
-	                    e.printStackTrace();  
-	                }  
-	            }  
+	           
 	        }  
 	        return status;  
 	}

@@ -192,12 +192,12 @@ function displayAnswerTree(rootparentid, childid, answer_text, immparentid, user
 			  		<img src="profilepic.png" id="profileimage"/><br/><%=session.getAttribute("name")%>
 			  	</button>
 			  	<div class="dropdown-content">
-    				<a href="#">Create Group</a>
+    				<a href="CreateGroup.jsp">Create Group</a>
     				<a href="#">Your Groups</a>
     				<a href="#">Create Events</a>
     				<a href="#">Your Events</a>
-    				<a href="#">Edit Profile</a>
-    				<a href="#">Log Out</a>
+    				<a href="FetchProfileServlet" id="profile">Edit Profile</a>
+    				<a href="LogoutServlet" id="logout">Log Out</a>
   				</div>
   			   </div>
 			  </td> 

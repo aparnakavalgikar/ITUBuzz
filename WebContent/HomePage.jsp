@@ -203,12 +203,12 @@ function displayReplyTree(rootparentid, childid, reply_text, immparentid, userid
 			  		<img src="profilepic.png" id="profileimage"/><br/><%=session.getAttribute("name")%>
 			  	</button>
 			  	<div class="dropdown-content">
-    				<a href="#">Create Group</a>
+    				<a href="CreateGroup.jsp">Create Group</a>
     				<a href="#">Your Groups</a>
     				<a href="#">Create Events</a>
     				<a href="#">Your Events</a>
     				<a href="FetchProfileServlet" id="profile">Edit Profile</a>
-    				<a href="LogOut.jsp" id="logout">Log Out</a>
+    				<a href="LogoutServlet" id="logout">Log Out</a>
   				</div>
   			   </div>
 			  </td> 
@@ -248,10 +248,11 @@ function displayReplyTree(rootparentid, childid, reply_text, immparentid, userid
 		<div id="<%= p.post_id %>" class="post">
 		<p id="postby">Posted by:  <%=p.post_user_name%></p>
   			<textarea id="displaypost" name="displaypost" readonly="readonly"><%=p.post_text%></textarea>
-     		<button id="replybutton" onclick="displayReply(<%=p.post_id %>)">Reply</button>
-    		<button id="likebutton">Like</button>
+     		<a href="#" id="replybutton" onclick="displayReply(<%=p.post_id %>)">Reply</a>
+    		<a href="#" id="likebutton">Like</a>
     		<input type="hidden" name="post_id" value="<%=p.post_id%>">
-         <input type="hidden" name="log_user_id" value="<%=p.log_user_id %>"></td>
+         <input type="hidden" name="log_user_id" value="<%=p.log_user_id %>">
+         
     	</div>	
     	<br />
 <%

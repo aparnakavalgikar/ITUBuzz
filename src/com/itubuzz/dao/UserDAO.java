@@ -21,6 +21,7 @@ public class UserDAO {
 	        PreparedStatement pst = null;  
 	        ResultSet rs = null; 
 	        List<Integer> userIds = new ArrayList<Integer>();
+	        String[] member = members.split("\\,");
 	  
 	        final String DB_URL="jdbc:mysql://127.0.0.1:3306/itubuzz"; 
 	        String driver = "com.mysql.jdbc.Driver";  
@@ -30,13 +31,15 @@ public class UserDAO {
 	            Class.forName(driver).newInstance();  
 	            conn = DriverManager  
 	                    .getConnection(DB_URL, userName, password);  
-	  
+	            
+	            for(int i =0;i<member.length;i++){
 	            pst = conn  
 	                    .prepareStatement("select user_id from userLogin where e_mail_id =? ");  
-	            pst.setString(1, members);  
+	            pst.setString(1, member[i]);  
 	            rs = pst.executeQuery();
 	            while(rs.next()){
 	            	 userIds.add(rs.getInt(1));
+	            }
 	            }
 	        }catch (Exception e) {  
 	            System.out.println(e);  

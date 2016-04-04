@@ -7,6 +7,7 @@ package com.itubuzz.webapp;
  */
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.itubuzz.dao.FetchProfileDetailsDAO;
 import com.itubuzz.dao.UpdateProfileDAO;
 
 /**
@@ -81,24 +83,73 @@ public class ProfileUpdateServlet extends HttpServlet {
 	        	role = "Faculty";
 	        }*/
 	        role = userType;
+	        Map < String, String > user = null;
 	        
 	        if(role.equalsIgnoreCase("student")){
 	        	if(UpdateProfileDAO.updateStudentProfileDetails(firstName,middleName,lastName,eMailId,date,dept,sem,filePart))
 	    		{
-	        		RequestDispatcher rd=request.getRequestDispatcher("ViewProfile.jsp");    
-	                rd.forward(request,response); 
+	        		if(FetchProfileDetailsDAO.fetchProfile(eMailId)){
+	        		   user = FetchProfileDetailsDAO.UserDetails();
+	  				   session.setAttribute("firstName", user.get("firstName"));
+	  				   session.setAttribute("middleName", user.get("middleName"));
+	  				   session.setAttribute("lastName", user.get("lastName"));
+	  				   session.setAttribute("eMailId", user.get("eMailId"));
+	  				   session.setAttribute("sem", user.get("sem"));
+	  				   session.setAttribute("dept", user.get("dept"));
+	  				   session.setAttribute("role", user.get("role"));
+	  				   session.setAttribute("dob_day", user.get("dob_day"));
+	  				   session.setAttribute("dob_month", user.get("dob_month"));
+	  				   session.setAttribute("dob_year", user.get("dob_year"));
+	  				   session.setAttribute("yop_day", user.get("yop_day"));
+	  				   session.setAttribute("yop_month", user.get("yop_month"));
+	  				   session.setAttribute("yop_year", user.get("yop_year"));
+	        		   RequestDispatcher rd=request.getRequestDispatcher("ViewProfile.jsp");    
+	                   rd.forward(request,response); 
+	        		}
 	    		}
 	        }else if(role.equalsIgnoreCase("Alumni")){
 	        	if(UpdateProfileDAO.updateAlumniProfileDetails(firstName,middleName,lastName,eMailId,date,dept,passYear,filePart))
 	    		{
+	        		if(FetchProfileDetailsDAO.fetchProfile(eMailId)){
+		        		   user = FetchProfileDetailsDAO.UserDetails();
+		  				   session.setAttribute("firstName", user.get("firstName"));
+		  				   session.setAttribute("middleName", user.get("middleName"));
+		  				   session.setAttribute("lastName", user.get("lastName"));
+		  				   session.setAttribute("eMailId", user.get("eMailId"));
+		  				   session.setAttribute("sem", user.get("sem"));
+		  				   session.setAttribute("dept", user.get("dept"));
+		  				   session.setAttribute("role", user.get("role"));
+		  				   session.setAttribute("dob_day", user.get("dob_day"));
+		  				   session.setAttribute("dob_month", user.get("dob_month"));
+		  				   session.setAttribute("dob_year", user.get("dob_year"));
+		  				   session.setAttribute("yop_day", user.get("yop_day"));
+		  				   session.setAttribute("yop_month", user.get("yop_month"));
+		  				   session.setAttribute("yop_year", user.get("yop_year"));
 	        		RequestDispatcher rd=request.getRequestDispatcher("ViewProfile.jsp");    
 	                rd.forward(request,response); 
+	        		}
 	    		}
 	        }else if(role.equalsIgnoreCase("Faculty")){
 	        	if(UpdateProfileDAO.updateFacultyProfileDetails(firstName,middleName,lastName,eMailId,date,dept,filePart))
 	    		{
+	        		if(FetchProfileDetailsDAO.fetchProfile(eMailId)){
+		        		   user = FetchProfileDetailsDAO.UserDetails();
+		  				   session.setAttribute("firstName", user.get("firstName"));
+		  				   session.setAttribute("middleName", user.get("middleName"));
+		  				   session.setAttribute("lastName", user.get("lastName"));
+		  				   session.setAttribute("eMailId", user.get("eMailId"));
+		  				   session.setAttribute("sem", user.get("sem"));
+		  				   session.setAttribute("dept", user.get("dept"));
+		  				   session.setAttribute("role", user.get("role"));
+		  				   session.setAttribute("dob_day", user.get("dob_day"));
+		  				   session.setAttribute("dob_month", user.get("dob_month"));
+		  				   session.setAttribute("dob_year", user.get("dob_year"));
+		  				   session.setAttribute("yop_day", user.get("yop_day"));
+		  				   session.setAttribute("yop_month", user.get("yop_month"));
+		  				   session.setAttribute("yop_year", user.get("yop_year"));
 	        		RequestDispatcher rd=request.getRequestDispatcher("ViewProfile.jsp");    
 	                rd.forward(request,response); 
+	        		}
 	    		}
 	        }
 	        out.close();

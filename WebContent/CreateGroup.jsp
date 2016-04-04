@@ -10,6 +10,15 @@
 	<script src="./js/GrowingInput.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./js/TextboxList.js" type="text/javascript" charset="utf-8"></script>		
 	<!-- sample initialization -->
+	
+	<%
+	if(null!=request.getAttribute("success_createGroup"))
+    {
+        out.println(request.getAttribute("success_createGroup"));
+    }
+%>
+	
+	
 	<script type="text/javascript" charset="utf-8">		
 		$(function(){
 			// With custom adding keys 

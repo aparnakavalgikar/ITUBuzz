@@ -248,7 +248,7 @@
          
          function ClearFieldsOnCancelClick()
          {
-        	document.location = "/ITUBUZZ/FetchProfileServlet";
+        	document.location = "/ITUBuzz/FetchProfileServlet";
          }
          
       </script>

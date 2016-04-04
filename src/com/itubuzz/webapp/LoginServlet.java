@@ -82,6 +82,12 @@ public class LoginServlet extends HttpServlet {
         			   session.setAttribute("name", user.getFirst_name());
         			   session.setAttribute("user_id", user.getUser_id());
         			   session.setAttribute("log_user_name", user.getFirst_name());
+        			   /**
+	            	    * @author Poorvisha
+	            	    * change added for my profile page
+	            	    * edited on : 03/26/2016
+	            	    */
+	            	   session.setAttribute("emailId", user.getE_mailId());
 		           }
 
         		   session.setAttribute("all_posts", all_post_data);

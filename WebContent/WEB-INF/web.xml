@@ -11,9 +11,8 @@
     <welcome-file>CreateGroup.jsp</welcome-file>
     <welcome-file>Search.jsp</welcome-file>
     <welcome-file>QAforum.jsp</welcome-file>
+    <welcome-file>QuestionPage.jsp</welcome-file>
   </welcome-file-list>
-  
-  <!-- login and register mapping -->
   <servlet>
     <servlet-name>login</servlet-name>
     <servlet-class>com.itubuzz.webapp.LoginServlet</servlet-class>
@@ -31,9 +30,6 @@
     <url-pattern>/RegisterUserServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-  
-  <!-- Post data related mapping -->
-  
     <servlet-name>PostDataServlet</servlet-name>
     <servlet-class>com.itubuzz.webapp.PostDataServlet</servlet-class>
   </servlet>
@@ -41,7 +37,6 @@
     <servlet-name>PostDataServlet</servlet-name>
     <url-pattern>/PostDataServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ReteriveAllPostServlet</servlet-name>
     <servlet-class>com.itubuzz.webapp.ReteriveAllPostServlet</servlet-class>
@@ -50,8 +45,6 @@
     <servlet-name>ReteriveAllPostServlet</servlet-name>
     <url-pattern>/ReteriveAllPostServlet</url-pattern>
   </servlet-mapping>
-  
-  <!-- reset password mapping -->
   <servlet>
     <servlet-name>ResetPasswordServlet</servlet-name>
     <servlet-class>com.itubuzz.webapp.ResetPasswordServlet</servlet-class>
@@ -60,20 +53,6 @@
     <servlet-name>ResetPasswordServlet</servlet-name>
     <url-pattern>/ResetPasswordServlet</url-pattern>
   </servlet-mapping>
-  
-  <!-- reply data mapping  
-  <servlet>
-   <description></description>
-    <display-name>ReplyDataServlet</display-name>
-    <servlet-name>ReplyDataServlet</servlet-name>
-    <servlet-class>com.itubuzz.webapp.ReplyDataServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ReplyDataServlet</servlet-name>
-    <url-pattern>/ReplyDataServlet</url-pattern>
-  </servlet-mapping>
-  -->
-  <!-- fetch profile mapping -->
   <servlet>
     <servlet-name>fetchProfile</servlet-name>
     <servlet-class>com.itubuzz.webapp.FetchProfileServlet</servlet-class>
@@ -82,8 +61,7 @@
     <servlet-name>fetchProfile</servlet-name>
     <url-pattern>/FetchProfileServlet</url-pattern>
   </servlet-mapping>
-  <!-- update profile mapping-->
-   <servlet>
+  <servlet>
     <servlet-name>updateProfile</servlet-name>
     <servlet-class>com.itubuzz.webapp.ProfileUpdateServlet</servlet-class>
   </servlet>
@@ -91,133 +69,75 @@
     <servlet-name>updateProfile</servlet-name>
     <url-pattern>/ProfileUpdateServlet</url-pattern>
   </servlet-mapping>
-  
-  <!-- create group mapping -->
-<servlet>
-  <servlet-name>CreateGroupServlet</servlet-name>
-  <servlet-class>com.itubuzz.webapp.CreateGroupServlet</servlet-class>
-</servlet>
-<servlet-mapping>
-  <servlet-name>CreateGroupServlet</servlet-name>
-  <url-pattern>/createGroup</url-pattern>
-</servlet-mapping>
-
- <!-- knowledge forum mapping -->
- 
-
-<servlet>
-<description/>
-<display-name>ReplyDataServlet</display-name>
-<servlet-name>ReplyDataServlet</servlet-name>
-<servlet-class>com.itubuzz.webapp.ReplyDataServlet</servlet-class>
-</servlet>
-
-
-<servlet-mapping>
-
-<servlet-name>ReplyDataServlet</servlet-name>
-
-<url-pattern>/ReplyDataServlet</url-pattern>
-
-</servlet-mapping>
-
-
-<servlet>
-
-<description/>
-
-<display-name>SearchServlet</display-name>
-
-<servlet-name>SearchServlet</servlet-name>
-
-<servlet-class>com.itubuzz.webapp.SearchServlet</servlet-class>
-
-</servlet>
-
-
-<servlet-mapping>
-
-<servlet-name>SearchServlet</servlet-name>
-
-<url-pattern>/SearchServlet</url-pattern>
-
-</servlet-mapping>
-
-
-<servlet>
-
-<servlet-name>QaforumQueServlet</servlet-name>
-
-<servlet-class>com.itubuzz.webapp.QaforumQueServlet</servlet-class>
-
-</servlet>
-
-
-<servlet-mapping>
-
-<servlet-name>QaforumQueServlet</servlet-name>
-
-<url-pattern>/QaforumQueServlet</url-pattern>
-
-</servlet-mapping>
-
-
-<servlet>
-
-<servlet-name>QaforumAnsServlet</servlet-name>
-
-<servlet-class>com.itubuzz.webapp.QaforumAnsServlet</servlet-class>
-
-</servlet>
-
-
-<servlet-mapping>
-
-<servlet-name>QaforumAnsServlet</servlet-name>
-
-<url-pattern>/QaforumAnsServlet</url-pattern>
-
-</servlet-mapping>
-
-
-<servlet>
-
-<display-name>GetforumServlet</display-name>
-
-<servlet-name>GetforumServlet</servlet-name>
-
-<servlet-class>com.itubuzz.webapp.GetforumServlet</servlet-class>
-
-</servlet>
-
-
-<servlet-mapping>
-
-<servlet-name>GetforumServlet</servlet-name>
-
-<url-pattern>/GetforumServlet</url-pattern>
-
-</servlet-mapping>
-
-
-<servlet>
-
-<description/>
-
-<display-name>GetAnstoQueServlet</display-name>
-
-<servlet-name>GetAnstoQueServlet</servlet-name>
-
-<servlet-class>com.itubuzz.webapp.GetAnstoQueServlet</servlet-class>
-
-</servlet>
-
-
-<servlet-mapping>
-
-<servlet-name>GetAnstoQueServlet</servlet-name>
-
-<url-pattern>/GetAnstoQueServlet</url-pattern>
-
-</servlet-mapping>
+  <servlet>
+    <servlet-name>CreateGroupServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.CreateGroupServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreateGroupServlet</servlet-name>
+    <url-pattern>/createGroup</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ReplyDataServlet</display-name>
+    <servlet-name>ReplyDataServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.ReplyDataServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReplyDataServlet</servlet-name>
+    <url-pattern>/ReplyDataServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchServlet</display-name>
+    <servlet-name>SearchServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.SearchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchServlet</servlet-name>
+    <url-pattern>/SearchServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>QaforumQueServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.QaforumQueServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QaforumQueServlet</servlet-name>
+    <url-pattern>/QaforumQueServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>QaforumAnsServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.QaforumAnsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QaforumAnsServlet</servlet-name>
+    <url-pattern>/QaforumAnsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <display-name>GetforumServlet</display-name>
+    <servlet-name>GetforumServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.GetforumServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetforumServlet</servlet-name>
+    <url-pattern>/GetforumServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetAnstoQueServlet</display-name>
+    <servlet-name>GetAnstoQueServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.GetAnstoQueServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAnstoQueServlet</servlet-name>
+    <url-pattern>/GetAnstoQueServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

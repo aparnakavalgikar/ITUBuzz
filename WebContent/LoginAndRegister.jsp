@@ -9,13 +9,21 @@
   <link rel="icon" href="marca.png" type="image/png">
 <title>ITUBUZZ</title>
     
- <%   
-if(null!=session.getAttribute("success_message"))
-    {
-        out.println(session.getAttribute("success_message"));
-    }    
+ <%    
+ if(null!=request.getAttribute("passwordSuccessMessage")){
+	 out.println(request.getAttribute("passwordSuccessMessage"));
+ }
  %>   
 <script type="text/javascript">
+
+var Msg ='<%=session.getAttribute("success_message")%>';
+if (Msg != "null") {
+function alertName(){
+alert(Msg);
+} 
+}
+
+window.onload = alertName;
 
 function currentStudentCheck() {
     if (document.getElementById('student').checked) {
@@ -389,7 +397,7 @@ function currentStudentCheck() {
         </tr>
             </table>
                 <br>
-                    <input type="submit" name="submit"  value="Register" />
+                    <input type="submit" name="submit" class="loginbutton" value="Register" />
                       <input type="submit" name="cancel" value="Cancel" />
                     </div>
         <div id= "alumni1" style="display:none"> 
@@ -572,7 +580,7 @@ function currentStudentCheck() {
 </tr>
         </table>
         <br>
-          <input type="submit" name="submit" value="Register" />
+          <input type="submit" name="submit" class="loginbutton" value="Register" />
             <input type="submit" name="cancel" value="Cancel" />
 
       </div>
