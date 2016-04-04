@@ -9,11 +9,11 @@ import java.sql.Statement;
 
 public class PostDAO {
 
-	public static boolean postdataCred(String post_text,String user_id  ) {
+	public static boolean postdataCred(String post_text,String user_id, String post_name  ) {
 		// TODO Auto-generated method stub
 		 boolean status = false;  
 	        Connection conn = null;  
-	        PreparedStatement pst = null;  
+	        PreparedStatement ps = null;  
 	        ResultSet rs = null;  	        
 
 	        Integer userId = Integer.parseInt((user_id));
@@ -27,11 +27,12 @@ public class PostDAO {
 	            conn = DriverManager  
 	                    .getConnection(DB_URL, userName, password);  
 	  
-	            PreparedStatement ps=conn.prepareStatement(  
-	            		"insert into posts (post_text, log_user_id) values(?,?)",Statement.RETURN_GENERATED_KEYS);  
+	            ps=conn.prepareStatement(  
+	            		"insert into posts (post_text, log_user_id, log_user_name) values(?,?,?)",Statement.RETURN_GENERATED_KEYS);  
 	            		
 	            ps.setString(1,post_text);
 	            ps.setInt(2,userId);
+	            ps.setString(3, post_name);
 	            ps.executeUpdate();
 
 	            rs = ps.getGeneratedKeys();
@@ -52,9 +53,9 @@ public class PostDAO {
 	                    e.printStackTrace();  
 	                }  
 	            }  
-	            if (pst != null) {  
+	            if (ps != null) {  
 	                try {  
-	                    pst.close();  
+	                    ps.close();  
 	                } catch (SQLException e) {  
 	                    e.printStackTrace();  
 	                }  
@@ -68,5 +69,5 @@ public class PostDAO {
 	            }  
 	        }  
 	        return status;  
-	    } 
+	    }  
 }
