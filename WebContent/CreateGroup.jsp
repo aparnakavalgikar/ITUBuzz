@@ -8,7 +8,8 @@
 	<link rel="stylesheet" href="./css/TextboxList.css" type="text/css" media="screen" charset=ISO-8859-1>
 	<!-- required for TextboxList -->
 	<script src="./js/GrowingInput.js" type="text/javascript" charset="utf-8"></script>
-	<script src="./js/TextboxList.js" type="text/javascript" charset="utf-8"></script>		
+	<script src="./js/TextboxList.js" type="text/javascript" charset="utf-8"></script>	
+	<title>ITUBUZZ</title>	
 	<!-- sample initialization -->
 	
 	<%
@@ -34,6 +35,28 @@
         });
 
 	</script>
+	<body>
+	<div id="itu_bar" style="background: #5a926a;">
+    <div id="itu_frame">
+      <div id="logo"><img src="logo.png" id="img_logo" alt="logo"/></div>
+        <div id="header-main-right">
+          <div id="header-main-right-nav">
+          <div>
+          <a href="HomePage.jsp" >Home</a>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+      <hr>
+      <br>
+      <br>
+      <br>
+     
+      <br>
+      <br>
+      <br>
+      <br>
 	<form action="createGroup" method="post">
 	<a href="#" rel="#createGroupContainer">Create Group</a>
 	<div class="apple_overlay" id="createGroupContainer">
@@ -57,4 +80,5 @@
 		</div>
 	</div>
 	</form>
+	</body>
 </html>

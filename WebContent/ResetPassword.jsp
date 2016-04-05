@@ -15,6 +15,23 @@
 
 </head>
 <body>
+
+
+  <div id="itu_bar" style="background: #5a926a;">
+    <div id="itu_frame">
+      <div id="logo"><img src="logo.png" id="img_logo" alt="logo"/></div>
+        <div id="header-main-right">
+          <div id="header-main-right-nav">
+          </div>
+          </div>
+          </div>
+          </div>
+         
+      <hr>
+      <br>
+      <br>
+      <br>
+      <hr>
 <div>
             <form id="reset_form" action="ResetPasswordServlet" method="post">
               <table border="0" align="center">

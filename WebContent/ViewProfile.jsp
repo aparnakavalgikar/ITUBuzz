@@ -254,10 +254,23 @@
       </script>
    </head>
    <body>
-      <br>
-      <br>
-      <br>
+   <div id="itu_bar" style="background: #5a926a;">
+    <div id="itu_frame">
+      <div id="logo"><img src="logo.png" id="img_logo" alt="logo"/></div>
+        <div id="header-main-right">
+          <div id="header-main-right-nav">
+          <div>
+          <a href="HomePage.jsp" >Home</a>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
       <hr>
+      <br>
+      <br>
+      <br>
+      
       <br>
       <br>
       <br>
@@ -274,7 +287,7 @@
          <br>
          <div id ="errors">
          </div>
-         <div id= "student1" style="display:none">
+         <div id= "student1" style="display:none" class="profilebox">
             <table align="center">
                <tr>
                   <td>Profile Photo:</td>
@@ -505,7 +518,7 @@
          </div>
          </form>
          <form name ="myForm"  action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
-         <div id= "alumni1" style="display:none">
+         <div id= "alumni1" style="display:none" class="profilebox">
             <table align="center" >
                <tr>
                   <td>Profile Photo:</td>
@@ -859,7 +872,7 @@
          </div>
          </form>
          <form name ="myForm"  action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
-         <div id= "faculty1" style="display:none">
+         <div id= "faculty1" style="display:none" class="profilebox">
             <table align="center">
                <tr>
                   <td>Profile Photo:</td>

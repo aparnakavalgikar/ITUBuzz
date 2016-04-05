@@ -110,7 +110,6 @@ document.getElementById("date").innerHTML = Date();
  	<div class="post">
  		<div class="postby">
      		Posted by: <%= session.getAttribute("name") %><br/>
-     		On: <p id="date"></p> 
      	</div>
         <textarea  id="postdisplaytext" name="postdisplaytext" tabindex="101" readonly="readonly"><%=b.search_value%></textarea>
         <input type="hidden" id="post_id" name="post_id" value="<%= b.search_value %>">
