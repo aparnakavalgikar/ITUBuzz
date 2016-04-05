@@ -27,7 +27,7 @@ public class RetrieveSearchDAO {
 		        Class.forName(driver).newInstance();  
 		        conn = DriverManager  
 		                .getConnection(DB_URL, userName, password);  
-		        String query = "select * from user_post where post_values like \'" + searchString + "\';";
+		        String query = "select * from posts  where post_text  like \'" + searchString + "\';";
 		        System.out.println("\nMakarand\n"+query);
 		        PreparedStatement ps=conn.prepareStatement(query);  
 		        		

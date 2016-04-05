@@ -14,7 +14,7 @@ public class QaforumDAO {
 		 boolean status = false;  
 	        Connection conn = null;  
 	        PreparedStatement ps = null;  
-	        ResultSet rs = null;
+	        int rs = 0;
 	        
 	        Integer userId = Integer.parseInt((user_id));
 	        
@@ -28,18 +28,16 @@ public class QaforumDAO {
 	                    .getConnection(DB_URL, userName, password);  
 	  
 	            ps=conn.prepareStatement(  
-	            		"insert into questions(question_text, log_user_id) values(?,?)", Statement.RETURN_GENERATED_KEYS);  
+	            		"insert into questions(question_text, log_user_id) values(?,?)");  
        			  
 	            		ps.setString(1, question_text);
 	            		ps.setInt(2, userId);
-	            		ps.executeUpdate();
+	            		rs=ps.executeUpdate();
 	            
-	           
-	            rs = ps.getGeneratedKeys();
+	            		if(rs>0){
+	            			status=true;
+	            		}
 	            
-                if(rs != null && rs.next()){
-                    status = true;
-                }
 	  
 	        } catch (Exception e) {  
 	            System.out.println(e);
@@ -59,13 +57,7 @@ public class QaforumDAO {
 	                    e.printStackTrace();  
 	                }  
 	            }  
-	            if (rs != null) {  
-	                try {  
-	                    rs.close();  
-	                } catch (SQLException e) {  
-	                    e.printStackTrace();  
-	                }  
-	            }  
+	             
 	        }  
 	        return status;  
 	}
