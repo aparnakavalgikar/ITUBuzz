@@ -13,7 +13,7 @@ public class QaforumDAO {
 		// TODO Auto-generated method stub
 		 boolean status = false;  
 	        Connection conn = null;  
-	        PreparedStatement pst = null;  
+	        PreparedStatement ps = null;  
 	        ResultSet rs = null;
 	        
 	        Integer userId = Integer.parseInt((user_id));
@@ -27,7 +27,7 @@ public class QaforumDAO {
 	            conn = DriverManager  
 	                    .getConnection(DB_URL, userName, password);  
 	  
-	            PreparedStatement ps=conn.prepareStatement(  
+	            ps=conn.prepareStatement(  
 	            		"insert into questions(question_text, log_user_id) values(?,?)", Statement.RETURN_GENERATED_KEYS);  
        			  
 	            		ps.setString(1, question_text);
@@ -36,6 +36,7 @@ public class QaforumDAO {
 	            
 	           
 	            rs = ps.getGeneratedKeys();
+	            
                 if(rs != null && rs.next()){
                     status = true;
                 }
@@ -51,9 +52,9 @@ public class QaforumDAO {
 	                    e.printStackTrace();  
 	                }  
 	            }  
-	            if (pst != null) {  
+	            if (ps != null) {  
 	                try {  
-	                    pst.close();  
+	                    ps.close();  
 	                } catch (SQLException e) {  
 	                    e.printStackTrace();  
 	                }  
@@ -73,8 +74,8 @@ public class QaforumDAO {
 		// TODO Auto-generated method stub
 		 	boolean status = false;  
 	        Connection conn = null;  
-	        PreparedStatement pst = null;  
-	        ResultSet rs = null;
+	        PreparedStatement ps = null;  
+	        int rs = 0;
 	        
 	        Long answerId = Long.parseLong((answer_id));
 	        Long immparentId = Long.parseLong((immparent_id));
@@ -95,17 +96,19 @@ public class QaforumDAO {
 	    * @author Kavya
 	    * edited on : 04/04/2016
 	    */
-	            PreparedStatement ps=conn.prepareStatement(  
+	            ps=conn.prepareStatement(  
 	            		"insert into answers(answer_id, answer_text, immparent_id, question_id, log_user_id) values(?,?,?,?,?)");  
        			  
 	            		ps.setLong(1, answerId);
 	            		ps.setString(2, answer_text);
 	            		ps.setLong(3, immparentId);
 	            		ps.setInt(4, questionId);
-	            		ps.setInt(5, userId);
-	            		ps.executeUpdate();
+	            		ps.setInt(5, userId);	
+	            		rs = ps.executeUpdate();
 	           
-	            
+	                    if(rs > 0){
+	                        status = true;
+	                    }
 	  
 	        } catch (Exception e) {  
 	            System.out.println(e);  
@@ -117,9 +120,9 @@ public class QaforumDAO {
 	                    e.printStackTrace();  
 	                }  
 	            }  
-	            if (pst != null) {  
+	            if (ps != null) {  
 	                try {  
-	                    pst.close();  
+	                    ps.close();  
 	                } catch (SQLException e) {  
 	                    e.printStackTrace();  
 	                }  
