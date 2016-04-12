@@ -81,6 +81,34 @@
 
 
   </style>
+
+   <script type="text/javascript">
+
+
+function currentStudentCheck() {
+    if (document.getElementById('student').checked) {
+        document.getElementById('student1').style.display = 'block';
+        document.getElementById('alumni1').style.display = 'none';
+        document.getElementById('faculty1').style.display = 'none';
+    }
+    else if (document.getElementById('alumni').checked){
+      document.getElementById('student1').style.display = 'none';
+        document.getElementById('alumni1').style.display = 'block';
+        document.getElementById('faculty1').style.display = 'none';
+    }
+    else if (document.getElementById('faculty').checked){
+      document.getElementById('student1').style.display = 'none';
+        document.getElementById('alumni1').style.display = 'none';
+        document.getElementById('faculty1').style.display = 'block';
+    }
+    else{
+      document.getElementById('student1').style.display = 'none';
+        document.getElementById('alumni1').style.display = 'none';
+        document.getElementById('faculty1').style.display = 'none';
+    }
+}
+
+  </script> 
   <script src="http://snipplicious.com/js/jquery.js"></script>
   <script src="http://snipplicious.com/js/bootstrap.min.js"></script>
 </head>
@@ -101,14 +129,24 @@
           <div class="tab-pane fade in active" id="new">
             <br>
             <fieldset>
+              <div class="form-group login-group-checkbox" align="center">
+                <input type="radio" name="register" id="student" onclick="javascript:currentStudentCheck();" value="currentStudent"> 
+                <label for ="student"> Student </label>
+
+                <input type="radio" name="register" id="alumni" onclick="javascript:currentStudentCheck();" value="currentStudent"> 
+                <label for ="alumni"> Alumni </label>
+
+                <input type="radio" name="register" id="faculty" onclick="javascript:currentStudentCheck();" value="currentStudent"> 
+                <label for ="faculty"> Faculty </label>
+              </div>
               <div class="form-group">
                 <div class="right-inner-addon">
-                  <input class="form-control input-sm" placeholder="Email Address" type="text">
+                  <input class="form-control input-sm" placeholder="Email Address*" type="text">
                 </div>
               </div>
               <div class="form-group">
                 <div class="right-inner-addon">
-                  <input class="form-control input-sm" placeholder="Name" type="text">
+                  <input class="form-control input-sm" placeholder="Name*" type="text">
                 </div>
               </div>
               <div class="form-group">
@@ -118,17 +156,48 @@
               </div>
               <div class="form-group">
                 <div class="right-inner-addon">
-                  <input class="form-control input-sm" placeholder="Department" type="text">
+                  <div class="dropdown">
+                    <td>Department* : </td>
+                      <td><select name="dropdown" >
+                        <option  value="Select">--select--</option>
+                        <option  value="Software">MS in Software Engineering</option>
+                        <option  value="Electrical">MS in Computer/Electrical Engineering</option>
+                        <option  value="Digital">MS in Digital Arts</option>
+                        <option  value="EngMgt">MS in Engineering Management</option>
+                        <option  value="IntSc">MS in Interdisciplinary Science</option>
+                        <option  value="MBA">Masters of Business Administration</option>
+                          </select>
+                        </td>
+                  </div>
+                </div>
+              </div>
+              <!-- I think we should rethink this. Trimester I, II, III doesn't make sense. Unless we had something like: Fall 2016... Spring.. Summer.. I don't think this is relevant. Let's keep it simple.
+              <div class="form-group">
+                <div class="right-inner-addon">
+                  <div class="dropdown">
+                    <td>Current Trimester* : </td>
+                      <td><select name="dropdown">
+                        <option  value="Select">--select--</option>
+                        <option  value="na">  Non Applicable  </option>
+                        <option  value="sem1">  Trimester I  </option>
+                        <option  value="sem2">  Trimester II  </option>
+                        <option  value="sem2">  Trimester III  </option>
+                        <option  value="sem2">  Trimester IV  </option>
+                         </select>
+                      </td>
+                  </div>
+                </div>
+              </div>
+            -->
+
+              <div class="form-group">
+                <div class="right-inner-addon">
+                  <input class="form-control input-sm" placeholder="Password*" type="password">
                 </div>
               </div>
               <div class="form-group">
                 <div class="right-inner-addon">
-                  <input class="form-control input-sm" placeholder="Password" type="password">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="right-inner-addon">
-                  <input class="form-control input-sm" placeholder="Confirm Password" id="" type="password">
+                  <input class="form-control input-sm" placeholder="Confirm Password*" id="" type="password">
                 </div>
               </div>
             </fieldset>
@@ -155,6 +224,12 @@
                 <div class="right-inner-addon">
                   <i class="fa fa-key"></i>
                   <input class="form-control input-lg" placeholder="Password" type="password">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="right-inner-addon">
+                  <input type="checkbox" name="persist" value="1"/>
+                    <span>Keep me signed</span></label></td>
                 </div>
               </div>
             </fieldset>
