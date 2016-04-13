@@ -48,7 +48,7 @@ public class ProfileUpdateServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		String name = (String) session.getAttribute("user_name_login");
-		  session.setAttribute("name", name);
+		  request.setAttribute("name", name);
 		if(session != null && null != session.getAttribute("emailId")){
 			String eMailId = (String) session.getAttribute("emailId");
 	        String userType = (String) session.getAttribute("role");

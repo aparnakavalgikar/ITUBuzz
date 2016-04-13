@@ -38,6 +38,7 @@ public class GetAnstoQueServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(true);
 		String question_id = request.getParameter("question_id");
+		
 		question_data = new QuestionVO();
 		question_data = RetrieveQaforumDAO.retrieveQueData(Integer.parseInt(question_id));
 		

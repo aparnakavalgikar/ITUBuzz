@@ -37,7 +37,7 @@ public class FetchProfileServlet extends HttpServlet {
 		  if(session != null && null != session.getAttribute("emailId")){
 			  String eMail = (String) session.getAttribute("emailId");
 			  String name = (String) session.getAttribute("name");
-			  session.setAttribute("name", name);
+			  request.setAttribute("name", name);
 			  Map < String, String > user = null;
 			
 			  if (FetchProfileDetailsDAO.fetchProfile(eMail)) {

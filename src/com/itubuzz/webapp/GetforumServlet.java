@@ -39,12 +39,12 @@ public class GetforumServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         String name = null;
         String loggedInUserId = request.getParameter("loggedInUser");
-        if(session.getAttribute("name")!=null){
-        name =  session.getAttribute("name").toString();
+        if(session.getAttribute("log_user_name")!=null){
+        name =  session.getAttribute("log_user_name").toString();
         }
-        System.out.println("setting name in knowledge forum for navigation : "+name);
-		 session.setAttribute("session_name", name);
-        
+        System.out.println("setting name in get forum servlet forum for navigation : "+name);
+		 session.setAttribute("log_user_name", name);
+		 session.setAttribute("logged_user_id", loggedInUserId);
         all_question_data = new ArrayList<QuestionVO>();
         all_question_data = RetrieveQaforumDAO.retrieveQueData();
 		

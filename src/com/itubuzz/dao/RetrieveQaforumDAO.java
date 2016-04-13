@@ -42,6 +42,7 @@ public class RetrieveQaforumDAO {
 	            q.question_id = rs.getInt(1);
 	            q.question_text = rs.getString(2);
 	            q.log_user_id=rs.getInt(3);
+	            q.log_user_name=rs.getString(4);
 	                              
 	            q_list.add(q);	        
 	        }
@@ -102,7 +103,8 @@ public class RetrieveQaforumDAO {
 	        {
 	            q.question_id = rs.getInt(1);
 	            q.question_text = rs.getString(2);
-	            q.log_user_id=rs.getInt(3);             
+	            q.log_user_id=rs.getInt(3);    
+	            q.log_user_name=rs.getString(4);
 	        }
 	        
 	    } catch (Exception e) {  
@@ -161,7 +163,8 @@ public class RetrieveQaforumDAO {
 	        {
 	            q.question_id = rs.getInt(1);
 	            q.question_text = rs.getString(2);
-	            q.log_user_id=rs.getInt(3);             
+	            q.log_user_id=rs.getInt(3);
+	            q.log_user_name=rs.getString(4);
 	        }
 	        
 	    } catch (Exception e) {  
@@ -224,6 +227,7 @@ public class RetrieveQaforumDAO {
 	            	a.immparent_id = rs.getLong(3);
 	            	a.question_id = rs.getInt(4);
 	            	a.log_user_id = rs.getInt(5);
+	            	a.log_user_name = rs.getString(6);
 	            		            	
 	            	a_list.add(a);
 	            }
@@ -289,6 +293,7 @@ public class RetrieveQaforumDAO {
 	            	a.immparent_id = rs.getLong(3);
 	            	a.question_id = rs.getInt(4);
 	            	a.log_user_id = rs.getInt(5);
+	            	a.log_user_name = rs.getString(6);
 	            		            	
 	            	a_list.add(a);
 	            }

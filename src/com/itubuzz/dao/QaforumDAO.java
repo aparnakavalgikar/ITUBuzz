@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class QaforumDAO {
 
-	public static boolean forumdataCred(String question_text,String user_id  ) {
+	public static boolean forumdataCred(String question_text,String user_id,String user_name  ) {
 		// TODO Auto-generated method stub
 		 boolean status = false;  
 	        Connection conn = null;  
@@ -28,10 +28,11 @@ public class QaforumDAO {
 	                    .getConnection(DB_URL, userName, password);  
 	  
 	            ps=conn.prepareStatement(  
-	            		"insert into questions(question_text, log_user_id) values(?,?)");  
+	            		"insert into questions(question_text, log_user_id,log_user_name) values(?,?,?)");  
        			  
 	            		ps.setString(1, question_text);
 	            		ps.setInt(2, userId);
+	            		ps.setString(3, user_name);
 	            		rs=ps.executeUpdate();
 	            
 	            		if(rs>0){
@@ -62,7 +63,7 @@ public class QaforumDAO {
 	        return status;  
 	}
 
-	public static boolean forumdataCred(String answer_id, String answer_text, String immparent_id, String question_id, String user_id) {
+	public static boolean forumdataCred(String answer_id, String answer_text, String immparent_id, String question_id, String user_id, String user_name) {
 		// TODO Auto-generated method stub
 		 	boolean status = false;  
 	        Connection conn = null;  
@@ -89,13 +90,14 @@ public class QaforumDAO {
 	    * edited on : 04/04/2016
 	    */
 	            ps=conn.prepareStatement(  
-	            		"insert into answers(answer_id, answer_text, immparent_id, question_id, log_user_id) values(?,?,?,?,?)");  
+	            		"insert into answers(answer_id, answer_text, immparent_id, question_id, log_user_id, log_user_name) values(?,?,?,?,?,?)");  
        			  
 	            		ps.setLong(1, answerId);
 	            		ps.setString(2, answer_text);
 	            		ps.setLong(3, immparentId);
 	            		ps.setInt(4, questionId);
 	            		ps.setInt(5, userId);	
+	            		ps.setString(6, user_name);
 	            		rs = ps.executeUpdate();
 	           
 	                    if(rs > 0){

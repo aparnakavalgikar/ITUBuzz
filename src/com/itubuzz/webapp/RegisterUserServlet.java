@@ -201,7 +201,7 @@ public class RegisterUserServlet extends HttpServlet {
         
         String name = user.getFirst_name();
         if(session!=null) { 
-        session.setAttribute("name", name);
+        request.setAttribute("name", name);
         }
         
         user.setUser_type(request.getParameter("register"));

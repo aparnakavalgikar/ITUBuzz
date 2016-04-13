@@ -48,7 +48,9 @@ public class QaforumQueServlet extends HttpServlet {
 		HttpSession session = request.getSession(false); 
 		question_text = request.getParameter("question_text");
 		String user_id = request.getParameter("log_user_id");
-		
+		String user_name = request.getParameter("log_user_name");
+		System.out.println("in QA forum question servlet user name is :"+user_name);
+		session.setAttribute("name", user_name);
 		if ( question_text.endsWith("?") ){ 
 			String[] qkeywords = {"WHAT", "WHERE", "WHY", "WHICH", "WHO", "WHOSE", "HOW", "WHEN"};
 			for (int i=0; i<qkeywords.length; i++)
@@ -70,7 +72,7 @@ public class QaforumQueServlet extends HttpServlet {
 		}*/
 		if (question) {
 			if(question_text.length()>0){
-						if(QaforumDAO.forumdataCred(question_text,user_id)){ 
+						if(QaforumDAO.forumdataCred(question_text,user_id,user_name)){ 
 							 question_data = RetrieveQaforumDAO.retrieveQueData(question_text);
 							 session.setAttribute("question_data", question_data);
 							 RequestDispatcher rd=request.getRequestDispatcher("QuestionPage.jsp");      
