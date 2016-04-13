@@ -26,7 +26,7 @@
 	<script src="./js/TextboxList.js" type="text/javascript" charset="utf-8"></script>	
 	
 <style type="text/css" media="screen">
-		.textboxlist { width: 400px; }
+		.textboxlist { width: 400px; bgcolor: #a8a69f; }
 	</style>
 	
 <script type="text/javascript">
@@ -259,8 +259,8 @@ function displayReplyTree(rootparentid, childid, reply_text, immparentid, userid
        	<a href=""> What's trending</a><br>
 		<a href="">News Feed</a><br>
 		<a href="">Related Links</a><br>
-		<a href="GetforumServlet" id="getforumdata">Knowledge Forum</a>
-		<input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute("name")%>">
+		<a href="GetforumServlet" id="getforumdata">Knowledge Forum <input type="hidden" id="log_user_name" name="log_user_name" value="<%=session.getAttribute("name")%>"></a>
+		
 		<form action="createGroup" method="post">
 	<a href="#" rel="#createGroupContainer">Create Group</a>
 	<div class="apple_overlay" id="createGroupContainer">
@@ -289,7 +289,7 @@ function displayReplyTree(rootparentid, childid, reply_text, immparentid, userid
     </td>
 
 <td width="60%"> 
-    <form name="post_form" id="post_form" action="PostDataServlet" method="post" autocomplete="off">
+    <form name="post_form" id="post_form" action="PostDataServlet" method="post">
     <div>
 		<textarea name="post_text" id="post_text" style="width:575px;align:center;height:150px;" ></textarea>
 		<br>

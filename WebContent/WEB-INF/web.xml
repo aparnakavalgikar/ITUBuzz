@@ -140,4 +140,14 @@
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/LogoutServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PostLoopServlet</display-name>
+    <servlet-name>PostLoopServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.PostLoopServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PostLoopServlet</servlet-name>
+    <url-pattern>/PostLoopServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

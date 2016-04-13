@@ -75,6 +75,15 @@ function currentStudentCheck() {
                       <span style="color:#ccc;">Keep me signed</span></label></td>
                   <td><label><a href="ResetPassword.jsp" style="color:#ccc;">Forgot your password?</a></label></td>
                 </tr>
+                
+               <tr>
+                <%    
+ if(null!=request.getAttribute("errorMessageLogin")){
+	 out.println(request.getAttribute("errorMessageLogin"));
+ }
+ %> 
+               
+               </tr>
               </table>
             </form>
           </div>
