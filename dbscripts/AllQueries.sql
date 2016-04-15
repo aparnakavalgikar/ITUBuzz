@@ -18,7 +18,8 @@ create table questions
 (
 question_id int not null primary key auto_increment,
 question_text longtext,
-log_user_id int not nulls,
+log_user_id int not null,
+
 log_user_name varchar(30) not null
 );
 
