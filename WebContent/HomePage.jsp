@@ -5,8 +5,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="style.css" type="text/css" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> ITUBuzz - Your ITU Social Network </title>
+  <link rel="stylesheet" href="style.css" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="dist/css/paper.min.css">
+  <link rel="stylesheet" href="css/demo.css">
+  <link rel="stylesheet" href="css/timeline.css">
+  <script type="text/javascript" src="dist/js/vendor/jquery.min.js"></script>
+  <script type="text/javascript" src="dist/js/paper.min.js"></script>
+  <script type="text/javascript" src="js/handlebars-v2.0.0.js"></script>
+  <script type="text/javascript" src="js/jquery.autosize.min.js"></script>
+  <script type="text/javascript" src="js/timeline.js"></script>
+
+
 <title>ITUBUZZ</title>
 <%
 	if(null!=request.getAttribute("errorMessage"))
@@ -14,16 +27,16 @@
         out.println(request.getAttribute("errorMessage"));
     }
 %>
-<script src="./js/jquery-1.12.2.min.js"></script>
-    <script src="./js/jquery.tools.min.js"></script>
-    <script src="./js/TextboxList.js"></script>
-	<link rel="stylesheet" type="text/css" href="./css/overlay-apple.css">
-	<link rel="stylesheet" type="text/css" href="./css/TextboxList.css">
+<script src="js/jquery-1.12.2.min.js"></script>
+    <script src="js/jquery.tools.min.js"></script>
+    <script src="js/TextboxList.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/overlay-apple.css">
+	<link rel="stylesheet" type="text/css" href="css/TextboxList.css">
 	<!-- required stylesheet for TextboxList -->
-	<link rel="stylesheet" href="./css/TextboxList.css" type="text/css" media="screen" charset=ISO-8859-1>
+	<link rel="stylesheet" href="css/TextboxList.css" type="text/css" media="screen" charset=ISO-8859-1>
 	<!-- required for TextboxList -->
-	<script src="./js/GrowingInput.js" type="text/javascript" charset="utf-8"></script>
-	<script src="./js/TextboxList.js" type="text/javascript" charset="utf-8"></script>	
+	<script src="js/GrowingInput.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/TextboxList.js" type="text/javascript" charset="utf-8"></script>	
 	
 <style type="text/css" media="screen">
 		.textboxlist { width: 400px; }
@@ -215,158 +228,300 @@ function displayReplyTree(rootparentid, childid, reply_text, immparentid, userid
 </script>  
 </head>
 
-<body >
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a id="logo" class="navbar-brand">ITUBuzz</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a id="notification" href="#" class="dropdown-toggle navbar-icons" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+            </a>
+            <ul id="notifications" class="dropdown-menu" role="menu">
+              <script id="notifications-template" type="text/x-handlebars-template">
+                <li class="dropdown-title">
+                  <h5><b>Notifications</b></h5>
+                </li>
+                {{#each notifications}}
+                <li>
+                  <a href="#">
+                    <h5><b>{{title}}</b></h5>
+                    {{{post}}}
+                  </a>
+                </li>
+                {{/each}}
+                <li>
+                  <a href="#" class="text-center">
+                    <span><b><i class="fa fa-bars"></i> More</b></span>
+                  </a>
+                </li>
+              </script>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a id="inbox" href="#" class="dropdown-toggle navbar-icons" data-toggle="dropdown">
+              <i class="fa fa-inbox"></i>
+            </a>
+            <ul id="messages" class="dropdown-menu" role="menu">
+              <script id="messages-template" type="text/x-handlebars-template">
+                <li class="dropdown-title">
+                  <h5><b>Messages</b></h5>
+                </li>
+                {{#each messages}}
+                <li>
+                  <a href="#">
+                    <h6><b>{{user}}</b></h6>
+                    {{{message}}}
+                  </a>
+                </li>
+                {{/each}}
+                <li>
+                  <a href="#" class="text-center">
+                    <span><b><i class="fa fa-bars"></i> More</b></span>
+                  </a>
+                </li>
+              </script>
+            </ul>
+          </li>
+          <li>
+            <a href="#"><img class="navbar-avatar" src="https://en.gravatar.com/userimage/23763355/e7bbf514106dc2fd9ddb4e8160a72e8c.png" alt="Profile"> Your Name </a>
+          </li>
+        </ul>
+
+        <form class="navbar-form navbar-right" role="search" id="search_form" action="SearchServlet" method="post">
+			<table align="left">
+				<tr>
+					<div class="form-group">
+						<div class="input-group">
+							<td><input type="text" class="form-control" placeholder="Search"></td>
+							<td><div class="input-group-addon"><i class="fa fa-search"></i></div></td>
+						</div>
+					</div>
+				</tr>
+				<tr>
+					<div class="form-group">
+						<div class="input-group">
+							<td ><a href="FetchProfileServlet" id="profile"><%=session.getAttribute("name")%></a> | 
+							<a href="LogOut.jsp" id="logout">Logout</a></td>
+						</div>
+					</div>
+				</tr>
+			</table>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-md-3">
+        <div class="card">
+          <div class="cover" data-fade="1500" data-duration="2500">
+            <ul class="cover-pics">
+              <li><img src="../assets/img/img-1.jpg"></li>
+              <li><img src="../assets/img/img-2.jpg"></li>
+              <li><img src="../assets/img/img-3.jpg"></li>
+              <li><img src="../assets/img/img-4.jpg"></li>
+              <li><img src="../assets/img/img-5.jpg"></li>
+              <li><img src="../assets/img/img-6.jpg"></li>
+              <li><img src="../assets/img/img-7.jpg"></li>
+              <li><img src="../assets/img/img-8.jpg"></li>
+            </ul>
+            <!-- This is where the profile picture will come. We need to merge code here and replace this avatar. --> 
+            <img src="https://www.digiserved.com/Images/svg/avatar_placeholder.svg" alt="user picture" class="avatar">
+          </div>
+          <div class="about">
+            <h3 class="name">User Name</h3>
+            <label id="location"><i class="fa fa-map-marker"></i> City, State</label>
+          </div>
+        </div>
+		<br>
+
+		<table width="100%">
+			<tr valign="top">
+				<td width="20%" >
+					<div class="panel panel-default">
+						<div class="panel-heading"></div>
+							<div class="panel-body">
+								<ul id="trends" class="panel-list">									
+									<a class="list-group-item" href="createGroup" rel="#createGroupContainer"><i class="fa fa-group fa-fw"></i>&nbsp; Create Group</a>
+									<div class="apple_overlay" id="createGroupContainer">
+										Create Group<br><br>
+										<div>
+											<table >
+												<tr>
+													<td align="right">Group Name: </td>
+													<td><input type="text" name="group_name" value=""/></td>
+												</tr>
+												<tr>
+													<td align="right">Members :    </td>
+													<td><div class="form_tags"><input type="text" name="members" value="" id="form_tags_input_2" autocomplete="off" style="display: none;">
+													</div></td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td><input type="submit" name="btnCreateGroup" value="Create Group"/></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+		
+									<a class="list-group-item" href="#"><i class="fa fa-link fa-fw"></i>&nbsp; Related Links</a>
+									<a class="list-group-item" href="GetforumServlet" id="knowledge"><i class="fa fa-file-text-o fa-fw"></i>&nbsp; Ask Questions</a>
+									<input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute("name")%>">
+								</ul>
+							</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+      </div>
+	<div class="col-md-6 col-md-5">
+			<div class="panel panel-default">
+			  <div id="new-micropost" class="panel-body">
+				<form role="form" name="post_form" id="post_form" action="PostDataServlet" method="post" autocomplete="off">
+				  <div class="form-group">
+					<textarea name="post_text" id="post_text" style="width:575px;align:center;height:150px;" rows="1" cols="10" class="form-control" placeholder="Share your thoughts"></textarea>
+				  </div>
+				  <button id="post" class="btn btn-success">
+					<i class="fa fa-send-o"></i> <b>Post</b>
+				  </button>
+				  <input type="hidden" name="log_user_id" id="log_user_id" value="<%=session.getAttribute("user_id")%>">
+				  <input type="hidden" name="log_user_name" id="log_user_name" value="<%=session.getAttribute("log_user_name")%>">
+				</form>
+			  </div>				
+			</div>
+			
+			<h3>Recent Activity</h3>
+			
+<%
+					@SuppressWarnings("unchecked")
+					ArrayList<PostVO> posts=(ArrayList<PostVO>)session.getAttribute("all_posts");
+					Iterator<PostVO> p_list= posts.iterator();
+		
+					while(p_list.hasNext()) {
+						PostVO p=(PostVO)p_list.next();
+%>
+				<div id="microposts" class="feed">
+					<script id="microposts-template" type="text/x-handlebars-template">
+						{{#each microposts}}
+						<div class="micropost">
+						  <div class="content">
+							<div class="avatar-content">
+							  <img src={{avatar}} alt={{avatar}}>
+							</div>
+							<div class="post-content">
+							  <span class="name">{{name}}
+							  <p style="color:blue;">Posted By : <%=p.post_user_name %></p></td>
+							  </span>
+							  <span class="username">{{username}}</span>
+							  <div class="post">{{{post}}}
+								<div id="<%= p.post_id %>" class="post" style="text-align:justify;width:575px;">
+									<p id="displaypost" align="center" style="text-align:justify;width:575px;"><%=p.post_text%></p>
+									<hr>
+									<a href="#" id="replybutton" onclick="displayReply(<%=p.post_id %>)" >Comment</a>
+									<a href="#" id="likebutton">Like</a>
+									<hr>
+									<input type="hidden" name="post_id" value="<%=p.post_id%>">
+									<input type="hidden" name="log_user_id" value="<%=p.log_user_id %>">
+									<input type ="hidden" name="reply_user_name" value="<%=p.post_user_name%>">
+								</div>   	
+							  </div>
+							</div>
+							<div class="right-content">
+							  <span>{{time}}</span>
+							</div>
+						  </div>
+						  <div class="actions">
+							<div class="actions-content">
+							  <a href="#">
+								<i class="fa fa-arrow-left"></i>
+							  </a>
+							  <a href="#">
+								<i class="fa fa-retweet"></i>
+							  </a>
+							  <a href="#">
+								<i class="fa fa-heart"></i>
+							  </a>
+							</div>
+						  </div>
+						</div>
+						{{/each}}
+					</script>
+				</div>
+	</div>
+<%
+    }
+
+					@SuppressWarnings("unchecked")
+					ArrayList<ReplyVO> replies=(ArrayList<ReplyVO>)session.getAttribute("all_replies");
+					Iterator<ReplyVO> r_list= replies.iterator();
+	
+					if (r_list.hasNext()) {
+						while (r_list.hasNext()) {
+							ReplyVO r=(ReplyVO)r_list.next();
+							Iterator<PostVO> pr_list= posts.iterator();
+    		
+							while(pr_list.hasNext()) {
+								PostVO p=(PostVO)pr_list.next();	
+
+								if ( p.post_id == r.post_id ) {
+    			
+%>
+								<script> displayReplyTree(<%= r.post_id %>, <%= r.reply_id%>, "<%= r.reply_text%>", <%= r.immparent_id %>,<%= r.log_user_id%>,"<%=r.log_reply_name%>"); </script>
+								<br />
+<%
+								} 
+							}
+						}
+					}
+%>
+		<div class="col-md-3 col-md-4">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+				<h3 class="panel-title"><b>Most Popular</b></h3>
+			  </div>
+			  <div class="panel-body">
+				<ul id="suggestions" class="panel-list">
+				  <script id="suggestions-template" type="text/x-handlebars-template">
+					{{#each suggestions}}
+					<li>
+					  <a href="#">
+						<div class="row">
+						  <div class="col-lg-3 col-md-3 col-xs-2">
+							<img src={{avatar}} alt="" class="avatar">
+						  </div>
+						  <div class="col-lg-5 col-md-5 col-xs-3">
+							<span class="name">{{name}}</span>
+							<span class="username">{{username}}</span>
+						  </div>
+						  <div class="col-lg-4 col-md-4 col-md-offset-0 col-xs-4 col-xs-offset-3">
+							<button class="btn btn-success btn-sm">
+							  Follow
+							</button>
+						  </div>
+						</div>
+					  </a>
+					</li>
+					{{/each}}
+				  </script>
+				</ul>
+			  </div>
+			</div>
+		</div>
+	</div>
+  </div>
 <input type="hidden" id="refreshed" value="no">
 <!-- header starts here -->
 
-			
-<div>
-    <div>
-      <div>
-     <div>      
-     <form id="search_form" action="SearchServlet" method="post"> 
-<table align="left">
-
-		<tr>
-		<td>ITUBUZZ</td>
-		
-		<td><input type="text" id="searchtext"></td>
-		<td><input type="button" id="searchbutton" value="Search"><br/></td>
-		
-		</tr>
-		
-</table>
-</form>
-<table align="right">
-<tr>
-			<td ><a href="FetchProfileServlet" id="profile"><%=session.getAttribute("name")%></a> | 
-			<a href="LogOut.jsp" id="logout">Logout</a></td>
-		 </tr>
-</table>
-	      </div>
-     </div>
-	</div>
-</div>
-<br>
-<br>
-<br>
-<hr />
-
-<table width="100%">
-  <tr valign="top">
-    <td width="20%" >
-    <div>
-       	<a href=""> What's trending</a><br>
-		<a href="">News Feed</a><br>
-		<a href="">Related Links</a><br>
-		<a href="GetforumServlet" id="getforumdata">Knowledge Forum</a>
-		<input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute("name")%>">
-		<form action="createGroup" method="post">
-	<a href="#" rel="#createGroupContainer">Create Group</a>
-	<div class="apple_overlay" id="createGroupContainer">
-		Create Group<br><br>
-		<div>
-			<table >
-			<tr>
-				<td align="right">Group Name: </td>
-				<td><input type="text" name="group_name" value=""/><td>
-			</tr>
-			<tr>
-				<td align="right">Members :    </td>
-				<td>		<div class="form_tags"><input type="text" name="members" value="" id="form_tags_input_2" autocomplete="off" style="display: none;">
-		</div></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td><input type="submit" name="btnCreateGroup" value="Create Group"/></td>
-			</tr>
-			</table>
-		</div>
-	</div>
-	</form> 
-		<br>
-	</div>
-    </td>
-
-<td width="60%"> 
-    <form name="post_form" id="post_form" action="PostDataServlet" method="post" autocomplete="off">
-    <div>
-		<textarea name="post_text" id="post_text" style="width:575px;align:center;height:150px;" ></textarea>
-		<br>
-		<br>
-		<input type="submit" id="postbutton" value="Post">
-		<input type="hidden" name="log_user_id" id="log_user_id" value="<%=session.getAttribute("user_id")%>">
-		<input type="hidden" name="log_user_name" id="log_user_name" value="<%=session.getAttribute("log_user_name")%>">
-		</div>
-		</form>
-	
-	
-
-
-<h3>Recent Activity</h3>
-        <table align="center" width="100%" cellpadding="5">
-         <tr>
-    
-<%
-   	@SuppressWarnings("unchecked")
-	ArrayList<PostVO> posts=(ArrayList<PostVO>)session.getAttribute("all_posts");
-    Iterator<PostVO> p_list= posts.iterator();
-    
-    while(p_list.hasNext()) {
-		PostVO p=(PostVO)p_list.next();
-%>
-</tr>
-<tr >
- <td ><p style="color:blue;">Posted By : <%=p.post_user_name %></p></td>
- </tr>
- <tr >
- <td width="60%">
- <div id="<%= p.post_id %>" class="post" style="text-align:justify;width:575px;">
-  			<p id="displaypost" align="center" style="text-align:justify;width:575px;"><%=p.post_text%></p>
-  			<hr>
-     		<a href="#" id="replybutton" onclick="displayReply(<%=p.post_id %>)" >Comment</a>
-            <a href="#" id="likebutton">Like</a>
-            <hr>
-    		<input type="hidden" name="post_id" value="<%=p.post_id%>">
-         <input type="hidden" name="log_user_id" value="<%=p.log_user_id %>">
-         <input type ="hidden" name="reply_user_name" value="<%=p.post_user_name%>">
- </div>   	
-    	<br/>
-<%
-    }
-
-   	@SuppressWarnings("unchecked")
-	ArrayList<ReplyVO> replies=(ArrayList<ReplyVO>)session.getAttribute("all_replies");
-    Iterator<ReplyVO> r_list= replies.iterator();
-    
-	
-    if (r_list.hasNext()) {
-    	while (r_list.hasNext()) {
-    		ReplyVO r=(ReplyVO)r_list.next();
-    		Iterator<PostVO> pr_list= posts.iterator();
-    		
-			while(pr_list.hasNext()) {
-				PostVO p=(PostVO)pr_list.next();	
-
-	    		if ( p.post_id == r.post_id ) {
-    			
-%>
-   	 				<script> displayReplyTree(<%= r.post_id %>, <%= r.reply_id%>, "<%= r.reply_text%>", <%= r.immparent_id %>,<%= r.log_user_id%>,"<%=r.log_reply_name%>"); </script>
-        			<br />
-<%
-       			} 
-			}
-    	}
-    }
-%>
-</td>
-<td>
-
-</td>
-</tr>
-</table>
-</tr>
-</table>
-   
 </body>
 </html>
