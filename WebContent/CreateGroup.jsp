@@ -1,20 +1,11 @@
 <html>
 	<script src="./js/jquery-1.12.2.min.js"></script>
     <script src="./js/jquery.tools.min.js"></script>
-    <script src="./js/TextboxList.js"></script>
 	<link rel="stylesheet" type="text/css" href="./css/overlay-apple.css">
 	<link rel="stylesheet" type="text/css" href="./css/TextboxList.css">
-	<!-- required stylesheet for TextboxList -->
-	<link rel="stylesheet" href="./css/TextboxList.css" type="text/css" media="screen" charset=ISO-8859-1>
-	<!-- required for TextboxList -->
 	<script src="./js/GrowingInput.js" type="text/javascript" charset="utf-8"></script>
-	<script src="./js/TextboxList.js" type="text/javascript" charset="utf-8"></script>	
+	<script src="./js/TextboxList.js" type="text/javascript" charset="utf-8"></script>
 		
-	<!-- sample initialization -->
-	
-	
-	
-	
 	<script type="text/javascript" charset="utf-8">		
 		$(function(){
 			// With custom adding keys 

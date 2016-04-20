@@ -41,7 +41,7 @@ public class ReplyDataServlet extends HttpServlet {
 		reply_text = request.getParameter("reply_text");
 		String immparent_id = request.getParameter("immparent_id");
 		String post_id = request.getParameter("log_post_id");
-		String user_id = session.getAttribute("user_id").toString();
+		String user_id = request.getParameter("log_user_id");
 		String reply_name = request.getParameter("reply_user_name");
 				
 		if(reply_text.length()>0){

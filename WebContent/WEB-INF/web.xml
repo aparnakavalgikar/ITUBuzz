@@ -77,6 +77,25 @@
     <servlet-name>CreateGroupServlet</servlet-name>
     <url-pattern>/createGroup</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>GroupPostDataServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.GroupPostDataServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GroupPostDataServlet</servlet-name>
+    <url-pattern>/GroupPostDataServlet</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <servlet-name>GroupReplyDataServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.GroupReplyDataServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GroupReplyDataServlet</servlet-name>
+    <url-pattern>/GroupReplyDataServlet</url-pattern>
+  </servlet-mapping>
+  
+  
   <servlet>
     <description></description>
     <display-name>ReplyDataServlet</display-name>
@@ -139,5 +158,15 @@
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PostLoopServlet</display-name>
+    <servlet-name>PostLoopServlet</servlet-name>
+    <servlet-class>com.itubuzz.webapp.PostLoopServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PostLoopServlet</servlet-name>
+    <url-pattern>/PostLoopServlet</url-pattern>
   </servlet-mapping>
 </web-app>

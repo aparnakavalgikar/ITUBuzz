@@ -38,15 +38,20 @@ public class GetAnstoQueServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(true);
 		String question_id = request.getParameter("question_id");
+		String log_answer_name = request.getParameter("answer_user_name");
+		String log_user_id = request.getParameter("logged_user_id");
+		System.out.println("the question id passed is : "+question_id);
 		question_data = new QuestionVO();
 		question_data = RetrieveQaforumDAO.retrieveQueData(Integer.parseInt(question_id));
 		
         all_answer_data = new ArrayList<AnswerVO>();
         all_answer_data = RetrieveQaforumDAO.retrieveAnstoQueData(Integer.parseInt(question_id));
-        
+        System.out.println("setting user's name for the reply forum in QA : "+log_answer_name);
+        System.out.println("setting the user_id for reply qa forum : "+log_user_id);
 		if(session!=null)  {
 			session.setAttribute("question_data", question_data);
-			
+			session.setAttribute("log_user_name", log_answer_name);
+			session.setAttribute("log_user_id",log_user_id);
 			if(all_answer_data != null){
 				session.setAttribute("all_answers", all_answer_data);
         	}
@@ -54,7 +59,8 @@ public class GetAnstoQueServlet extends HttpServlet {
     		RequestDispatcher rd=request.getRequestDispatcher("QuestionPage.jsp");    
     		rd.forward(request,response);
 
-        	} else	{    
+        	}
+		else	{    
             RequestDispatcher rd=request.getRequestDispatcher("QAforum.jsp");    
             rd.include(request,response);    
         }

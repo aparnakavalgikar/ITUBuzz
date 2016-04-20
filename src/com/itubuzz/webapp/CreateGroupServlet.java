@@ -52,15 +52,13 @@ public class CreateGroupServlet extends HttpServlet {
 			  String eMail = (String) session.getAttribute("emailId");
 		members = members.concat(","+eMail);
         }
-		System.out.println("the members are : "+members);
         
 		int groupId = CreateGroupDAO.createGroup(groupName);
 		
 		if(groupId != -1){
 			int numberOfRecordsCreated = CreateGroupDAO.assignUsersToGroup(groupId,members);
 			System.out.println(numberOfRecordsCreated+" users has been assigned to the group groupName");
-			request.setAttribute("success_createGroup", "Successfully created a/an "+groupName+" group with members  : "+members);
-			RequestDispatcher rd=request.getRequestDispatcher("CreateGroup.jsp");    
+			RequestDispatcher rd=request.getRequestDispatcher("GroupPage.jsp?id="+groupId+"&name="+groupName);
 			   rd.forward(request,response);
 		}
 

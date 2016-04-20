@@ -1,31 +1,23 @@
 package com.itubuzz.dao;
-/**
- * International Technological University, San Jose
- * @author Kavya
- * created on : 03/15/2016
- */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-public class EmailRetrieveDAO {
+public class GroupPostDAO {
 
-	/**
-	 * method : retrieveEMailForResetPassword(String e_mail)
-	 * @param e_mail
-	 * @return
-	 * @author Kavya
-	 */
-	public static boolean retrieveEMailForResetPassword(String e_mail){
-		
-		    boolean status = false;  
+	public static boolean postdataCred(String group_id, String post_text,String user_id,String post_user_name  ) {
+		// TODO Auto-generated method stub
+		 boolean status = false;  
 	        Connection conn = null;  
 	        PreparedStatement pst = null;  
-	        ResultSet rs = null; 
-	        String retrievedUserName = null;
-	  
+	        ResultSet rs = null;  	        
+
+	        Integer userId = Integer.parseInt((user_id));
+	        
 	        final String DB_URL="jdbc:mysql://127.0.0.1:3306/itubuzz"; 
 	        String driver = "com.mysql.jdbc.Driver";  
 	        String userName = "root";  
@@ -35,21 +27,24 @@ public class EmailRetrieveDAO {
 	            conn = DriverManager  
 	                    .getConnection(DB_URL, userName, password);  
 	  
-	            pst = conn  
-	                    .prepareStatement("select e_mail_id from userLogin where e_mail_id=?");  
-	            pst.setString(1, e_mail);  
-	            rs = pst.executeQuery();
-	            while(rs.next()){
-	            	 retrievedUserName = rs.getString("e_mail_id");
+	            PreparedStatement ps=conn.prepareStatement(  
+	            		"insert into group_posts (g_post_text, log_user_id, log_user_name,group_id) values(?,?,?,?)",Statement.RETURN_GENERATED_KEYS);  
+	            		
+	            ps.setString(1,post_text);
+	            ps.setInt(2,userId);
+	            ps.setString(3, post_user_name);
+	            ps.setInt(4, Integer.parseInt(group_id));
+	            ps.executeUpdate();
 
-	            	 }
-	            if(retrievedUserName.equals(e_mail)){
-	            	status = true;
-	            }
-	            else{
-	            	status = false;
-	            }
-	        }catch (Exception e) {  
+	            rs = ps.getGeneratedKeys();
+	            
+                if(rs != null && rs.next()){
+                    System.out.println("Generated post Id: "+rs.getInt(1));
+                    status = true;
+                }
+	      
+	  
+	        } catch (Exception e) {  
 	            System.out.println(e);  
 	        } finally {  
 	            if (conn != null) {  
@@ -76,7 +71,4 @@ public class EmailRetrieveDAO {
 	        }  
 	        return status;  
 	    } 
-		
-	
-	
 }

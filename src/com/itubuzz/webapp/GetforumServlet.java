@@ -20,7 +20,6 @@ import com.itubuzz.valueobjects.*;
 public class GetforumServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<QuestionVO> all_question_data = null;
-	private ArrayList<AnswerVO> all_answer_data = null;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,25 +38,23 @@ public class GetforumServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         String name = null;
         String loggedInUserId = request.getParameter("loggedInUser");
-        if(session.getAttribute("name")!=null){
-        name =  session.getAttribute("name").toString();
+        if(session.getAttribute("log_user_name")!=null){
+        name =  session.getAttribute("log_user_name").toString();
         }
-        System.out.println("setting name in knowledge forum for navigation : "+name);
-		 session.setAttribute("session_name", name);
-        
+        System.out.println("setting name in get forum servlet forum for navigation : "+name);
+		 session.setAttribute("log_user_name", name);
+		 session.setAttribute("logged_user_id", loggedInUserId);
         all_question_data = new ArrayList<QuestionVO>();
         all_question_data = RetrieveQaforumDAO.retrieveQueData();
 		
-        all_answer_data = new ArrayList<AnswerVO>();
-        all_answer_data = RetrieveQaforumDAO.retrieveAnsData();
+        
         
 		if(all_question_data != null){         
 			   session.setAttribute("all_questions", all_question_data);
 			   
-			   if(all_answer_data != null){
-				   session.setAttribute("all_answers", all_answer_data);
-			   }
-			   session.setAttribute("name", loggedInUserId);
+			  
+			   session.setAttribute("name", name);
+			   System.out.println("the name for answer forum to be set in qa forum : "+session.getAttribute("name"));
 			   RequestDispatcher rd=request.getRequestDispatcher("QAforum.jsp");    
 			   rd.forward(request,response);
 

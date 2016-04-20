@@ -10,6 +10,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="style.css" type="text/css" />
+
         <style>
             .loginpage {
                 background: url("loginpage.jpg") no-repeat center center fixed;   
@@ -83,16 +84,13 @@
         </style>
         <title>ITUBUZZ</title>
 
-        <% if(null!=request.getAttribute( "passwordSuccessMessage")){ out.println(request.getAttribute( "passwordSuccessMessage")); } %>
+        <% if(null!=request.getAttribute( "passwordSuccessMessage")){ 
+        	out.println(request.getAttribute( "passwordSuccessMessage"));
+        	} %>
+        	
+        	
             <script type="text/javascript">
-                var Msg = '<%=session.getAttribute("success_message")%>';
-                if (Msg != "null") {
-                    function alertName() {
-                        alert(Msg);
-                    }
-                }
-
-                window.onload = alertName;
+                
 
                 function currentStudentCheck() {
                     if (document.getElementById('student').checked) {
@@ -128,6 +126,9 @@
                     <!-- Nav tabs -->
                     <div class="text-center">
                         <div class="btn-group">
+                        
+                        
+        				<br>
                             <a href="#user" role="tab" data-toggle="tab" class="btn btn-success btn-lg active"><i class="fa fa-user"></i>Sign In</a>
                             <a href="#new" role="tab" data-toggle="tab" class="btn btn-success btn-lg"><i class="fa fa-plus"></i>Sign Up</a>
                         </div>
@@ -135,7 +136,15 @@
 					<div class="tab-content">
                     <div class="tab-pane fade in active" id="user">
                         <br>	
-                        <fieldset>
+                        <h3 style="font: italic;color :green;size:10;">
+                        <% if(null != request.getAttribute("success_message")) 
+        				{
+        					out.println(request.getAttribute("success_message"));
+        				}%>
+        				</h3>
+                        
+                        <br>
+                       <fieldset>
                         <form role="form" id="login_form" action="loginServlet" method="post">
                             <div class="form-group">
                                 <div class="right-inner-addon">
@@ -146,7 +155,7 @@
                             <div class="form-group">
                                 <div class="right-inner-addon">
                                     <i class="fa fa-key"></i>
-                                    <input class="form-control input-lg" placeholder="Password" type="password" tabindex="2" id="pass"  name="login_password">
+                                    <input class="form-control input-lg" placeholder="Password" type="password" tabindex="2" id="pass"  name="login_password" maxlength="20">
                                     <label class="forgot"><a href="/jsp/ResetPassword.jsp">forgot password?</a>
                                     </label>
                                 </div>
@@ -161,34 +170,112 @@
 
                     <div class="tab-pane fade" id="new">
                         <br>
+                        
+                                				
+        				<h3 style="font: italic;color:red">
+        				<%
+        				if(null != request.getAttribute("errorMessageLogin")) 
+        				{
+        					out.println(request.getAttribute("errorMessageLogin"));
+        				}
+        				if(null != request.getAttribute("errorMessage")) 
+        				{
+        					out.println(request.getAttribute("errorMessage"));
+        				}
+        				
+        				
+        				if(null!=request.getAttribute( "errorMessageNames"))
+        				{ 
+        					out.println(request.getAttribute( "errorMessageNames")); 
+        				}
+        				
+        				if(null!=request.getAttribute( "errorMessageMiddleName"))
+        				{ 
+        					out.println(request.getAttribute( "errorMessageMiddleName")); 
+        			    }
+        				
+        				
+        				if(null!=request.getAttribute( "errorMessageDate"))
+        				{ 
+        					out.println(request.getAttribute( "errorMessageDate")); 
+        			    }
+        				
+        				if(null!=request.getAttribute( "errorMessageMail")) 
+        				{ 
+        					out.println(request.getAttribute( "errorMessageMail")); 
+        					
+        				}
+        				
+        				if(null!=request.getAttribute( "errorMessageStudentPassword"))
+        				{ 
+        					out.println(request.getAttribute( "errorMessageStudentPassword")); 
+        				}
+        				
+        				if(null!=request.getAttribute( "errorMessageStudentDept")) 
+        				{ 
+        					out.println(request.getAttribute( "errorMessageStudentDept")); 
+        				}
+        				
+        				if(null!=request.getAttribute( "errorMessageSem"))
+        				{ 
+        					out.println(request.getAttribute( "errorMessageSem")); 
+        				}
+        				
+        				if(null!=request.getAttribute( "errorMessageAlumniMail"))
+        				{ 
+        					out.println(request.getAttribute( "errorMessageAlumniMail")); 
+        				}
+        				
+        				if(null!=request.getAttribute( "errorMessageAlumniPassword"))
+        				{
+        					out.println(request.getAttribute( "errorMessageAlumniPassword"));
+        				}
+        				
+        				if(null!=request.getAttribute( "errorMessageAlumniDept")) 
+        				{ 
+        					out.println(request.getAttribute( "errorMessageAlumniDept"));
+        				}
+        				
+        				if(null!=request.getAttribute( "errorMessageYOP"))
+        				{ 
+        					out.println(request.getAttribute( "errorMessageYOP"));
+        				}
+        				
+        				if(null!=request.getAttribute( "errorMessageFacultyMail")) 
+        				{
+        					out.println(request.getAttribute( "errorMessageFacultyMail"));
+        			    }
+        				
+        				if(null!=request.getAttribute( "errorMessageFacultyPassword"))
+        				{ 
+        					out.println(request.getAttribute( "errorMessageFacultyPassword"));
+        				}
+        				
+        				if(null!=request.getAttribute( "errorMessageFacultyDept"))
+        				{ 
+        					out.println(request.getAttribute( "errorMessageFacultyDept")); 
+        				}
+        				
+        				%>
+        				
+        				
+        				</h3>
+        				
+        				<br>
+                        
                         <h4 class="title">Not a member? Create account!</h4>
                         <fieldset>
                             <form role="form" class="form-group text-center" id="register_form" action="RegisterUserServlet" method="post">
                                 <table align="center" border="0" cellspacing="5">
-                                    <tr>
-                                        <div class="form-group">
-                                            <div class="right-inner-addon">
-                                                <td>
-                                                    <p style="font: italic;color: red;">
-                                                        <%if(null!=request.getAttribute( "errorMessage")) { out.println(request.getAttribute( "errorMessage")); } %>
-                                                    </p>
-                                                </td>
-                                            </div>
-                                        </div>
-
-                                    </tr>
+                                   
                                     <tr>
 					                    <div class="form-group">
                                             <div class="right-inner-addon">
 												<td>First Name*:</td>
 												<td>
-													<input type="text" class="form-control input-sm" name="first_name" id="first_name" maxlength="15" />
+													<input type="text" class="form-control input-sm" name="first_name" id="first_name" maxlength="20" />
 												</td>
-												<td>
-													<p style="font: italic;color: red;">
-														<%if(null!=request.getAttribute( "errorMessageNames")) { out.println(request.getAttribute( "errorMessageNames")); } %>
-													</p>
-												</td>
+												
 											</div>
 										</div>
 									</tr>
@@ -198,14 +285,9 @@
 
 												<td>Middle Name:</td>
 												<td>
-													<input type="text" class="form-control input-sm" name="middle_name" id="middle_name" maxlength="15" />
+													<input type="text" class="form-control input-sm" name="middle_name" id="middle_name" maxlength="20" />
 												</td>
-												<td>
-													<p style="font: italic;color: red;">
-														<%if(null!=request.getAttribute( "errorMessageMiddleName")) { out.println(request.getAttribute( "errorMessageMiddleName")); } %>
-													</p>
-												</td>
-											</div>
+										   </div>
 										</div>
 									</tr>
                 
@@ -215,13 +297,9 @@
 
 												<td>Last Name*:</td>
 												<td>
-													<input type="text" class="form-control input-sm" name="last_name" id="last_name" maxlength="15" />
+													<input type="text" class="form-control input-sm" name="last_name" id="last_name" maxlength="20" />
 												</td>
-												<td>
-													<p style="font: italic;color: red;">
-														<%if(null!=request.getAttribute( "errorMessageNames")) { out.println(request.getAttribute( "errorMessageNames")); } %>
-													</p>
-												</td>
+											
 											</div>
 										</div>
 									</tr>
@@ -397,11 +475,6 @@
 															<option value="1905">1905</option>
 														</select>
 													</td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageDate")) { out.println(request.getAttribute( "errorMessageDate")); } %>
-														</p>
-													</td>
 											</div>
 										</div>
 									</tr>
@@ -427,12 +500,8 @@
 
 													<td>E-mail id*:</td>
 													<td>
-														<input type="text" class="form-control input-sm" name="e_mail_id_student" id="e_mail_id_student" placeholder="sample@itu.com" /> </td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageMail")) { out.println(request.getAttribute( "errorMessageMail")); } %>
-														</p>
-													</td>
+														<input type="text" class="form-control input-sm" name="e_mail_id_student" id="e_mail_id_student" placeholder="sample@students.itu.edu" />
+														 </td>
 												</div>
 											</div>
 										</tr>
@@ -443,18 +512,14 @@
 													<td>
 														<input type="password" class="form-control input-sm" name="new_password_student" id="new_password_student" maxlength="20" />
 													</td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageStudentPassword")) { out.println(request.getAttribute( "errorMessageStudentPassword")); } %>
-														</p>
-													</td>
+													
 												</div>
 											</div>
 										</tr>
 										<tr>
 											<div class="form-group">
 												<div class="right-inner-addon">
-													<td>Confirm Password*:</td>
+													<td>Re-enter Password*:</td>
 													<td>
 														<input type="password" class="form-control input-sm" name="re_enter_password_student" id="re_enter_password_student" maxlength="20" />
 													</td>
@@ -476,11 +541,7 @@
 															<option value="MBA">Masters of Business Administration</option>
 														</select>
 													</td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageStudentDept")) { out.println(request.getAttribute( "errorMessageStudentDept")); } %>
-														</p>
-													</td>
+													
 												</div>
 											</div>
 										</tr>
@@ -496,11 +557,6 @@
 															<option value="sem3"> Trimester III </option>
 															<option value="sem4"> Trimester IV </option>
 														</select>
-													</td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageSem")) { out.println(request.getAttribute( "errorMessageSem")); } %>
-														</p>
 													</td>
 												</div>
 											</div>
@@ -519,11 +575,7 @@
 													<td>
 														<input type="text" class="form-control input-sm" name="e_mail_id_alumni" id="e_mail_id_alumni" placeholder="sample@example.com" />
 													</td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageAlumniMail")) { out.println(request.getAttribute( "errorMessageAlumniMail")); } %>
-														</p>
-													</td>
+													
 												</div>
 											</div>
 										</tr>
@@ -532,13 +584,9 @@
 												<div class="right-inner-addon">
 													<td>New Password* :</td>
 													<td>
-														<input type="password" class="form-control input-sm" name="new_password_alumni" id="new_password_alumni" />
+														<input type="password" class="form-control input-sm" name="new_password_alumni" id="new_password_alumni" maxlength="20"/>
 													</td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageAlumniPassword")) { out.println(request.getAttribute( "errorMessageAlumniPassword")); } %>
-														</p>
-													</td>
+													
 												</div>
 											</div>
 										</tr>
@@ -547,7 +595,7 @@
 												<div class="right-inner-addon">
 													<td>Re-enter Password* :</td>
 													<td>
-														<input type="password" class="form-control input-sm" name="re_enter_password_alumni" id="re_enter_password_alumni" />
+														<input type="password" class="form-control input-sm" name="re_enter_password_alumni" id="re_enter_password_alumni" maxlength="20" />
 													</td>
 												</div>
 											</div>
@@ -567,11 +615,7 @@
 															<option value="MBA">Masters of Business Administration</option>
 														</select>
 													</td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageAlumniDept")) { out.println(request.getAttribute( "errorMessageAlumniDept")); } %>
-														</p>
-													</td>
+													
 												</div>
 											</div>
 										</tr>
@@ -711,11 +755,7 @@
 															<option value="1905">1905</option>
 														</select>
 													</td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageYOP")) { out.println(request.getAttribute( "errorMessageYOP")); } %>
-														</p>
-													</td>
+													
 												</div>
 											</div>
 										</tr>
@@ -730,14 +770,9 @@
 												<div class="right-inner-addon">
 													<td>E-mail id* :</td>
 													<td>
-														<input type="text" class="form-control input-sm" name="e_mail_id_faculty" id="e_mail_id_faculty" placeholder="sample@itu.com" />
+														<input type="text" class="form-control input-sm" name="e_mail_id_faculty" id="e_mail_id_faculty" placeholder="sample@itu.edu" />
 													</td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageFacultyMail")) { out.println(request.getAttribute( "errorMessageFacultyMail")); } %>
-														</p>
-													</td>
-												</div>
+										      </div>
 											</div>
 										</tr>
 										<tr>
@@ -745,12 +780,7 @@
 												<div class="right-inner-addon">
 													<td>New Password* :</td>
 													<td>
-														<input type="password" class="form-control input-sm" name="new_password_faculty" id="new_password_faculty" />
-													</td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageFacultyPassword")) { out.println(request.getAttribute( "errorMessageFacultyPassword")); } %>
-														</p>
+														<input type="password" class="form-control input-sm" name="new_password_faculty" id="new_password_faculty" maxlength="20"/>
 													</td>
 												</div>
 											</div>
@@ -760,7 +790,7 @@
 												<div class="right-inner-addon">
 													<td>Re-enter Password* :</td>
 													<td>
-														<input type="password" class="form-control input-sm" name="re_enter_password_faculty" id="re_enter_password_faculty" />
+														<input type="password" class="form-control input-sm" name="re_enter_password_faculty" id="re_enter_password_faculty" maxlength="20"/>
 													</td>
 												</div>
 											</div>
@@ -783,11 +813,6 @@
 															<option value="ISO">International Students Office</option>
 															<option value="Library">Library</option>
 														</select>
-													</td>
-													<td>
-														<p style="font: italic;color: red;">
-															<%if(null!=request.getAttribute( "errorMessageFacultyDept")) { out.println(request.getAttribute( "errorMessageFacultyDept")); } %>
-														</p>
 													</td>
 												</div>
 											</div>

@@ -7,8 +7,27 @@ public class AnswerVO {
 		public long immparent_id;
 		public int question_id;
 		public int log_user_id;
-	
+		public String log_user_name;
+		public long answer_number;
 		
+		
+	
+		public long getAnswer_number() {
+			return answer_number;
+		}
+
+		public void setAnswer_number(long answer_number) {
+			this.answer_number = answer_number;
+		}
+
+		public String getLog_user_name() {
+			return log_user_name;
+		}
+
+		public void setLog_user_name(String log_user_name) {
+			this.log_user_name = log_user_name;
+		}
+
 		public long getanswer_id() {
 			return answer_id;
 		}

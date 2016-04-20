@@ -42,6 +42,7 @@ public class RetrieveQaforumDAO {
 	            q.question_id = rs.getInt(1);
 	            q.question_text = rs.getString(2);
 	            q.log_user_id=rs.getInt(3);
+	            q.log_user_name=rs.getString(4);
 	                              
 	            q_list.add(q);	        
 	        }
@@ -102,7 +103,8 @@ public class RetrieveQaforumDAO {
 	        {
 	            q.question_id = rs.getInt(1);
 	            q.question_text = rs.getString(2);
-	            q.log_user_id=rs.getInt(3);             
+	            q.log_user_id=rs.getInt(3);    
+	            q.log_user_name=rs.getString(4);
 	        }
 	        
 	    } catch (Exception e) {  
@@ -161,7 +163,8 @@ public class RetrieveQaforumDAO {
 	        {
 	            q.question_id = rs.getInt(1);
 	            q.question_text = rs.getString(2);
-	            q.log_user_id=rs.getInt(3);             
+	            q.log_user_id=rs.getInt(3);
+	            q.log_user_name=rs.getString(4);
 	        }
 	        
 	    } catch (Exception e) {  
@@ -218,12 +221,13 @@ public class RetrieveQaforumDAO {
 	            while(rs.next())
 	            {
 	            	AnswerVO a = new AnswerVO();
-	            	
-	            	a.answer_id = rs.getLong(1);
-	            	a.answer_text = rs.getString(2);
-	            	a.immparent_id = rs.getLong(3);
-	            	a.question_id = rs.getInt(4);
-	            	a.log_user_id = rs.getInt(5);
+	            	a.answer_number = rs.getLong(1);
+	            	a.answer_id = rs.getLong(2);
+	            	a.answer_text = rs.getString(3);
+	            	a.immparent_id = rs.getLong(4);
+	            	a.question_id = rs.getInt(5);
+	            	a.log_user_id = rs.getInt(6);
+	            	a.log_user_name = rs.getString(7);
 	            		            	
 	            	a_list.add(a);
 	            }
@@ -283,12 +287,13 @@ public class RetrieveQaforumDAO {
 	            while(rs.next())
 	            {
 	            	AnswerVO a = new AnswerVO();
-	            	
-	            	a.answer_id = rs.getLong(1);
-	            	a.answer_text = rs.getString(2);
-	            	a.immparent_id = rs.getLong(3);
-	            	a.question_id = rs.getInt(4);
-	            	a.log_user_id = rs.getInt(5);
+	            	a.answer_number = rs.getLong(1);
+	            	a.answer_id = rs.getLong(2);
+	            	a.answer_text = rs.getString(3);
+	            	a.immparent_id = rs.getLong(4);
+	            	a.question_id = rs.getInt(5);
+	            	a.log_user_id = rs.getInt(6);
+	            	a.log_user_name = rs.getString(7);
 	            		            	
 	            	a_list.add(a);
 	            }

@@ -37,11 +37,13 @@ public class FetchProfileServlet extends HttpServlet {
 		  if(session != null && null != session.getAttribute("emailId")){
 			  String eMail = (String) session.getAttribute("emailId");
 			  String name = (String) session.getAttribute("name");
-			  session.setAttribute("name", name);
+			  request.setAttribute("name", name);
 			  Map < String, String > user = null;
 			
 			  if (FetchProfileDetailsDAO.fetchProfile(eMail)) {
 				   user = FetchProfileDetailsDAO.UserDetails();
+				   Long user_id = Long.parseLong(user.get("user_id"));
+				   session.setAttribute("logged_user_id", user_id);
 				   session.setAttribute("firstName", user.get("firstName"));
 				   session.setAttribute("middleName", user.get("middleName"));
 				   session.setAttribute("lastName", user.get("lastName"));

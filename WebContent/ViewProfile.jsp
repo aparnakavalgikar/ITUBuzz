@@ -3,8 +3,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
    <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-      <title>ITUBUZZ</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title> ITUBuzz - Your ITU Social Network </title>
+	<script src="./js/jquery-1.12.2.min.js"></script>
+	<script src="./js/jquery.tools.min.js"></script>
+	<script src="./js/TextboxList.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/overlay-apple.css">
+	<link rel="stylesheet" type="text/css" href="./css/TextboxList.css">
+	<!-- required stylesheet for TextboxList -->
+	<link rel="stylesheet" href="./css/TextboxList.css" type="text/css" media="screen" charset=ISO-8859-1>
+	<!-- required for TextboxList -->
+	<script src="./js/GrowingInput.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/TextboxList.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="dist/css/paper.min.css">
+	<link rel="stylesheet" href="css/demo.css">
+	<link rel="stylesheet" href="css/timeline.css">
+	<script type="text/javascript" src="dist/js/vendor/jquery.min.js"></script>
+	<script type="text/javascript" src="dist/js/paper.min.js"></script>
+	<script type="text/javascript" src="js/handlebars-v2.0.0.js"></script>
+	<script type="text/javascript" src="js/jquery.autosize.min.js"></script>
+	<script type="text/javascript" src="js/timeline.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
       <script type="text/javascript">
          function currentUserTypeCheck() {
@@ -253,98 +275,81 @@
          
       </script>
    </head>
-   <body>
-  <div>
-    <div>
-      <div>
-     <div>      
-     <form id="search_form" action="SearchServlet" method="post"> 
-<table align="left">
+<input type="hidden" id="refreshed" value="no">
 
-		<tr>
-		<td>ITUBUZZ</td>
-		
-		<td><input type="text" id="searchtext"></td>
-		<td><input type="button" id="searchbutton" value="Search"><br/></td>
-		
-		</tr>
-		
-</table>
-</form>
-<table align="right">
-<tr>
-			<td ><a href="HomePage.jsp" id="profile">Home</a> | 
-			<a href="LogOut.jsp" id="logout">Logout</a></td>
-		 </tr>
-</table>
-	      </div>
-     </div>
-	</div>
-</div>
-<br>
-<br>
-<br>
-<hr />
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a id="logo" class="navbar-brand"><img class="logoimage" src="logo.png"></a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+		  <li>
+			<a href="PostLoopServlet?log_user_id=<%=session.getAttribute("user_id")%>" id="postloop" class="btn btn-info btn-lg">
+			<span class="glyphicon glyphicon-home"></span> Home
+			<input type="hidden" name="home_name" id="home_name"  value="<%=request.getAttribute("home_name")%>">
+			</a>
+		  </li>
+          <li>
+            <a href="FetchProfileServlet" id="profile"><img class="navbar-avatar" src="https://en.gravatar.com/userimage/23763355/e7bbf514106dc2fd9ddb4e8160a72e8c.png" alt="Profile"> 
+			<br /> <%=session.getAttribute("log_user_name")%> </a>
+          </li>
+		  <li><a href="LoginAndRegister.jsp" id="logout"><span class="glyphicon glyphicon-log-out"></span></a></li>    
+        </ul>
 
-      <br>
-      <br>
-      <br>
-     <table width="100%">
-  <tr valign="top">
-    <td width="20%" >
-    <div>
-       	<a href=""> What's trending</a><br>
-		<a href="CreateGroup.jsp">Create Group</a><br>
-		<a href="">News Feed</a><br>
-		<a href="">Related Links</a><br>
-		<a href="GetforumServlet" id="getforumdata">Knowledge Forum</a><br>
-	</div>
-    </td>
-
-<td>  
-     
-      <form name ="myForm"  action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
-         <table border="0" align="center">
-            <tr>
-               <td>
-                  <input type="hidden" id="role_hidden" name="user_type" size="20" value=<%=session.getAttribute("role")%>>
-                  <input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute("firstName")%>"> 
-               </td>
-            </tr>
-         </table>
-         <br>
-         <br>
-         <div id ="errors">
-         </div>
-         <div id= "student1" style="display:none" class="profilebox">
-            <table align="center">
-               <tr>
-                  <td>Profile Photo:</td>
-                  <td>
-                     <input type="button" value="Upload" id="upload" name ="upload" style='visibility: hidden;' onclick ="fileopen()">
-                     <input type="file" name="photo" id="photo" size="50" style='visibility: hidden;' onchange="readURL(this);" >
-                     <img name="profilepic" id="profilepic" alt="ProfileImage" align="left" src="${pageContext.request.contextPath}/images/${eMailId}" width="160" height="160">
-                  </td>
-               </tr>
-               <tr>
-                  <td >First Name* :</td>
-                  <td><input type="text" name="first_name" id="first_name" size="20" value=<%=session.getAttribute("firstName")%>></td>
-               </tr>
-               <tr>
-                  <td>Middle Name : </td>
-                  <td><input type="text" name="middle_name" id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>></td>
-               </tr>
-               <tr>
-                  <td>Last Name* :</td>
-                  <td> <input type="text" name="last_name" id="last_name" value=<%=session.getAttribute("lastName")%>></td>
-               </tr>
-               <tr>
-                  <td>E-mail id* :</td>
-                  <td> <input type="text" id="eMailId" name="e_mail_id" value=<%=session.getAttribute("eMailId")%>></td>
-               </tr>
-               <tr align="left">
-                  <td>Date of Birth :</td>
-                  <td >
+        <form class="navbar-form navbar-right" role="search" id="search_form" action="SearchServlet" method="post">
+			<div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Search">
+					<div class="input-group-addon"><i class="fa fa-search"></i></div>
+				</div>
+			</div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-md-3">
+        <div class="card">
+		<form role="form" name ="myForm"  action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
+		<div id= "student1" style="display:none" class="profilebox">
+		     <input type="hidden" id="role_hidden" name="user_type" size="20" value=<%=session.getAttribute("role")%>>
+             <input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute("firstName")%>">         
+          <div class="cover" data-fade="1500" data-duration="2500">
+            <ul class="cover-pics">
+              <li><img src="../assets/img/img-1.jpg"></li>
+              <li><img src="../assets/img/img-2.jpg"></li>
+              <li><img src="../assets/img/img-3.jpg"></li>
+              <li><img src="../assets/img/img-4.jpg"></li>
+              <li><img src="../assets/img/img-5.jpg"></li>
+              <li><img src="../assets/img/img-6.jpg"></li>
+              <li><img src="../assets/img/img-7.jpg"></li>
+              <li><img src="../assets/img/img-8.jpg"></li>
+            </ul>
+            <!-- This is where the profile picture will come. We need to merge code here and replace this avatar. --> 
+			
+			 <input type="button" value="Upload" id="upload" name ="upload" style='visibility: hidden;' onclick ="fileopen()">
+			 <input type="file" name="photo" id="photo" size="50" style='visibility: hidden;' onchange="readURL(this);" >
+			 <img name="profilepic" id="profilepic" alt="ProfileImage" align="left" src="${pageContext.request.contextPath}/images/${eMailId}" width="160" height="160" alt="user picture" class="avatar">
+          </div>
+          <div class="about">
+                  <h3 class="name">First Name* :</h3>
+				  <label> <input type="text" name="first_name" id="first_name" size="20" value=<%=session.getAttribute("firstName")%>> </label>               
+                  <h4 class="name">Middle Name :</h4>
+                  <label><input type="text" name="middle_name" id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>> </label>
+                  <h4 class="name">Last Name* :</h4>
+                  <label><input type="text" name="last_name" id="last_name" value=<%=session.getAttribute("lastName")%>> </label>
+                  <h4 class="email">E-mail id* :</h4>
+                  <label><input type="text" id="eMailId" name="e_mail_id" value=<%=session.getAttribute("eMailId")%>> </label>
+				  <h4 class="email">Date of Birth :</h4>
+				  <label>
                      <select name="day_of_month" id="day_of_month">
                         <option value="00" selected>Day</option>
                         <option value ="01">01</option>
@@ -509,11 +514,9 @@
                         <option value="1906">1906</option>
                         <option value="1905">1905</option>
                      </select>
-                  </td>
-               </tr>
-               <tr>
-                  <td>Department* : </td>
-                  <td>
+                  </label>
+				  <h4 class="email">Department* :</h4>
+				  <label>
                      <select  name="department" id="dept" >
                         <option  value="Select">--select--</option>
                         <option  value="Software">MS in Software Engineering</option>
@@ -523,11 +526,9 @@
                         <option  value="IntSc">MS in Interdisciplinary Science</option>
                         <option  value="MBA">Masters of Business Administration</option>
                      </select>
-                  </td>
-               </tr>
-               <tr>
-                  <td>Current Trimester* : </td>
-                  <td>
+				  </label>
+                  <h4 class="email">Current Trimester* :</h4>
+				  <label>
                      <select name="semester" id="sem">
                         <option  value="Select">--select--</option>
                         <option  value="sem1">  Trimester I  </option>
@@ -535,47 +536,43 @@
                         <option  value="sem3">  Trimester III  </option>
                         <option  value="sem4">  Trimester IV  </option>
                      </select>
-                  </td>
-               </tr>
-            </table>
-            <br>
-            <center>
-               <input type="submit" name="save" id="save" value="Save"/>
-               <input type="button" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
-               <input type="button" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
-            </center>
-         </div>
-         </form>
-         <form name ="myForm"  action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
-         <div id= "alumni1" style="display:none" class="profilebox">
-            <table align="center" >
-               <tr>
-                  <td>Profile Photo:</td>
-                  <td>
+				  </label>
+				  <br>
+				<center>
+					<input type="submit" name="save" id="save" value="Save"/>
+					<input type="button" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
+					<input type="button" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
+				</center>
+			</div>
+		</div>
+		</form>
+			<form role="form" name ="myForm"  action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
+				<div id= "alumni1" style="display:none" class="profilebox">
+		          <div class="cover" data-fade="1500" data-duration="2500">
+					<ul class="cover-pics">
+					  <li><img src="../assets/img/img-1.jpg"></li>
+					  <li><img src="../assets/img/img-2.jpg"></li>
+					  <li><img src="../assets/img/img-3.jpg"></li>
+					  <li><img src="../assets/img/img-4.jpg"></li>
+					  <li><img src="../assets/img/img-5.jpg"></li>
+					  <li><img src="../assets/img/img-6.jpg"></li>
+					  <li><img src="../assets/img/img-7.jpg"></li>
+					  <li><img src="../assets/img/img-8.jpg"></li>
+					</ul>
                      <input type="button" value="Upload" id="upload" name="upload" style='visibility: hidden;'  onclick ="fileopen()">
                      <input type="file" name="photo" id="photo" size="50" style='visibility: hidden;' onchange="readURL(this);">
                      <img name="profilepic" alt="ProfileImage" align="left" src="${pageContext.request.contextPath}/images/${eMailId}" width="160" height="160">
-                  </td>
-               </tr>
-               <tr>
-                  <td >First Name* :</td>
-                  <td><input type="text" name="first_name" id ="first_name" size="20" value=<%=session.getAttribute("firstName")%>></td>
-               </tr>
-               <tr>
-                  <td>Middle Name : </td>
-                  <td><input type="text" name="middle_name" id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>></td>
-               </tr>
-               <tr>
-                  <td>Last Name* :</td>
-                  <td> <input type="text" name="last_name" id="last_name" value=<%=session.getAttribute("lastName")%>></td>
-               </tr>
-               <tr>
-                  <td>E-mail id* :</td>
-                  <td> <input type="text" id = "eMailId" name="e_mail_id" value=<%=session.getAttribute("eMailId")%>></td>
-               </tr>
-               <tr align="left">
-                  <td>Date of Birth :</td>
-                  <td >
+				  </div>
+                  <h3 class="name">First Name* :</h3>
+				  <label> <input type="text" name="first_name" id="first_name" size="20" value=<%=session.getAttribute("firstName")%>> </label>               
+                  <h4 class="name">Middle Name :</h4>
+                  <label><input type="text" name="middle_name" id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>> </label>
+                  <h4 class="name">Last Name* :</h4>
+                  <label><input type="text" name="last_name" id="last_name" value=<%=session.getAttribute("lastName")%>> </label>
+                  <h4 class="email">E-mail id* :</h4>
+                  <label><input type="text" id="eMailId" name="e_mail_id" value=<%=session.getAttribute("eMailId")%>> </label>
+				  <h4 class="dob">Date of Birth :</h4>
+                  <label>
                      <select name="day_of_month" id="day_of_month">
                         <option value="00" selected>Day</option>
                         <option value ="01">01</option>
@@ -740,11 +737,9 @@
                         <option value="1906">1906</option>
                         <option value="1905">1905</option>
                      </select>
-                  </td>
-               </tr>
-               <tr>
-                  <td>Department* : </td>
-                  <td>
+                  </label>
+				  <h4 class="dob">Department* :</h4>
+				  <label>
                      <select name="department" id="dept">
                         <option  value="Select">--select--</option>
                         <option  value="Software">MS in Software Engineering</option>
@@ -754,11 +749,9 @@
                         <option  value="IntSc">MS in Interdisciplinary Science</option>
                         <option  value="MBA">Masters of Business Administration</option>
                      </select>
-                  </td>
-               </tr>
-               <tr>
-                  <td>Year of Passing* : </td>
-                  <td>
+                  </label>
+				  <h4 class="dob">Year of Passing* :</h4>
+				  <label>        
                      <select name="month_of_passing" id="month_of_passing">
                         <option value="00" selected>Month</option>
                         <option value ="01">01</option>
@@ -889,47 +882,42 @@
                         <option value="1906">1906</option>
                         <option value="1905">1905</option>
                      </select>
-                  </td>
-               </tr>
-            </table>
-            <br>
-            <center>
-               <input type="submit" name="save" id="save" value="Save"/>
-               <input type="submit" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
-               <input type="button" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
-            </center>
-         </div>
-         </form>
-         <form name ="myForm"  action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
-         <div id= "faculty1" style="display:none" class="profilebox">
-            <table align="center">
-               <tr>
-                  <td>Profile Photo:</td>
-                  <td>
+				  </label>
+				<br>
+				<center>
+					<input type="submit" name="save" id="save" value="Save"/>
+					<input type="submit" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
+					<input type="button" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
+				</center>
+			</div>
+			</form>
+			<form role="form" name ="myForm"  action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
+				<div id= "faculty1" style="display:none" class="profilebox">
+		          <div class="cover" data-fade="1500" data-duration="2500">
+					<ul class="cover-pics">
+					  <li><img src="../assets/img/img-1.jpg"></li>
+					  <li><img src="../assets/img/img-2.jpg"></li>
+					  <li><img src="../assets/img/img-3.jpg"></li>
+					  <li><img src="../assets/img/img-4.jpg"></li>
+					  <li><img src="../assets/img/img-5.jpg"></li>
+					  <li><img src="../assets/img/img-6.jpg"></li>
+					  <li><img src="../assets/img/img-7.jpg"></li>
+					  <li><img src="../assets/img/img-8.jpg"></li>
+					</ul>
                      <input type="button" value="Upload" id="upload" name="upload" style='visibility: hidden;'  onclick ="fileopen()">
                      <input type="file" name="photo" id="photo" size="50" style='visibility: hidden;'onchange="readURL(this);">
                      <img name="profilepic" alt="ProfileImage" align="left" src="${pageContext.request.contextPath}/images/${eMailId}" width="160" height="160">
-                  </td>
-               </tr>
-               <tr>
-                  <td >First Name* :</td>
-                  <td><input type="text" name="first_name" id= "first_name" size="20" value=<%=session.getAttribute("firstName")%>></td>
-               </tr>
-               <tr>
-                  <td>Middle Name : </td>
-                  <td><input type="text" name="middle_name" id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>></td>
-               </tr>
-               <tr>
-                  <td>Last Name* :</td>
-                  <td> <input type="text" name="last_name"  id="last_name" value=<%=session.getAttribute("lastName")%>></td>
-               </tr>
-               <tr>
-                  <td>E-mail id* :</td>
-                  <td> <input type="text" id="eMailId" name="e_mail_id" value=<%=session.getAttribute("eMailId")%>></td>
-               </tr>
-               <tr align="left">
-                  <td>Date of Birth :</td>
-                  <td >
+				  </div>
+                  <h3 class="name">First Name* :</h3>
+				  <label> <input type="text" name="first_name" id="first_name" size="20" value=<%=session.getAttribute("firstName")%>> </label>               
+                  <h4 class="name">Middle Name :</h4>
+                  <label><input type="text" name="middle_name" id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>> </label>
+                  <h4 class="name">Last Name* :</h4>
+                  <label><input type="text" name="last_name" id="last_name" value=<%=session.getAttribute("lastName")%>> </label>
+                  <h4 class="email">E-mail id* :</h4>
+                  <label><input type="text" id="eMailId" name="e_mail_id" value=<%=session.getAttribute("eMailId")%>> </label>
+				  <h4 class="email">Date of Birth :</h4>
+				  <label>
                      <select name="day_of_month" id="day_of_month">
                         <option value="00" selected>Day</option>
                         <option value ="01">01</option>
@@ -1094,11 +1082,9 @@
                         <option value="1906">1906</option>
                         <option value="1905">1905</option>
                      </select>
-                  </td>
-               </tr>
-               <tr>
-                  <td>Department* : </td>
-                  <td>
+                  </label>
+				  <h4 class="dob">Department* :</h4>
+				  <label>
                      <select  name="department" id="dept" >
                         <option  value="Select">--select--</option>
                         <option  value="Software">MS in Software Engineering</option>
@@ -1108,22 +1094,64 @@
                         <option  value="IntSc">MS in Interdisciplinary Science</option>
                         <option  value="MBA">Masters of Business Administration</option>
                      </select>
-                  </td>
-               </tr>
-            </table>
-            <br>
-            <center>
-               <input type="submit" name="save" id="save" value="Save"/>
-               <input type="button" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
-               <input type="button" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
-            </center>
+				  </label>
+		        
+		         <br>
+                 <center>
+					<input type="submit" name="save" id="save" value="Save"/>
+					<input type="button" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
+					<input type="button" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
+				</center>
+			</div>
+			</form>
             <script type="text/javascript">
                selectedValues();
             </script>
          </div>
-         </td>
-         </tr>
-         </table>
-      </form>
-   </body>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+          </div>
+          <div class="panel-body">
+            <ul id="trends" class="panel-list">
+              <a class="list-group-item" href="createGroup" rel="#createGroupContainer"><i class="fa fa-group fa-fw"></i>&nbsp; Create Group</a>
+			  	<div class="apple_overlay" id="createGroupContainer">
+					Create Group<br><br>
+					<div>
+						<table >
+						<tr>
+							<td align="right">Group Name: </td>
+							<td><input type="text" name="group_name" value=""/></td>
+						</tr>
+						<tr>
+							<td align="right">Members :    </td>
+							<td><div class="form_tags"><input type="text" name="members" value="" id="form_tags_input_2" autocomplete="off" style="display: none;">
+					</div></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td><input type="submit" name="btnCreateGroup" value="Create Group"/></td>
+						</tr>
+						</table>
+					</div>
+				</div>
+
+              <a class="list-group-item" href="#"><i class="fa fa-link fa-fw"></i>&nbsp; Related Links</a>
+              <a class="list-group-item" href="GetforumServlet" id="knowledge"><i class="fa fa-file-text-o fa-fw"></i>&nbsp; Ask Questions</a>
+			  <input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute("name")%>">
+			  <a class="list-group-item" href="#"><i class="fa fa-group fa-fw"></i>&nbsp; Edit Profile</a>
+           </ul>
+          </div>
+        </div>		
+      </div>
+	  <div class="col-lg-3 col-md-4">
+		<div class="well">
+		  <div class="footer">
+			<!-- This is where the chat code should be inserted-->
+		  </div>
+		</div>
+	  </div>
+	</div>
+</div>
+    
+</body>
 </html>

@@ -5,7 +5,18 @@ public class QuestionVO {
 		public int question_id;
 		public String question_text;
 		public int log_user_id;
+		public String log_user_name;
 		
+		
+		
+		public String getLog_user_name() {
+			return log_user_name;
+		}
+
+		public void setLog_user_name(String log_user_name) {
+			this.log_user_name = log_user_name;
+		}
+
 		public int getquestion_id() {
 			return question_id;
 		}

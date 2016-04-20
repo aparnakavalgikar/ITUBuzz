@@ -201,7 +201,7 @@ public class RegisterUserServlet extends HttpServlet {
         
         String name = user.getFirst_name();
         if(session!=null) { 
-        session.setAttribute("name", name);
+        request.setAttribute("name", name);
         }
         
         user.setUser_type(request.getParameter("register"));
@@ -210,7 +210,7 @@ public class RegisterUserServlet extends HttpServlet {
          * updating code to include proper validations
          */
         if(user.getUser_type().equalsIgnoreCase("currentStudent")){
-        		if(EMailIdValidator.validateUserEmailId(request.getParameter("e_mail_id_student"), user.getUser_type())){
+        		if(EMailIdValidator.validateUserEmailIdStudent(request.getParameter("e_mail_id_student"), user.getUser_type())){
         			if(PasswordValidator.validateUserPasswords(request.getParameter("new_password_student"), request.getParameter("re_enter_password_student"), request.getParameter("e_mail_id_student"))){	
         				if(!(request.getParameter("department_student").isEmpty())){
         					if(!(request.getParameter("semester_student").isEmpty())){
@@ -265,7 +265,7 @@ public class RegisterUserServlet extends HttpServlet {
         	
         
         else if (user.getUser_type().equalsIgnoreCase("alumni")){
-        	if(EMailIdValidator.validateOtherEmail(request.getParameter("e_mail_id_alumni"), user.getUser_type())){
+        	if(EMailIdValidator.validateUserEmailIdAlumni(request.getParameter("e_mail_id_alumni"), user.getUser_type())){
         		if(PasswordValidator.validateUserPasswords(request.getParameter("new_password_alumni"), request.getParameter("re_enter_password_alumni"), request.getParameter("e_mail_id_alumni"))){	
         			if(!(request.getParameter("department_alumni").isEmpty())){
         				user.setE_mailId(request.getParameter("e_mail_id_alumni"));
@@ -312,7 +312,7 @@ public class RegisterUserServlet extends HttpServlet {
          
          
         else if (user.getUser_type().equalsIgnoreCase("faculty")){
-        	 if(EMailIdValidator.validateUserEmailId(request.getParameter("e_mail_id_faculty"), user.getUser_type())){
+        	 if(EMailIdValidator.validateUserEmailIdFaculty(request.getParameter("e_mail_id_faculty"), user.getUser_type())){
         		if(PasswordValidator.validateUserPasswords(request.getParameter("new_password_faculty"), request.getParameter("re_enter_password_faculty"), request.getParameter("e_mail_id_faculty"))){
         			if(!(request.getParameter("department_faculty").isEmpty())){
         				user.setE_mailId(request.getParameter("e_mail_id_faculty"));
@@ -381,7 +381,7 @@ public class RegisterUserServlet extends HttpServlet {
 						  request.getSession().removeAttribute("errorMessageFacultyPassword");
 						  request.getSession().removeAttribute("errorMessageAlumniPassword");
 						  request.getSession().removeAttribute("errorMessageStudentPassword");
-						  session.setAttribute("success_message", "Hi "+name+" ! Login to continue....");
+						  request.setAttribute("success_message", "Hi "+name+" ! Login to continue...");
 					      RequestDispatcher rd=request.getRequestDispatcher("LoginAndRegister.jsp");    
 					      rd.forward(request,response); 
 						    
@@ -406,4 +406,3 @@ public class RegisterUserServlet extends HttpServlet {
      }	            
 
 }
-

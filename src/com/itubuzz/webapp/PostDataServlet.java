@@ -50,7 +50,7 @@ public class PostDataServlet extends HttpServlet {
 		String user_id = request.getParameter("log_user_id");
 		String post_name=request.getParameter("log_user_name");
 		String name = (String) session.getAttribute("name");
-		  session.setAttribute("name", name);
+		  request.setAttribute("name", name);
 		
 		if(post_text.length()>0){
 			if(PostDAO.postdataCred(post_text,user_id,post_name)){ 

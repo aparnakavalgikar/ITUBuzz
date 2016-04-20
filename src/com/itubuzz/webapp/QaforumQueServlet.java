@@ -48,33 +48,35 @@ public class QaforumQueServlet extends HttpServlet {
 		HttpSession session = request.getSession(false); 
 		question_text = request.getParameter("question_text");
 		String user_id = request.getParameter("log_user_id");
-		
+		String user_name = request.getParameter("log_user_name");
+		System.out.println("in QA forum question servlet user name is :"+user_name);
+		session.setAttribute("name", user_name);
 		if ( question_text.endsWith("?") ){ 
-			String[] qkeywords = {"WHAT", "WHERE", "WHY", "WHICH", "WHO", "WHOSE", "HOW", "WHEN"};
-			for (int i=0; i<qkeywords.length; i++)
-				if(question_text.toUpperCase().contains(qkeywords[i])) {					
+			String qkeywords = "(.*[WHAT, WHERE, WHY, WHICH, WHO, WHOSE, HOW, WHEN].*$)";
+			
+				if(question_text.toUpperCase().matches(qkeywords)) {					
 					question = true;
 				}
-				/*else{
+				else{
 					request.setAttribute("errorMessageQuestion", "Questions should contain any of the following keywords :  'WHAT, WHERE, WHY, WHICH, WHO, WHOSE, HOW, WHEN'!");
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("QAforum.jsp");
 				    requestDispatcher.forward(request, response);
 				    return;
-				}*/
+				}
 		}
-		/*else{
+		else{
 			request.setAttribute("errorMessageQuestion", "Questions should End with a question mark (?)");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("QAforum.jsp");
 		    requestDispatcher.forward(request, response);
 		    return;
-		}*/
+		}
 		if (question) {
 			if(question_text.length()>0){
-						if(QaforumDAO.forumdataCred(question_text,user_id)){ 
+						if(QaforumDAO.forumdataCred(question_text,user_id,user_name)){ 
 							 question_data = RetrieveQaforumDAO.retrieveQueData(question_text);
 							 session.setAttribute("question_data", question_data);
 							 RequestDispatcher rd=request.getRequestDispatcher("QuestionPage.jsp");      
-					         rd.forward(request,response);
+					         rd.forward(request, response);
 				             }    
 						}
 		} else {

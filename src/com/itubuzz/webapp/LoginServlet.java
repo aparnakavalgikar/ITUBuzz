@@ -75,7 +75,7 @@ public class LoginServlet extends HttpServlet {
         
 		if(session!=null)  {
         	   if(all_post_data != null){
-        		   
+        		   if(!(user_list.isEmpty())){
         		   for(UserVO user : user_list){
         			   session.setAttribute("name", user.getFirst_name());
         			   session.setAttribute("user_id", user.getUser_id());
@@ -98,6 +98,14 @@ public class LoginServlet extends HttpServlet {
     			   rd.forward(request,response);
 
         	   }
+        		   else{
+            		   request.setAttribute("errorMessageLogin", "Enter valid login credentials!");
+           			RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
+           		    requestDispatcher.forward(request, response);
+           		    return;
+            	   }
+        	   }
+        	   
 		}
        else	{    
             RequestDispatcher rd=request.getRequestDispatcher("LoginAndRegister.jsp");    
@@ -106,4 +114,6 @@ public class LoginServlet extends HttpServlet {
 		out.close();
 	}
 
+	
+	
 }
