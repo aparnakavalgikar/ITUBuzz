@@ -31,7 +31,7 @@ log_user_id int not null
 );
 
 
-CREATE TABLE itubuzz.userLogin (
+CREATE TABLE userLogin (
   user_id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT ,
   first_name varchar(30) NOT NULL,
   middle_name varchar(30) DEFAULT NULL,
