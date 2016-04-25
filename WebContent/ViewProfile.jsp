@@ -572,8 +572,8 @@ function displayMyGroup() {
 			  	<a class="list-group-item" href="#microposts_posts" id="profile_post"><i class="fa fa-file-text"></i>&nbsp; My Posts</a>
                                     <a class="list-group-item" href="#microposts_questions" id="profile_question"><i class="fa fa-file-text"></i>&nbsp; My Questions</a>
 				
-			  <a class="list-group-item" href="GetforumServlet" id="knowledge"><i class="fa fa-file-text-o fa-fw"></i>&nbsp; Knowledge Forum</a>
-              <a class="list-group-item" href="MostPopularServlet"><i class="fa fa-asterisk"></i>&nbsp; Most Popular</a>
+			  <a class="list-group-item" href="GetforumServlet?loggedInUser=<%=session.getAttribute("user_id")%>" id="knowledge"><i class="fa fa-file-text-o fa-fw"></i>&nbsp; Knowledge Forum</a>
+              <a class="list-group-item" href="MostPopularServlet?log_user_id=<%=session.getAttribute("user_id")%>"><i class="fa fa-asterisk"></i>&nbsp; Most Popular</a>
 			  <input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute("name")%>">
 			  <form action="createGroup" id="createGroupForm" method="post" role="form">
 				<a class="list-group-item" href="#createGroupContainer" rel="#createGroupContainer"><i class="fa fa-group fa-fw"></i>&nbsp; Create Group</a>

@@ -320,8 +320,8 @@ function displayAnswerTree(rootparentid, childid, answer_text, immparentid, user
             <ul id="trends" class="panel-list">
 				  	<a class="list-group-item" href="FetchProfileServlet?user_id=<%=session.getAttribute("user_id")%>&emailId=<%=session.getAttribute("emailId")%>&name=<%=session.getAttribute("log_user_name")%>" id="profile">&nbsp;<i class="fa fa-user"></i>&nbsp;  My Profile</a>
 					<form action="createGroup" id="createGroupForm" method="post" role="form">
-					<a class="list-group-item" href="GetforumServlet" id="knowledge"><i class="fa fa-file-text-o fa-fw"></i>&nbsp; Knowledge Forum</a>
-				  <a class="list-group-item" href="MostPopularServlet"><i class="fa fa-asterisk"></i>&nbsp; Most Popular</a>
+					<a class="list-group-item" href="GetforumServlet?loggedInUser=<%=session.getAttribute("user_id")%>" id="knowledge"><i class="fa fa-file-text-o fa-fw"></i>&nbsp; Knowledge Forum</a>
+				  <a class="list-group-item" href="MostPopularServlet?log_user_id=<%=session.getAttribute("user_id")%>"><i class="fa fa-asterisk"></i>&nbsp; Most Popular</a>
 				  <input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute("name")%>">
 					<a class="list-group-item" href="#createGroupContainer" rel="#createGroupContainer"><i class="fa fa-group fa-fw"></i>&nbsp; Create Group</a>
 					<div class="apple_overlay" id="createGroupContainer">

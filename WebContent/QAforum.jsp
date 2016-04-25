@@ -158,7 +158,7 @@ window.getAtQ = function (question_id, logged_user_name) {
           <div class="panel-body">
             <ul id="trends" class="panel-list">
 			  	<a class="list-group-item" href="FetchProfileServlet?user_id=<%=session.getAttribute("user_id")%>&emailId=<%=session.getAttribute("emailId")%>&name=<%=session.getAttribute("log_user_name")%>" id="profile">&nbsp;<i class="fa fa-user"></i>&nbsp;  My Profile</a>
-			  	<a class="list-group-item" href="MostPopularServlet"><i class="fa fa-asterisk"></i>&nbsp; Most Popular</a>
+			  	<a class="list-group-item" href="MostPopularServlet?log_user_id=<%=session.getAttribute("user_id")%>"><i class="fa fa-asterisk"></i>&nbsp; Most Popular</a>
 				<input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute("name")%>">
 				<form action="createGroup" id="createGroupForm" method="post" role="form">
 				<a class="list-group-item" href="#createGroupContainer" rel="#createGroupContainer"><i class="fa fa-group fa-fw"></i>&nbsp; Create Group</a>
