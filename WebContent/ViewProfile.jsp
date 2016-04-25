@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
    <head>
-	<meta charset="utf-8" />
+<meta charset="utf-8" />
   	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
   	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -24,14 +24,18 @@
 	<script src="dist/js/vendor/jquery.min.js" type="text/javascript" ></script>
 	<script src="dist/js/paper.min.js" type="text/javascript" ></script>
 	<script src="js/EmailValidator.js" type="text/javascript" charset="utf-8"></script>
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="css/overlay-apple.css" type="text/css" />
 	<link rel="stylesheet" href="css/TextboxList.css" type="text/css" />
-	<link href='https://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="dist/css/paper.min.css" />
 	<link rel="stylesheet" href="css/demo.css" />
 	<link rel="stylesheet" href="css/timeline.css" />
 	<link rel="stylesheet" href="style.css" type="text/css" />
+	<link href='https://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet' type='text/css'>
+
+	<style type="text/css" media="screen">
+		.textboxlist { width: 400px; bgcolor: #a8a69f; }
+	</style>
 
 <%
 	if(null!=request.getAttribute("errorMessage"))
@@ -106,16 +110,14 @@ function displayMyGroup() {
                     var userid = document.getElementById("log_user_id").value;
                     var replyname = document.getElementById("log_user_name").value;
                     var parent = document.getElementById(parentid);
-                    
                     var num = 0;
 
                     var rootparent = document.getElementById(parentid);
-                    console.log("root parent is"+rootparent);
-                    
-                	while ( rootparent.parentNode.getAttribute('id') != null) {
-                		rootparent = rootparent.parentNode;
-                		num = num + 1;
-                	}
+
+                    while (rootparent.parentNode.getAttribute('id') != 'microposts') {
+                        rootparent = rootparent.parentNode;
+                        num = num + 1;
+                    }
 
                     var leftspace = null;
 
@@ -145,7 +147,6 @@ function displayMyGroup() {
                     node1.setAttribute('class', 'form-control');
                     node1.setAttribute('id', 'reply_text');
                     node1.setAttribute('autocomplete', 'off');
-                    node1.setAttribute('autofocus', 'true');
                     node1.setAttribute('placeholder', 'Comment...');
 
                     var node2 = document.createElement("br");
@@ -1513,10 +1514,9 @@ function displayMyGroup() {
 										<a href="#" id="replybutton" onclick="displayReply(<%= p.getPost_id() %>)">
 											<i class="fa fa-retweet">Comment</i>
 										</a>
-										<input type="hidden" id="post_id" name="post_id" value="<%=p.getPost_id() %>">
+										<input type="hidden" name="post_id" value="<%=p.getPost_id() %>">
 										<input type="hidden" id="log_user_id" name="log_user_id" value="<%=p.getLog_user_id() %>">
 										<input type="hidden" id="log_user_name" name="log_user_name" value="<%=session.getAttribute("log_user_name")%>">
-										<input type="hidden" name="reply_user_name" value="<%=p.getPost_user_name() %>">
 									</div>
 									<hr />
 <% 
