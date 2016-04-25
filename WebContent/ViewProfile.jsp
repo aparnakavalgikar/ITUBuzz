@@ -1,12 +1,259 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-   pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="java.io.*,java.util.ArrayList,java.util.Iterator,com.itubuzz.valueobjects.*" %>
+        
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
    <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-      <title>ITUBUZZ</title>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-      <script type="text/javascript">
+<meta charset="utf-8" />
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<meta http-equiv="cache-control" content="max-age=0" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+	<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+	<meta http-equiv="pragma" content="no-cache" />
+
+    <title> ITUBuzz - Your ITU Social Network </title>
+    
+	<script src="js/jquery-1.12.2.min.js"></script>
+	<script src="js/jquery.tools.min.js"></script>
+	<script src="js/TextboxList.js"></script>
+	<script src="js/GrowingInput.js" type="text/javascript"></script>
+	<script src="dist/js/vendor/jquery.min.js" type="text/javascript" ></script>
+	<script src="dist/js/paper.min.js" type="text/javascript" ></script>
+	<script src="js/EmailValidator.js" type="text/javascript" charset="utf-8"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="css/overlay-apple.css" type="text/css" />
+	<link rel="stylesheet" href="css/TextboxList.css" type="text/css" />
+	<link rel="stylesheet" href="dist/css/paper.min.css" />
+	<link rel="stylesheet" href="css/demo.css" />
+	<link rel="stylesheet" href="css/timeline.css" />
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<link href='https://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet' type='text/css'>
+
+	<style type="text/css" media="screen">
+		.textboxlist { width: 400px; bgcolor: #a8a69f; }
+	</style>
+
+<%
+	if(null!=request.getAttribute("errorMessage"))
+    {
+        out.println(request.getAttribute("errorMessage"));
+    }
+%>
+	<script src="./js/jquery-1.12.2.min.js"></script>
+    <script src="./js/jquery.tools.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/overlay-apple1.css">
+	<!--  <link rel="stylesheet" type="text/css" href="./css/TextboxList.css">-->
+	<!-- required stylesheet for TextboxList -->
+	<link rel="stylesheet" href="./css/TextboxList.css" type="text/css" media="screen" charset=ISO-8859-1>
+	<!-- required for TextboxList -->
+	<script src="./js/GrowingInput.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/TextboxList.js" type="text/javascript" charset="utf-8"></script>	
+	<script src="./js/EmailValidator.js" type="text/javascript" charset="utf-8"></script>
+	
+<style type="text/css" media="screen">
+		.textboxlist { width: 400px; bgcolor: #a8a69f; }
+	</style>
+	<script type="text/javascript">
+$(function(){
+	// With custom adding keys 
+	var t2 = $('#form_tags_input_2').textboxlist({bitsOptions:{editable:{addKeys: [188]}}});
+});
+
+$(document).ready(function() {
+	  $("a[rel]").overlay({effect: 'apple'});
+      });
+
+onload=function(){
+	var e = document.getElementById("refreshed");
+	if (e.value == "no")
+		e.value="yes";
+	else {
+		e.value="no";
+		location.reload();
+	}
+}
+
+function displayMyGroup() {
+    if (document.getElementById('myGroups').onclick) {
+        document.getElementById('myGroup_1').style.display = 'block';
+        }
+}
+                function nextChildid(parentid) {
+
+                    var childs = document.getElementById(parentid).childNodes;
+                    var childid = 0;
+                    var lastChildid = 0;
+                    var num = 0;
+
+                    for (i = 0; i < childs.length; i++) {
+                        if (childs[i].nodeName == "DIV") {
+                            lastChildid = childs[i].id;
+                            num = num + 1;
+                        }
+                    }
+
+                      if (num == 0) {
+                        var num = 1;
+                        childid = parentid.toString().concat(num.toString());
+                    } else {
+                        childid = Number(lastChildid) + 1;
+                    }
+
+                    return childid;
+                }
+
+                function displayReply(parentid) {
+                    var userid = document.getElementById("log_user_id").value;
+                    var replyname = document.getElementById("log_user_name").value;
+                    var parent = document.getElementById(parentid);
+                    var num = 0;
+
+                    var rootparent = document.getElementById(parentid);
+
+                    while (rootparent.parentNode.getAttribute('id') != 'microposts') {
+                        rootparent = rootparent.parentNode;
+                        num = num + 1;
+                    }
+
+                    var leftspace = null;
+
+                    if (num == 0)
+                        leftspace = "margin-left: 0px;";
+                    else
+                        leftspace = "margin-left: 50px;";
+
+
+                    var rootparentid = rootparent.getAttribute('id');
+
+                    var childid = nextChildid(parentid);
+
+                    var form = document.createElement("form");
+                    form.setAttribute('action', 'ReplyDataServlet');
+                    form.setAttribute('method', 'post');
+                    form.setAttribute('role', 'form');
+                    form.setAttribute('autocomplete', 'off');
+
+                    var childiv = document.createElement("div");
+                    childiv.setAttribute('id', childid);
+                    childiv.setAttribute('class', 'form-group');
+                    childiv.setAttribute('style', leftspace);
+
+                    var node1 = document.createElement("textarea");
+                    node1.setAttribute('name', 'reply_text');
+                    node1.setAttribute('class', 'form-control');
+                    node1.setAttribute('id', 'reply_text');
+                    node1.setAttribute('autocomplete', 'off');
+                    node1.setAttribute('placeholder', 'Comment...');
+
+                    var node2 = document.createElement("br");
+
+                    var node3 = document.createElement("button");
+                    node3.setAttribute('class', 'btn btn-success btn-xs');
+                    node3.setAttribute('id', 'nextreplybutton');
+                    var node31 = document.createElement("i");
+                    node31.setAttribute('class', 'fa fa-send-o');
+                    node31.innerHTML = "Submit";
+                    node3.appendChild(node31);
+
+                    var node4 = document.createElement("input");
+                    node4.setAttribute('type', 'hidden');
+                    node4.setAttribute('name', 'immparent_id');
+                    node4.setAttribute('id', 'immparent_id');
+                    node4.setAttribute('value', parentid);
+
+                    var node5 = document.createElement("input");
+                    node5.setAttribute('type', 'hidden');
+                    node5.setAttribute('name', 'log_post_id');
+                    node5.setAttribute('id', 'log_post_id');
+                    node5.setAttribute('value', rootparentid);
+
+                    var node6 = document.createElement("input");
+                    node6.setAttribute('type', 'hidden');
+                    node6.setAttribute('name', 'reply_id');
+                    node6.setAttribute('id', 'reply_id');
+                    node6.setAttribute('value', childid);
+
+                    var node7 = document.createElement("input");
+                    node7.setAttribute('type', 'hidden');
+                    node7.setAttribute('name', 'log_user_id');
+                    node7.setAttribute('id', 'log_user_id');
+                    node7.setAttribute('value', userid);
+
+                    var node8 = document.createElement("input");
+                    node8.setAttribute('type', 'hidden');
+                    node8.setAttribute('name', 'reply_user_name');
+                    node8.setAttribute('id', 'reply_user_name');
+                    node8.setAttribute('value', replyname);
+
+                    childiv.appendChild(node1);
+                    childiv.appendChild(node2);
+                    childiv.appendChild(node3);
+                    childiv.appendChild(node4);
+                    childiv.appendChild(node5);
+                    childiv.appendChild(node6);
+                    childiv.appendChild(node7);
+                    childiv.appendChild(node8);
+
+                    form.appendChild(childiv);
+                    parent.appendChild(form);
+
+                    node3.onclick = function() {
+                        var parentid = node3.parentNode.getAttribute('id');
+                        displayReply(parentid);
+                    };
+                }
+
+
+                function displayReplyTree(rootparentid, childid, reply_text, immparentid, userid, replyname) {
+
+                    var leftspace = null;
+                    if (rootparentid == immparentid)
+                        leftspace = "margin-left: 0px;";
+                    else
+                        leftspace = "margin-left: 50px;";
+
+
+                    var parent = document.getElementById(immparentid);
+                    var replyname = replyname;
+                    var childiv = document.createElement("div");
+                    childiv.setAttribute('id', childid);
+                    childiv.setAttribute('style', leftspace);
+
+                    var node1 = document.createElement("p");
+                    node1.setAttribute('id', 'displayName');
+                    node1.innerHTML = replyname + ":	";
+
+                    var node2 = document.createElement("span");
+                    node2.setAttribute('id', 'displayReply');
+                    node2.innerHTML = reply_text;
+                    node1.appendChild(node2);
+                    node1.setAttribute('font-style', '6px');
+
+                    var node3 = document.createElement("hr");
+
+                    var node4 = document.createElement("a");
+                    node4.setAttribute('id', 'nextreplybutton');
+                    node4.setAttribute('href', '#');
+                    var node41 = document.createElement("i");
+                    node41.setAttribute('class', 'fa fa-retweet');
+                    node41.innerHTML = "Comment";
+                    node4.appendChild(node41);
+
+                    childiv.appendChild(node1);
+                    childiv.appendChild(node4);
+                    childiv.appendChild(node3);
+                    parent.appendChild(childiv);
+
+                    node4.onclick = function() {
+                        var parentid = node4.parentNode.getAttribute('id');
+                        displayReply(parentid);
+                    };
+
+                }
          function currentUserTypeCheck() {
              if (document.getElementById('role_hidden').value == "student") {
                  document.getElementById('student1').style.display = 'block';
@@ -40,20 +287,7 @@
 	                 n[i].disabled = true;      
 	             }
         	}
-        	/*document.getElementById('first_name').disabled = true;
-         	document.getElementById('middle_name').disabled = true;
-         	document.getElementById('last_name').disabled = true;
-         	document.getElementById('eMailId').disabled = true;
-         	document.getElementById('day_of_month').disabled = true;
-         	document.getElementById('month').disabled = true;
-         	document.getElementById('birthday_year').disabled = true;
-         	document.getElementById('dept').disabled = true;
-         	document.getElementById('sem').disabled = true;
-         	document.getElementById('month_of_passing').disabled = true;
-         	document.getElementById('year_of_passing').disabled = true;
-         	document.getElementById('cancel').style.visibility = "hidden";
-         	document.getElementById('save').style.visibility = "hidden";
-         	*/
+        	
         	var buttonfields = ['cancel','save'];
         	for(j=0;j<buttonfields.length;j++){
 	        	var n = document.getElementsByName(buttonfields[j]);
@@ -73,20 +307,7 @@
  	                 n[i].disabled = false;      
  	             }
          	}
-         	/*document.getElementById('first_name').disabled = false;
-         	document.getElementById('middle_name').disabled = false;
-         	document.getElementById('last_name').disabled = false;
-         	document.getElementById('eMailId').disabled = true;
-         	document.getElementById('day_of_month').disabled = false;
-         	document.getElementById('month').disabled = false;
-         	document.getElementById('birthday_year').disabled = false;
-         	document.getElementById('dept').disabled = false;
-         	document.getElementById('sem').disabled = false;
-         	document.getElementById('month_of_passing').disabled = false;
-         	document.getElementById('year_of_passing').disabled = false;
-         	document.getElementById('cancel').style.visibility = "visible";
-         	document.getElementById('save').style.visibility = "visible";
-         	document.getElementById('upload').style.visibility = "visible";*/
+         
          	var buttonfields = ['cancel','save','upload'];
         	for(j=0;j<buttonfields.length;j++){
 	        	var n = document.getElementsByName(buttonfields[j]);
@@ -105,26 +326,44 @@
          	
          }
          function validateForm()
-         {
+         {		
+        	 var dateVar = "";
+        	 var passingDateVar = "";
         	 if (document.getElementById('role_hidden').value == "student") {
         		var firstName = $('#student1 #first_name').val();
-              	var lastName = $('#student1 #last_name').val()
+              	var lastName = $('#student1 #last_name').val();
               	var dept = $('#student1 #dept').val();
               	var sem = $('#student1 #sem').val();
+              	var bday = $('#student1 #day_of_month').val();
+              	var bmonth = $('#student1 #month').val();
+         		var byear = $('#student1 #birthday_year').val();
+         		dateVar = byear+"-"+bmonth+"-"+bday;
              }
              else if (document.getElementById('role_hidden').value == "alumni"){
             	var firstName = $('#alumni1 #first_name').val();
-              	var lastName = $('#alumni1 #last_name').val()
+              	var lastName = $('#alumni1 #last_name').val();
               	var dept = $('#alumni1 #dept').val();
               	var yop_month = $('#alumni1 #month_of_passing').val();
           		var yop_year = $('#alumni1 #year_of_passing').val();
+          		var bday = $('#alumni1 #day_of_month').val();
+         		var bmonth = $('#alumni1 #month').val();
+         		var byear = $('#alumni1 #birthday_year').val();
+         		dateVar = byear+"-"+bmonth+"-"+bday;
+         		passingDateVar = yop_year+"-"+ yop_month+"-"+ "28";
              }
              else if (document.getElementById('role_hidden').value == "faculty"){
             	var firstName = $('#faculty1 #first_name').val();
               	var lastName = $('#faculty1 #last_name').val()
               	var dept = $('#faculty1 #dept').val();
+              	var bday = $('#faculty1 #day_of_month').val();
+         		var bmonth = $('#faculty1 #month').val();
+         		var byear = $('#faculty1 #birthday_year').val();
+         		dateVar = byear+"-"+bmonth+"-"+bday;
              }
-        	
+        	 var bdate=new Date(dateVar);
+        	 var passdate = new Date(passingDateVar);
+        	 console.log(bdate);
+      		var currentDate = new Date();
          	var status = true;
          	document.getElementById('errors').innerHTML = "";
          	if (firstName == null || firstName == "") {
@@ -133,6 +372,13 @@
              }
          	if (lastName == null || lastName == "") {
          		document.getElementById('errors').innerHTML +="*Please enter your Last Name*"+"<br>";
+         		status = false;
+             }
+         	if(dateVar != '0000-00-00' && isNaN(bdate)){
+     			document.getElementById('errors').innerHTML +="*Please select a valid birth date*"+"<br>";
+         		status = false;
+     		}else if(dateVar != '0000-00-00' && bdate >= currentDate){
+     			document.getElementById('errors').innerHTML +="*Please select Date of Birth less than Current Date*"+"<br>";
          		status = false;
              }
          	if (dept == null || dept == "" || dept=="Select") {
@@ -153,6 +399,13 @@
              		document.getElementById('errors').innerHTML +="*Please enter Year Of Passing*"+"<br>";
              		status = false;
                  }
+         		if(isNaN(passdate)){
+         			document.getElementById('errors').innerHTML +="*Please select a valid year of passing *"+"<br>";
+             		status = false;
+         		}else if(passdate >= currentDate){
+         			document.getElementById('errors').innerHTML +="*Please select year of passing less than Current Date*"+"<br>";
+             		status = false;
+         		}
          		}
          	return status;
          }
@@ -248,67 +501,151 @@
          
          function ClearFieldsOnCancelClick()
          {
-        	document.location = "/ITUBuzz/FetchProfileServlet";
+        	document.location = "${pageContext.request.contextPath}/FetchProfileServlet";
          }
          
       </script>
    </head>
-   <body>
-  <div>
-    <div>
-      <div>
-     <div>      
-     <form id="search_form" action="SearchServlet" method="post"> 
-<table align="left">
+   <body class="viewprofile">
+<input type="hidden" id="refreshed" value="no">
 
-		<tr>
-		<td>ITUBUZZ</td>
-		
-		<td><input type="text" id="searchtext"></td>
-		<td><input type="button" id="searchbutton" value="Search"><br/></td>
-		
-		</tr>
-		
-</table>
-</form>
-<table align="right">
-<tr>
-			<td ><a href="HomePage.jsp" id="profile">Home</a> | 
-			<a href="LogOut.jsp" id="logout">Logout</a></td>
-		 </tr>
-</table>
-	      </div>
-     </div>
-	</div>
-</div>
-<br>
-<br>
-<br>
-<hr />
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <h1 style="color:white; ">ITUBuzz
+        <img class="logoimage" src="marca.png"  height=30px">
+        </h1>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">      
+	       <ul class="nav navbar-nav navbar-right">
+	        <li>
+				<a href="PostLoopServlet?log_user_id=<%=session.getAttribute("user_id")%>" id="postloop" class="btn btn-xs">
+					<i class="fa fa-home" style="font-size:14px;color:white"> Home</i>
+					<input type="hidden" name="home_name" id="home_name"  value="<%=request.getAttribute("home_name")%>">
+				</a>
+			  </li>
+			  <li>
+			  	<a href="LoginAndRegister.jsp" class="btn btn-xs" id="logout">
+			  		<i class="fa fa-sign-out" style="font-size:14px;color:white"> SignOut</i>
+			  	</a>			  	 
+			  </li>    
+		    </ul>
+	        <form class="navbar-form navbar-right" role="search" id="search_form" action="SearchServlet" method="post">
+	           <div class="input-group add-on">
+ 				    <input type="text" class="form-control" placeholder="Search" name="search" id="search">
+      				<div class="input-group-btn">
+        				<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+      				</div>
+    			</div>
+    			<input type="hidden" name="page_name" value="post">
+ 	        </form>
+        </div>
+      </div>
+  </nav>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-md-3">
+        <div class="card">
+          <div class="cover" data-fade="1500" data-duration="2500">
+            <ul class="cover-pics">
+              <li><img src="assets/img/img-1.jpg"></li>
+              <li><img src="assets/img/img-2.jpg"></li>
+              <li><img src="assets/img/img-3.jpg"></li>
+              <li><img src="assets/img/img-4.jpg"></li>
+              <li><img src="assets/img/img-5.jpg"></li>
+              <li><img src="assets/img/img-6.jpg"></li>
+              <li><img src="assets/img/img-7.jpg"></li>
+              <li><img src="assets/img/img-8.jpg"></li>
+            </ul>
+            <!-- This is where the profile picture will come. We need to merge code here and replace this avatar. --> 			
+            <!-- <img src="https://www.digiserved.com/Images/svg/avatar_placeholder.svg" alt="user picture" class="avatar"> -->
+			<img src="${pageContext.request.contextPath}/images/${eMailId}" alt="user picture" class="avatar">
+          </div>
+          <div class="about">
+            <h3 class="name"><%=session.getAttribute("log_user_name")%></h3>
+          </div>
+        </div><br/>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <ul id="trends" class="panel-list">
+			  	<a class="list-group-item" href="#microposts_posts" id="profile_post"><i class="fa fa-file-text"></i>&nbsp; My Posts</a>
+                                    <a class="list-group-item" href="#microposts_questions" id="profile_question"><i class="fa fa-file-text"></i>&nbsp; My Questions</a>
+				
+			  <a class="list-group-item" href="GetforumServlet" id="knowledge"><i class="fa fa-file-text-o fa-fw"></i>&nbsp; Knowledge Forum</a>
+              <a class="list-group-item" href="MostPopularServlet"><i class="fa fa-asterisk"></i>&nbsp; Most Popular</a>
+			  <input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute("name")%>">
+			  <form action="createGroup" id="createGroupForm" method="post" role="form">
+				<a class="list-group-item" href="#createGroupContainer" rel="#createGroupContainer"><i class="fa fa-group fa-fw"></i>&nbsp; Create Group</a>
+			  	<div class="apple_overlay" id="createGroupContainer">
+					<h3 align="center" style="color:green;font-size: 24px">Create Group</h3>            
+					<br>
+					<div class="form-group">
+						<table>
+						<tr>
+							<td align="right">Group Name: </td>
+							<td><input type="text" class="form-control" name="group_name" value=""/></td>
+						</tr>
+						<tr>
+							<td colspan=2>&nbsp;</td>
+						</tr>
+						<tr>
+							<td align="right">Members :    </td>
+							<td><div class="form_tags"><input type="text" class="form-control" name="members" value="" id="form_tags_input_2" autocomplete="off" style="display: none;" placeholder="sample@students.itu.edu,sample@example.com,sample@itu.edu">
+							</div></td>
+						</tr>
+						<tr>
+							<td colspan=2>&nbsp;</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td><input type="button" class="btn btn-success btn-md" name="btnCreateGroup" value="Create Group" onclick="javascript:validateEmailAddress(false)"/></td>
+						</tr>
+						</table>
+					</div>
+                    <div id="emailerrmsg">
+					</div>
+                </div>
+				</form>
+			  <a class="list-group-item" href="#" onclick="displayMyGroup();" id="myGroups"><i class="fa fa-link fa-fw"></i>&nbsp; My Groups</a>
+			  
+			 <div class="" id="myGroup_1" style="display:none;">
+			 
+			  <%
+			  @SuppressWarnings("unchecked")
+			  ArrayList<GroupVO> group = (ArrayList<GroupVO>)session.getAttribute("all_groups");
+			    Iterator<GroupVO> g_list= group.iterator();
+			    
+			    while(g_list.hasNext()){
+			    	GroupVO g = (GroupVO)g_list.next();
+			    	
+			    	%>
+			    	<form id="my_group_names" action="MyRegisteredGroupsServlet" method="post" role="form">
+			    					<button id="my_registered_group" class="my-group-button" style="background-color: #fff;color: #999999;height:35px;width:100%;">
+                						 <b style="color: #555;font-family: Courier New;font-size: 12px"><%=g.getGroupName() %></b>
+             						 </button>	    				   
+			   						<input type="hidden"  name="group_name" value="<%=g.getGroupName()%>">
+			   						<input type="hidden"  name="group_id" value="<%=g.getGroupId() %>">
+			   						<input type="hidden"  name="user_name_login" value="<%=session.getAttribute("name")%>">
+			   						<br>
+			   		</form>
+			  <%  	
+			    }
+			  %>
+			  </div>
+		  </ul>
+          </div>
+        </div>		
+      </div>      <br>
       <br>
       <br>
-      <br>
-     <table width="100%">
-  <tr valign="top">
-    <td width="20%" >
-    <div>
-       	<a href=""> What's trending</a><br>
-		<a href="CreateGroup.jsp">Create Group</a><br>
-		<a href="">News Feed</a><br>
-		<a href="">Related Links</a><br>
-		<a href="GetforumServlet" id="getforumdata">Knowledge Forum</a><br>
-	</div>
-    </td>
-
-<td>  
-     
-      <form name ="myForm"  action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
+      <div class="col-md-7 col-md-7 my_post_que">
+                        <div class="card">
+                            <form role="form" id="viewprofile" name="myForm" action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
          <table border="0" align="center">
             <tr>
                <td>
                   <input type="hidden" id="role_hidden" name="user_type" size="20" value=<%=session.getAttribute("role")%>>
-                  <input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute("firstName")%>"> 
                </td>
             </tr>
          </table>
@@ -316,31 +653,43 @@
          <br>
          <div id ="errors">
          </div>
-         <div id= "student1" style="display:none" class="profilebox">
-            <table align="center">
+         <div id= "student1" style="display:none">
+	 <input type="hidden" id="role_hidden" name="user_type" size="20" value=<%=session.getAttribute( "role")%>>
+	 <input type="hidden" id="user_id" name="user_id" value="<%= session.getAttribute(" user_id ") %>">
+                                    <input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute(" firstName ")%>">
+            <table class="table table-striped" align="center">
                <tr>
-                  <td>Profile Photo:</td>
                   <td>
-                     <input type="button" value="Upload" id="upload" name ="upload" style='visibility: hidden;' onclick ="fileopen()">
-                     <input type="file" name="photo" id="photo" size="50" style='visibility: hidden;' onchange="readURL(this);" >
-                     <img name="profilepic" id="profilepic" alt="ProfileImage" align="left" src="${pageContext.request.contextPath}/images/${eMailId}" width="160" height="160">
-                  </td>
+                  	 <img name="profilepic" id="profilepic" alt="ProfileImage" align="center" src="${pageContext.request.contextPath}/images/${eMailId}" width="160" height="160">
+                  	 <td>
+                     <input type="button" align="center" class="btn btn-success" value="Upload" id="upload" name ="upload" style='visibility: hidden;' onclick ="fileopen()">
+                     <input type="file" align="center" name="photo" id="photo" size="50" style='visibility: hidden;' onchange="readURL(this);" >
+                  	</td>
+                
                </tr>
                <tr>
+               <div class="form-group">
                   <td >First Name* :</td>
-                  <td><input type="text" name="first_name" id="first_name" size="20" value=<%=session.getAttribute("firstName")%>></td>
+                  <td><input type="text" class="form-control" name="first_name" maxlength = 20 id="first_name" size="20" value=<%=session.getAttribute("firstName")%>></td>
+               	</div>
                </tr>
                <tr>
+               <div class="form-group">
                   <td>Middle Name : </td>
-                  <td><input type="text" name="middle_name" id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>></td>
+                  <td><input type="text" class="form-control" name="middle_name" maxlength = 20 id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>></td>
+               </div>
                </tr>
                <tr>
+               <div class="form-group">
                   <td>Last Name* :</td>
-                  <td> <input type="text" name="last_name" id="last_name" value=<%=session.getAttribute("lastName")%>></td>
+                  <td> <input type="text" class="form-control"  name="last_name" maxlength = 20 id="last_name" value=<%=session.getAttribute("lastName")%>></td>
+               </div>
                </tr>
                <tr>
+               <div class="form-group">
                   <td>E-mail id* :</td>
-                  <td> <input type="text" id="eMailId" name="e_mail_id" value=<%=session.getAttribute("eMailId")%>></td>
+                  <td> <input type="text" class="form-control" id="eMailId" name="e_mail_id" value=<%=session.getAttribute("eMailId")%>></td>
+               </div>
                </tr>
                <tr align="left">
                   <td>Date of Birth :</td>
@@ -540,38 +889,44 @@
             </table>
             <br>
             <center>
-               <input type="submit" name="save" id="save" value="Save"/>
-               <input type="button" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
-               <input type="button" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
+               <input type="button" class="btn btn-success" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
+               <input type="submit" class="btn btn-success" name="save" id="save" value="Save"/>
+               <input type="button" class="btn btn-success" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
             </center>
          </div>
          </form>
          <form name ="myForm"  action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
-         <div id= "alumni1" style="display:none" class="profilebox">
+         <div id= "alumni1" style="display:none">
+	 <input type="hidden" id="role_hidden" name="user_type" size="20" value=<%=session.getAttribute( "role")%>>
+	 <input type="hidden" id="user_id" name="user_id" value="<%= session.getAttribute(" user_id ") %>">
+         <input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute(" firstName ")%>">
             <table align="center" >
                <tr>
+               <div>
                   <td>Profile Photo:</td>
-                  <td>
-                     <input type="button" value="Upload" id="upload" name="upload" style='visibility: hidden;'  onclick ="fileopen()">
-                     <input type="file" name="photo" id="photo" size="50" style='visibility: hidden;' onchange="readURL(this);">
-                     <img name="profilepic" alt="ProfileImage" align="left" src="${pageContext.request.contextPath}/images/${eMailId}" width="160" height="160">
+                  	<td>
+                  	<img name="profilepic" alt="ProfileImage" align="center" src="${pageContext.request.contextPath}/images/${eMailId}" width="160" height="160">
+                  	</td>
+                  	<td>
+                    <input type="button" align="center" class="btn btn-success" value="Upload" id="upload" name="upload" style='visibility: hidden;'  onclick ="fileopen()">
+                    <input type="file" align="center" name="photo" id="photo" size="50" style='visibility: hidden;' onchange="readURL(this);">
                   </td>
                </tr>
                <tr>
                   <td >First Name* :</td>
-                  <td><input type="text" name="first_name" id ="first_name" size="20" value=<%=session.getAttribute("firstName")%>></td>
+                  <td><input type="text" class="form-control" name="first_name" maxlength = 20 id ="first_name" size="20" value=<%=session.getAttribute("firstName")%>></td>
                </tr>
                <tr>
                   <td>Middle Name : </td>
-                  <td><input type="text" name="middle_name" id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>></td>
+                  <td><input type="text" class="form-control" name="middle_name" maxlength = 20 id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>></td>
                </tr>
                <tr>
                   <td>Last Name* :</td>
-                  <td> <input type="text" name="last_name" id="last_name" value=<%=session.getAttribute("lastName")%>></td>
+                  <td> <input type="text" class="form-control" name="last_name" maxlength = 20 id="last_name" value=<%=session.getAttribute("lastName")%>></td>
                </tr>
                <tr>
                   <td>E-mail id* :</td>
-                  <td> <input type="text" id = "eMailId" name="e_mail_id" value=<%=session.getAttribute("eMailId")%>></td>
+                  <td> <input type="text" class="form-control" id = "eMailId" name="e_mail_id" value=<%=session.getAttribute("eMailId")%>></td>
                </tr>
                <tr align="left">
                   <td>Date of Birth :</td>
@@ -894,39 +1249,52 @@
             </table>
             <br>
             <center>
-               <input type="submit" name="save" id="save" value="Save"/>
-               <input type="submit" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
-               <input type="button" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
+               <input type="button" class="btn btn-success" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
+               <input type="submit" class="btn btn-success" name="save" id="save" value="Save"/>
+               <input type="submit" class="btn btn-success" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/> 
             </center>
          </div>
          </form>
          <form name ="myForm"  action="ProfileUpdateServlet" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
-         <div id= "faculty1" style="display:none" class="profilebox">
+         <div id= "faculty1" style="display:none">
+			<input type="hidden" id="role_hidden" name="user_type" size="20" value=<%=session.getAttribute( "role")%>>
+			<input type="hidden" id="user_id" name="user_id" value="<%= session.getAttribute(" user_id ") %>">
+            <input type="hidden" id="user_name_login" name="user_name_login" value="<%=session.getAttribute(" firstName ")%>">
             <table align="center">
                <tr>
                   <td>Profile Photo:</td>
                   <td>
-                     <input type="button" value="Upload" id="upload" name="upload" style='visibility: hidden;'  onclick ="fileopen()">
-                     <input type="file" name="photo" id="photo" size="50" style='visibility: hidden;'onchange="readURL(this);">
-                     <img name="profilepic" alt="ProfileImage" align="left" src="${pageContext.request.contextPath}/images/${eMailId}" width="160" height="160">
-                  </td>
+                  	 <img name="profilepic" alt="ProfileImage" align="center" src="${pageContext.request.contextPath}/images/${eMailId}" width="160" height="160">
+                  	 </td>
+                  	 <td>
+                     <input type="button" align="center" class="btn btn-success" value="Upload" id="upload" name="upload" style='visibility: hidden;'  onclick ="fileopen()">
+                     <input type="file"  align="center" name="photo" id="photo" size="50" style='visibility: hidden;'onchange="readURL(this);">
+					</td>                  	
                </tr>
-               <tr>
-                  <td >First Name* :</td>
-                  <td><input type="text" name="first_name" id= "first_name" size="20" value=<%=session.getAttribute("firstName")%>></td>
+               	<tr>
+               		<div class="form-group">
+	                  <td >First Name* :</td>
+	                  <td><input type="text" class="form-control" name="first_name" class="form-control input" maxlength = 20 id= "first_name" size="20" value=<%=session.getAttribute("firstName")%>></td>
+               		</div>
+               	</tr>
+               	<tr>
+               		<div class="form-group">
+	                  <td>Middle Name : </td>
+	                  <td><input type="text" name="middle_name" class="form-control" maxlength = 20 id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>></td>
+               		</div>
                </tr>
-               <tr>
-                  <td>Middle Name : </td>
-                  <td><input type="text" name="middle_name" id="middle_name" size="20" value=<%=session.getAttribute("middleName")%>></td>
-               </tr>
-               <tr>
-                  <td>Last Name* :</td>
-                  <td> <input type="text" name="last_name"  id="last_name" value=<%=session.getAttribute("lastName")%>></td>
-               </tr>
-               <tr>
-                  <td>E-mail id* :</td>
-                  <td> <input type="text" id="eMailId" name="e_mail_id" value=<%=session.getAttribute("eMailId")%>></td>
-               </tr>
+               	<tr>
+               		<div class="form-group">
+	                  <td>Last Name* :</td>
+	                  <td> <input type="text" name="last_name"  class="form-control" maxlength = 20 id="last_name" value=<%=session.getAttribute("lastName")%>></td>
+               		</div>
+               	</tr>
+               	<tr>
+               		<div class="form-group">
+	                  <td>E-mail id* :</td>
+	                  <td> <input type="text" id="eMailId"  class="form-control" name="e_mail_id" size="50" value=<%=session.getAttribute("eMailId")%>></td>
+               		</div>
+               	</tr>
                <tr align="left">
                   <td>Date of Birth :</td>
                   <td >
@@ -1113,17 +1481,84 @@
             </table>
             <br>
             <center>
-               <input type="submit" name="save" id="save" value="Save"/>
-               <input type="button" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
-               <input type="button" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
+               <input type="button" class="btn btn-success" name="edit" id="edit" value="Edit" onclick="EnableUserfieldsOnEditProfile()"/>
+               <input type="submit" class="btn btn-success" name="save" id="save" value="Save"/>
+               <input type="button" class="btn btn-success" name="cancel" id="cancel" value="Cancel" onclick="ClearFieldsOnCancelClick()"/>
             </center>
             <script type="text/javascript">
                selectedValues();
             </script>
          </div>
-         </td>
-         </tr>
-         </table>
       </form>
+</div>
+						<br />
+						<br />
+						<div id="microposts_posts" class="feed posts">
+                            <input type="hidden" id="user_id" name="user_id" value="<%= session.getAttribute(" user_id ") %>">
+                            <h3>My Posts</h3>                            
+							<hr />
+<% 
+								ArrayList<PostVO> posts = (ArrayList<PostVO>)session.getAttribute("all_posts"); 
+								Iterator<PostVO> p_list= posts.iterator(); 
+								
+								@SuppressWarnings("unchecked") ArrayList
+								<ReplyVO> replies = (ArrayList<ReplyVO>)session.getAttribute("all_replies"); 
+								Iterator<ReplyVO> r_list= replies.iterator(); 
+								while(p_list.hasNext()) { 
+								PostVO p=(PostVO)p_list.next(); 
+%>
+									<div id="<%= p.getPost_id() %>" class="form-group">
+										<p id="displaypost" align="center" style="text-align:justify;width:575px;font-size:18px">
+											<%=p.getPost_text() %>
+										</p>
+										<a href="#" id="replybutton" onclick="displayReply(<%= p.getPost_id() %>)">
+											<i class="fa fa-retweet">Comment</i>
+										</a>
+										<input type="hidden" name="post_id" value="<%=p.getPost_id() %>">
+										<input type="hidden" name="log_user_id" value="<%=p.getLog_user_id() %>">
+										<input type="hidden" name="reply_user_name" value="<%=p.getPost_user_name() %>">
+									</div>
+									<hr />
+<% 
+									while (r_list.hasNext()) {
+										ReplyVO r=(ReplyVO)r_list.next(); 
+										if ( p.getPost_id() == r.getPost_id() ) { 
+%>
+									<script>
+										displayReplyTree( <%= r.getPost_id() %> , <%= r.getReply_id() %> , "<%= r.getReply_text() %>", <%= r.getImmparent_id() %> , <%= r.getLog_user_id() %> , "<%=r.getLog_reply_name() %>");
+									</script>
+									<br />
+<% 
+										} 
+									} 
+								} 
+								posts.clear(); 
+								replies.clear(); 
+%>
+						</div>
+						<div id="microposts_questions" class="feed questions">
+								<h3>Questions Asked by Me</h3>							
+								<hr />
+<% 
+								@SuppressWarnings( "unchecked") 
+								ArrayList<QuestionVO> questions=(ArrayList<QuestionVO>)session.getAttribute("all_questions"); 
+								Iterator<QuestionVO> q_list= questions.iterator(); 
+								while(q_list.hasNext()) { 
+									QuestionVO q=(QuestionVO)q_list.next(); 
+%>
+									<div id="<%= q.getquestion_id() %>" class="question_list">
+										<a id="displayquestion" name="displayquestion" style="font-style:18px" href="GetAnstoQueServlet?question_id=<%= q.getquestion_id() %>&logged_user_id=<%=session.getAttribute("user_id")%>&answer_user_name=<%=session.getAttribute("name")%>"><%=q.getquestion_text() %>
+										</a>
+										<input type="hidden" name="question_id" id="question_id" value="<%= q.getquestion_id() %>">
+										<input type="hidden" name="answer_user_name" id="answer_user_name" value="<%=session.getAttribute(" name ")%>">
+									</div>
+									<hr />							
+<% 
+								} 
+%>
+                        </div>
+					</div>
+                </div>
+            </div>
    </body>
 </html>

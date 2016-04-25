@@ -7,6 +7,8 @@ package com.itubuzz.webapp;
  */
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -19,7 +21,14 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.itubuzz.dao.FetchProfileDetailsDAO;
+import com.itubuzz.dao.MyGroupIdRetrieveDAO;
+import com.itubuzz.dao.RetrieveSearchDAO;
 import com.itubuzz.dao.UpdateProfileDAO;
+import com.itubuzz.valueobjects.GroupVO;
+import com.itubuzz.valueobjects.PostVO;
+import com.itubuzz.valueobjects.QuestionVO;
+import com.itubuzz.valueobjects.ReplyVO;
+import com.itubuzz.valueobjects.SearchPostVO;
 
 /**
  * Servlet implementation class ProfileUpdateServlet
@@ -28,6 +37,10 @@ import com.itubuzz.dao.UpdateProfileDAO;
 public class ProfileUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String SLASH = "/";
+	private SearchPostVO search_post_results;
+	private ArrayList<QuestionVO> search_question_results;
+	private ArrayList<PostVO> all_post_data;
+	private ArrayList<ReplyVO> all_reply_data;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -47,14 +60,15 @@ public class ProfileUpdateServlet extends HttpServlet {
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		String name = (String) session.getAttribute("user_name_login");
-		  session.setAttribute("name", name);
-		if(session != null && null != session.getAttribute("emailId")){
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html");
+		String name = (String) session.getAttribute("user_name_login");		
+		request.setAttribute("name", name);
+		
+		if(session != null && null != session.getAttribute("emailId")) {
 			String eMailId = (String) session.getAttribute("emailId");
 	        String userType = (String) session.getAttribute("role");
 			String role = null;		
-			response.setContentType("text/html");  
-			PrintWriter out = response.getWriter(); 		
 			String firstName = request.getParameter("first_name");
 	        String middleName = request.getParameter("middle_name");
 	        String lastName = request.getParameter("last_name");
@@ -105,8 +119,6 @@ public class ProfileUpdateServlet extends HttpServlet {
 	  				   session.setAttribute("yop_day", user.get("yop_day"));
 	  				   session.setAttribute("yop_month", user.get("yop_month"));
 	  				   session.setAttribute("yop_year", user.get("yop_year"));
-	        		   RequestDispatcher rd=request.getRequestDispatcher("ViewProfile.jsp");    
-	                   rd.forward(request,response); 
 	        		}
 	    		}
 	        }else if(role.equalsIgnoreCase("Alumni")){
@@ -127,8 +139,7 @@ public class ProfileUpdateServlet extends HttpServlet {
 		  				   session.setAttribute("yop_day", user.get("yop_day"));
 		  				   session.setAttribute("yop_month", user.get("yop_month"));
 		  				   session.setAttribute("yop_year", user.get("yop_year"));
-	        		RequestDispatcher rd=request.getRequestDispatcher("ViewProfile.jsp");    
-	                rd.forward(request,response); 
+	        		 
 	        		}
 	    		}
 	        }else if(role.equalsIgnoreCase("Faculty")){
@@ -149,16 +160,42 @@ public class ProfileUpdateServlet extends HttpServlet {
 		  				   session.setAttribute("yop_day", user.get("yop_day"));
 		  				   session.setAttribute("yop_month", user.get("yop_month"));
 		  				   session.setAttribute("yop_year", user.get("yop_year"));
-	        		RequestDispatcher rd=request.getRequestDispatcher("ViewProfile.jsp");    
-	                rd.forward(request,response); 
+	        		 
 	        		}
 	    		}
 	        }
-	        out.close();
-		}else{
-			RequestDispatcher rd=request.getRequestDispatcher("LoginAndRegister.jsp");    
-            rd.forward(request,response); 
+		
+	       Integer userid = (Integer) session.getAttribute("user_id");
+		   search_post_results = RetrieveSearchDAO.retrieveYourPostQueData(userid);
+		   search_question_results = RetrieveSearchDAO.retrieveYourQueData(userid);
+			
+			if ( search_post_results != null || search_question_results != null ) {
+				all_post_data = search_post_results.search_plist;
+				all_reply_data = search_post_results.search_rlist;
+					if ( search_post_results != null ) { 
+						session.setAttribute("all_posts", all_post_data);
+						session.setAttribute("all_replies", all_reply_data);
+					}
+					if ( search_question_results != null ) {
+
+						session.setAttribute("all_questions", search_question_results);
+					}
+				}
+			List<GroupVO> group_list = new ArrayList<GroupVO>();
+		     
+			  group_list = MyGroupIdRetrieveDAO.retrievegroupIdforGroup(userid);
+			  
+			  session.setAttribute("all_groups", group_list);
+
+		   RequestDispatcher rd=request.getRequestDispatcher("ViewProfile.jsp");    
+		   rd.forward(request,response);
+		   
+		} else {
+			RequestDispatcher rd=request.getRequestDispatcher("HomePage.jsp");    
+            rd.forward(request,response);
+            
 		}
+		out.close();
       }
         
 	}	

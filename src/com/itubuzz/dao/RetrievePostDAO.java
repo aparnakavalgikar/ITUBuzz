@@ -37,10 +37,10 @@ public class RetrievePostDAO {
         {
             PostVO p = new PostVO();
             
-            p.post_id = rs.getInt(1);
-            p.post_text = rs.getString(2);
-            p.log_user_id=rs.getInt(3);
-            p.post_user_name=rs.getString(4);
+            p.setPost_id(rs.getInt(1));
+            p.setPost_text(rs.getString(2));
+            p.setLog_user_id(rs.getInt(3));
+            p.setPost_user_name(rs.getString(4));
         
             post_list.add(p);
             

@@ -2,13 +2,13 @@ package com.itubuzz.valueobjects;
 
 public class ReplyVO {
   
-	public long reply_id;
-	public String reply_text;
-	public long immparent_id;
-	public int post_id;
-	public int log_user_id;
-	public long reply_number;
-	public String log_reply_name;
+	private long reply_id;
+	private String reply_text;
+	private long immparent_id;
+	private int post_id;
+	private int log_user_id;
+	private long reply_number;
+	private String log_reply_name;
 	
 	
 	

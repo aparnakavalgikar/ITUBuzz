@@ -3,6 +3,7 @@ package com.itubuzz.webapp;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,7 +34,7 @@ public class QaforumAnsServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 	/**
@@ -51,12 +52,20 @@ public class QaforumAnsServlet extends HttpServlet {
 		String immparent_id = request.getParameter("immparent_id");
 		String question_id = request.getParameter("log_question_id");
 		String user_id = request.getParameter("log_user_id");
-		
+		String user_name = request.getParameter("log_user_name");
+		System.out.println("inside QA forum answer servlet user name is : "+user_name);
+		session.setAttribute("name", user_name);
 		if(answer_text.length()>0){
-			if(QaforumDAO.forumdataCred(answer_id, answer_text, immparent_id, question_id, user_id)){ 
+			if(QaforumDAO.forumdataCred(answer_id, answer_text, immparent_id, question_id, user_id, user_name)){ 
 				all_answer_data = new ArrayList<AnswerVO>();
 				all_answer_data = RetrieveQaforumDAO.retrieveAnsData();
 				session.setAttribute("all_answers", all_answer_data);
+				List<GroupVO> group_list = new ArrayList<GroupVO>();
+			     
+				  group_list = MyGroupIdRetrieveDAO.retrievegroupIdforGroup(Integer.parseInt(user_id));
+				  
+				  session.setAttribute("all_groups", group_list);
+				
 				RequestDispatcher rd=request.getRequestDispatcher("QuestionPage.jsp");      
 		        rd.forward(request,response);
 	            }    

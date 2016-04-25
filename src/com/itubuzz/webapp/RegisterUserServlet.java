@@ -67,6 +67,9 @@ public class RegisterUserServlet extends HttpServlet {
 		PrintWriter out = response.getWriter(); 
 		HttpSession session = request.getSession(false); 
 		UserVO user = new UserVO();
+		String month =null;
+		String day= null;
+		String year = null;
 		
 		
 		/**
@@ -104,7 +107,7 @@ public class RegisterUserServlet extends HttpServlet {
 			}
 			else{
 				
-				request.setAttribute("errorMessageNames", "Name cannot contain alphanumeric characters!");
+				request.setAttribute("errorMessageNames", "Name should contain only Alphabets!");
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
 			    requestDispatcher.forward(request, response);
 			    return;
@@ -126,7 +129,7 @@ public class RegisterUserServlet extends HttpServlet {
 		   }
 			else{
 				
-				request.setAttribute("errorMessageMiddleName", "Name cannot contain alphanumeric characters!");
+				request.setAttribute("errorMessageMiddleName", "Name should contain only Alphabets!");
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
 			    requestDispatcher.forward(request, response);
 			    return;
@@ -139,11 +142,36 @@ public class RegisterUserServlet extends HttpServlet {
         
         /**
          * setting the parameters for date of birth and validating the same
+         * edited by kavya on 04/24/2016 to fix issues 19 and 20
          */
-        String month = request.getParameter("month");
-        String day = request.getParameter("day_of_month");
-        String year = request.getParameter("birthday_year");
-        if(!(month.equals("00") && day.equals("00") && year.equals("0000"))){
+
+        month = request.getParameter("month");
+
+         day = request.getParameter("day_of_month");
+
+         year = request.getParameter("birthday_year");
+         
+          if( month.equals("00") && day.equals("00") && (!year.equals("0000"))) {
+         	request.setAttribute("errorMessageDate", "Please select a valid Day (or) Month (or) Year");
+ 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
+ 		    requestDispatcher.forward(request, response);
+ 		    return;
+         }
+         
+         else if( (!month.equals("00")) && day.equals("00") && year.equals("0000")) {
+         	request.setAttribute("errorMessageDate", "Please select a valid Day (or) Month (or) Year");
+ 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
+ 		    requestDispatcher.forward(request, response);
+ 		    return;
+         }
+         else if( month.equals("00") && (!day.equals("00")) && year.equals("0000")) {
+         	request.setAttribute("errorMessageDate", "Please select a valid Day (or) Month (or) Year");
+ 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
+ 		    requestDispatcher.forward(request, response);
+ 		    return;
+         }
+ 
+         else  if(!(month.equals("00") && day.equals("00") && year.equals("0000"))){
         	dob = year+"-"+month+"-"+day;
            try {
 			if(DateValidator.validateDob(dob)){
@@ -151,7 +179,7 @@ public class RegisterUserServlet extends HttpServlet {
 			      }
 			   else{
 				    
-					request.setAttribute("errorMessageDate", "Date cannot be same as or greater than current date !\n Please enter a valid date !");
+					request.setAttribute("errorMessageDate", "Date cannot be same as or greater than current date  !\n Please enter a valid date !");
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
 				    requestDispatcher.forward(request, response);
 				    return;
@@ -161,7 +189,8 @@ public class RegisterUserServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        }   
+        }  
+       
         else{
         	user.setDob(dob);
         }
@@ -201,7 +230,7 @@ public class RegisterUserServlet extends HttpServlet {
         
         String name = user.getFirst_name();
         if(session!=null) { 
-        session.setAttribute("name", name);
+        request.setAttribute("name", name);
         }
         
         user.setUser_type(request.getParameter("register"));
@@ -210,7 +239,7 @@ public class RegisterUserServlet extends HttpServlet {
          * updating code to include proper validations
          */
         if(user.getUser_type().equalsIgnoreCase("currentStudent")){
-        		if(EMailIdValidator.validateUserEmailId(request.getParameter("e_mail_id_student"), user.getUser_type())){
+        		if(EMailIdValidator.validateUserEmailIdStudent(request.getParameter("e_mail_id_student"), user.getUser_type())){
         			if(PasswordValidator.validateUserPasswords(request.getParameter("new_password_student"), request.getParameter("re_enter_password_student"), request.getParameter("e_mail_id_student"))){	
         				if(!(request.getParameter("department_student").isEmpty())){
         					if(!(request.getParameter("semester_student").isEmpty())){
@@ -219,6 +248,7 @@ public class RegisterUserServlet extends HttpServlet {
         					user.setPasswordReenter(request.getParameter("re_enter_password_student"));
         					user.setDept(request.getParameter("department_student"));
         					System.out.println(user.getDept());
+        					student_sem = request.getParameter("semester_student");
         					user.setTrimester(student_sem);
         					user.setRole("student");
         				}
@@ -242,7 +272,7 @@ public class RegisterUserServlet extends HttpServlet {
         			}
         			else{
         				
-                        request.setAttribute("errorMessageStudentPassword", "Please enter a valid Password!");
+                        request.setAttribute("errorMessageStudentPassword", "Password must be at least 8 characters with at least one special character, one uppercase letter,one lowercase letter and one number! Password and Confirm password should be the same ! Passwords cannot be the same as your email-id ");
                         RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
         			    requestDispatcher.forward(request, response);
         			    return;
@@ -265,7 +295,7 @@ public class RegisterUserServlet extends HttpServlet {
         	
         
         else if (user.getUser_type().equalsIgnoreCase("alumni")){
-        	if(EMailIdValidator.validateOtherEmail(request.getParameter("e_mail_id_alumni"), user.getUser_type())){
+        	if(EMailIdValidator.validateUserEmailIdAlumni(request.getParameter("e_mail_id_alumni"), user.getUser_type())){
         		if(PasswordValidator.validateUserPasswords(request.getParameter("new_password_alumni"), request.getParameter("re_enter_password_alumni"), request.getParameter("e_mail_id_alumni"))){	
         			if(!(request.getParameter("department_alumni").isEmpty())){
         				user.setE_mailId(request.getParameter("e_mail_id_alumni"));
@@ -291,7 +321,7 @@ public class RegisterUserServlet extends HttpServlet {
         	}
         		else{
         	    
-                request.setAttribute("errorMessageAlumniPassword", "Please enter a valid Password!");
+                request.setAttribute("errorMessageAlumniPassword", "Password must be at least 8 characters with at least one special character, one uppercase letter,one lowercase letter and one number! Password and Confirm password should be the same ! Passwords cannot be the same as your email-id ");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
 			    requestDispatcher.forward(request, response);
 			    return;
@@ -312,7 +342,7 @@ public class RegisterUserServlet extends HttpServlet {
          
          
         else if (user.getUser_type().equalsIgnoreCase("faculty")){
-        	 if(EMailIdValidator.validateUserEmailId(request.getParameter("e_mail_id_faculty"), user.getUser_type())){
+        	 if(EMailIdValidator.validateUserEmailIdFaculty(request.getParameter("e_mail_id_faculty"), user.getUser_type())){
         		if(PasswordValidator.validateUserPasswords(request.getParameter("new_password_faculty"), request.getParameter("re_enter_password_faculty"), request.getParameter("e_mail_id_faculty"))){
         			if(!(request.getParameter("department_faculty").isEmpty())){
         				user.setE_mailId(request.getParameter("e_mail_id_faculty"));
@@ -338,7 +368,7 @@ public class RegisterUserServlet extends HttpServlet {
         		}
         		else{
         			
-                    request.setAttribute("errorMessageFacultyPassword", "Please enter a valid Password!");
+                    request.setAttribute("errorMessageFacultyPassword", "Password must be at least 8 characters with at least one special character, one uppercase letter,one lowercase letter and one number! Password and Confirm password should be the same ! Passwords cannot be the same as your email-id ");
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
     			    requestDispatcher.forward(request, response);
     			    return;
@@ -381,14 +411,14 @@ public class RegisterUserServlet extends HttpServlet {
 						  request.getSession().removeAttribute("errorMessageFacultyPassword");
 						  request.getSession().removeAttribute("errorMessageAlumniPassword");
 						  request.getSession().removeAttribute("errorMessageStudentPassword");
-						  session.setAttribute("success_message", "Hi "+name+" ! Login to continue....");
+						  request.setAttribute("success_message", "Successfully registered ! Please login with registered e-mail and password to continue");
 					      RequestDispatcher rd=request.getRequestDispatcher("LoginAndRegister.jsp");    
 					      rd.forward(request,response); 
 						    
 						}
 					  else{
 						   
-					       request.setAttribute("errorMessage", "Unable to register at the moment! Please try again later !");
+					       request.setAttribute("errorMessage", "This e-mail id is already exists.Please register with a unique id!");
 					       RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
 						   requestDispatcher.forward(request, response);
 						   return;
@@ -406,4 +436,3 @@ public class RegisterUserServlet extends HttpServlet {
      }	            
 
 }
-

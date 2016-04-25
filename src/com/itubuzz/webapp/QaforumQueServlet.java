@@ -3,7 +3,7 @@ package com.itubuzz.webapp;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +21,7 @@ import com.itubuzz.valueobjects.*;
 public class QaforumQueServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private QuestionVO question_data = new QuestionVO();
+	private ArrayList<QuestionVO> all_question_data = null;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -45,36 +46,55 @@ public class QaforumQueServlet extends HttpServlet {
 		String question_text = null;
 		response.setContentType("text/html"); 
 		PrintWriter out = response.getWriter(); 
-		HttpSession session = request.getSession(false); 
+		HttpSession session = request.getSession(false);
+		
 		question_text = request.getParameter("question_text");
 		String user_id = request.getParameter("log_user_id");
+		String user_name = request.getParameter("log_user_name");
+		System.out.println("in QA forum question servlet user name is :"+user_name);
+		session.setAttribute("name", user_name);
+		
+		List<GroupVO> group_list = new ArrayList<GroupVO>();
+	     
+		  group_list = MyGroupIdRetrieveDAO.retrievegroupIdforGroup(Integer.parseInt(user_id));
+		  
+		  session.setAttribute("all_groups", group_list);
+		
+		
 		
 		if ( question_text.endsWith("?") ){ 
-			String[] qkeywords = {"WHAT", "WHERE", "WHY", "WHICH", "WHO", "WHOSE", "HOW", "WHEN"};
-			for (int i=0; i<qkeywords.length; i++)
-				if(question_text.toUpperCase().contains(qkeywords[i])) {					
+			String qkeywords = "(.*[WHAT, WHERE, WHY, WHICH, WHO, WHOSE, HOW, WHEN].*$)";
+			
+				if(question_text.toUpperCase().matches(qkeywords)) {					
 					question = true;
 				}
-				/*else{
+				else{
 					request.setAttribute("errorMessageQuestion", "Questions should contain any of the following keywords :  'WHAT, WHERE, WHY, WHICH, WHO, WHOSE, HOW, WHEN'!");
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("QAforum.jsp");
 				    requestDispatcher.forward(request, response);
 				    return;
-				}*/
+				}
 		}
-		/*else{
+		else{
 			request.setAttribute("errorMessageQuestion", "Questions should End with a question mark (?)");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("QAforum.jsp");
 		    requestDispatcher.forward(request, response);
 		    return;
-		}*/
+		}
 		if (question) {
 			if(question_text.length()>0){
-						if(QaforumDAO.forumdataCred(question_text,user_id)){ 
-							 question_data = RetrieveQaforumDAO.retrieveQueData(question_text);
-							 session.setAttribute("question_data", question_data);
-							 RequestDispatcher rd=request.getRequestDispatcher("QuestionPage.jsp");      
-					         rd.forward(request,response);
+						if(QaforumDAO.forumdataCred(question_text,user_id,user_name)){ 
+							all_question_data = RetrieveQaforumDAO.retrieveQueData();
+							// question_data = RetrieveQaforumDAO.retrieveQueData(question_text);
+							// session.setAttribute("question_data", question_data);
+							// RequestDispatcher rd=request.getRequestDispatcher("QuestionPage.jsp");  
+							if(all_question_data != null){         
+								   session.setAttribute("all_questions", all_question_data);
+								   RequestDispatcher rd=request.getRequestDispatcher("QAforum.jsp");    
+								   rd.forward(request,response);
+							}
+							
+					         
 				             }    
 						}
 		} else {

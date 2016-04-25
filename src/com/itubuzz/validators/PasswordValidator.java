@@ -20,7 +20,7 @@ public class PasswordValidator {
 	 */
 	public static boolean validateUserPasswords(String newPassword, String reEnterPassword, String eMailId){
 		boolean passVal = false;
-		
+		if(!(newPassword.isEmpty() && reEnterPassword.isEmpty() || newPassword == null || reEnterPassword == null )){
 		// entered password should not be the same as the email id
 		if(newPassword.equals(reEnterPassword)){
 		 if(!(newPassword.equals(eMailId) && reEnterPassword.equals(eMailId)))	{
@@ -47,6 +47,7 @@ public class PasswordValidator {
 		    	}
 		 }
 		} 
+		}
 		return passVal;
 	}
 }

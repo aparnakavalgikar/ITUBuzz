@@ -18,14 +18,14 @@ public class LogoutServlet extends HttpServlet {
                                 throws ServletException, IOException {  
             response.setContentType("text/html");  
             PrintWriter out=response.getWriter();  
+             
               
-            request.getRequestDispatcher("LogOut.jsp").include(request, response);  
-              
-            HttpSession session=request.getSession();
-            session.invalidate();  
-              
+            HttpSession session=request.getSession(false);
+            if(session!=null)
+            	session.invalidate(); 
+            request.getSession().removeAttribute("success_message"); 
            System.out.print("You are successfully logged out!");  
-              
+           request.getRequestDispatcher("LogOut.jsp").include(request, response);
             out.close();  
     }  
 }  

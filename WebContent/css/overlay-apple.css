@@ -5,7 +5,7 @@
     display:none;
  
     /* growing background image */
-    background-image:url(../images/white.png);
+    background-image:url("../white.png");
  
     /*
       width after the growing animation finishes
@@ -22,7 +22,7 @@
  
 /* default close button positioned on upper right corner */
 .apple_overlay .close {
-    background-image:url(../images/close.png);
+    background-image:url("../close.png");
     position:absolute; right:5px; top:5px;
     cursor:pointer;
     height:35px;

@@ -3,6 +3,7 @@ package com.itubuzz.webapp;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import com.itubuzz.valueobjects.*;
 public class ReplyDataServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<ReplyVO> all_reply_data;
+	private ArrayList<PostVO> all_post_data;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -41,14 +43,24 @@ public class ReplyDataServlet extends HttpServlet {
 		reply_text = request.getParameter("reply_text");
 		String immparent_id = request.getParameter("immparent_id");
 		String post_id = request.getParameter("log_post_id");
-		String user_id = session.getAttribute("user_id").toString();
+		String user_id = request.getParameter("log_user_id");
 		String reply_name = request.getParameter("reply_user_name");
 				
+		List<GroupVO> group_list = new ArrayList<GroupVO>();
+	     
+		  group_list = MyGroupIdRetrieveDAO.retrievegroupIdforGroup(Integer.parseInt(user_id));
+		  
+		  session.setAttribute("all_groups", group_list);
+		
+		
 		if(reply_text.length()>0){
 			if(ReplyDAO.replydataCred(reply_id, reply_text, immparent_id, post_id, user_id, reply_name)){ 
 				all_reply_data = new ArrayList<ReplyVO>();
 				all_reply_data = RetrieveReplyDAO.retrieveRepliedData();
+				all_post_data = new ArrayList<PostVO>();
+				all_post_data = RetrievePostDAO.retrievePostedData();
 				session.setAttribute("all_replies", all_reply_data);
+				session.setAttribute("all_posts", all_post_data);
 				RequestDispatcher rd=request.getRequestDispatcher("HomePage.jsp");      
 		        rd.forward(request,response);
 	            }    

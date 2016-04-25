@@ -24,11 +24,13 @@ public class UpdateProfileDAO {
 	 public static boolean updateStudentProfileDetails(String firstName, String middleName,
 		String lastName, String eMailId, String dob,
 		String dept, String sem, Part filePart) {
-		
-		 java.sql.Date sqlDateDob = null;
+		java.sql.Date sqlDateDob;
+		 
  		  
- 		if(!(dob.equalsIgnoreCase("0000-00-00"))){
-         sqlDateDob = java.sql.Date.valueOf(dob);
+ 		if((dob.equals("0000-00-00")) || (dob.equals("null-null-null")) ) {
+ 			sqlDateDob = null;
+ 		} else {
+ 			sqlDateDob = java.sql.Date.valueOf(dob);
  		}
  		 
 		  boolean status = false;
@@ -149,9 +151,11 @@ public class UpdateProfileDAO {
 		  String dept, Part filePart) {
 		 java.sql.Date sqlDateDob = null;
  		
- 		if(!(dob.equalsIgnoreCase("0000-00-00"))){
-         sqlDateDob = java.sql.Date.valueOf(dob);
- 		}
+	 		if((dob.equals("0000-00-00")) || (dob.equals("null-null-null")) ) {
+	 			sqlDateDob = null;
+	 		} else {
+	 			sqlDateDob = java.sql.Date.valueOf(dob);
+	 		}
 		 
 		  boolean status = false;
 		  Connection conn = null;
@@ -263,11 +267,17 @@ public class UpdateProfileDAO {
 	  String dept, String yop, Part filePart) {
 		 java.sql.Date sqlDateDob = null;
  		java.sql.Date sqlDateYop = null;
- 		if(!(dob.equalsIgnoreCase("0000-00-00"))){
-         sqlDateDob = java.sql.Date.valueOf(dob);
+ 		
+ 		if((dob.equals("0000-00-00")) || (dob.equals("null-null-null")) ) {
+ 			sqlDateDob = null;
+ 		} else {
+ 			sqlDateDob = java.sql.Date.valueOf(dob);
  		}
- 		if(!(yop.equalsIgnoreCase("0000-00-01"))){
- 		sqlDateYop = java.sql.Date.valueOf(yop);
+
+ 		if((yop.equals("0000-00-01")) || (yop.equals("null-null-01")) ) {
+ 			sqlDateYop = null;
+ 		} else {
+ 			sqlDateYop = java.sql.Date.valueOf(yop);
  		}
 		 
 		  boolean status = false;

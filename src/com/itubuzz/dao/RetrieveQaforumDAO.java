@@ -39,9 +39,10 @@ public class RetrieveQaforumDAO {
 	        {
 	            QuestionVO q = new QuestionVO();
 	            
-	            q.question_id = rs.getInt(1);
-	            q.question_text = rs.getString(2);
-	            q.log_user_id=rs.getInt(3);
+	            q.setquestion_id(rs.getInt(1));
+	            q.setquestion_text(rs.getString(2));
+	            q.setLog_user_id(rs.getInt(3));
+	            q.setLog_user_name(rs.getString(4));
 	                              
 	            q_list.add(q);	        
 	        }
@@ -100,9 +101,10 @@ public class RetrieveQaforumDAO {
 	       
 	        while(rs.next())
 	        {
-	            q.question_id = rs.getInt(1);
-	            q.question_text = rs.getString(2);
-	            q.log_user_id=rs.getInt(3);             
+	            q.setquestion_id(rs.getInt(1));
+	            q.setquestion_text(rs.getString(2));
+	            q.setLog_user_id(rs.getInt(3));    
+	            q.setLog_user_name(rs.getString(4));
 	        }
 	        
 	    } catch (Exception e) {  
@@ -159,9 +161,10 @@ public class RetrieveQaforumDAO {
 	       
 	        while(rs.next())
 	        {
-	            q.question_id = rs.getInt(1);
-	            q.question_text = rs.getString(2);
-	            q.log_user_id=rs.getInt(3);             
+	            q.setquestion_id(rs.getInt(1));
+	            q.setquestion_text(rs.getString(2));
+	            q.setLog_user_id(rs.getInt(3));
+	            q.setLog_user_name(rs.getString(4));
 	        }
 	        
 	    } catch (Exception e) {  
@@ -218,12 +221,13 @@ public class RetrieveQaforumDAO {
 	            while(rs.next())
 	            {
 	            	AnswerVO a = new AnswerVO();
-	            	
-	            	a.answer_id = rs.getLong(1);
-	            	a.answer_text = rs.getString(2);
-	            	a.immparent_id = rs.getLong(3);
-	            	a.question_id = rs.getInt(4);
-	            	a.log_user_id = rs.getInt(5);
+	            	a.setAnswer_number(rs.getLong(1));
+	            	a.setanswer_id(rs.getLong(2));
+	            	a.setanswer_text(rs.getString(3));
+	            	a.setimmparent_id(rs.getLong(4));
+	            	a.setquestion_id(rs.getInt(5));
+	            	a.setLog_user_id(rs.getInt(6));
+	            	a.setLog_user_name(rs.getString(7));
 	            		            	
 	            	a_list.add(a);
 	            }
@@ -283,13 +287,15 @@ public class RetrieveQaforumDAO {
 	            while(rs.next())
 	            {
 	            	AnswerVO a = new AnswerVO();
-	            	
-	            	a.answer_id = rs.getLong(1);
-	            	a.answer_text = rs.getString(2);
-	            	a.immparent_id = rs.getLong(3);
-	            	a.question_id = rs.getInt(4);
-	            	a.log_user_id = rs.getInt(5);
-	            		            	
+	            	a.setAnswer_number(rs.getLong(1));
+	            	a.setanswer_id(rs.getLong(2));
+	            	a.setanswer_text(rs.getString(3));
+	            	a.setimmparent_id(rs.getLong(4));
+	            	a.setquestion_id(rs.getInt(5));
+	            	a.setLog_user_id(rs.getInt(6));
+	            	a.setLog_user_name(rs.getString(7));
+	            	System.out.println("im parent id :"+rs.getLong(4));
+	            	System.out.println("parent id for answer number :"+a.getAnswer_number()+" is :"+a.getimmparent_id() );
 	            	a_list.add(a);
 	            }
 	                        	       	        

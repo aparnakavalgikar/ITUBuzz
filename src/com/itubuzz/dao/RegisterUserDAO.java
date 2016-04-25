@@ -76,7 +76,7 @@ public class RegisterUserDAO {
 	            		ps.setString(2, middleName);
 	            		ps.setString(3, lastName);
 	            		ps.setString(4, newPassword);
-	            		ps.setString(5,eMailId);
+	            		ps.setString(5,eMailId.toLowerCase());
 						ps.setDate(6, sqlDateDob);
 	            		ps.setString(7, dept);
 	            		ps.setString(8, trimester);

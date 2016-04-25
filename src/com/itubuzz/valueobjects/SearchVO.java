@@ -2,8 +2,8 @@ package com.itubuzz.valueobjects;
 
 public class SearchVO {
 	
-		public int search_id;
-		public String search_value;
+	public int search_id;
+	public String search_value;
 		
 		public int getSearch_id() {
 			return search_id;

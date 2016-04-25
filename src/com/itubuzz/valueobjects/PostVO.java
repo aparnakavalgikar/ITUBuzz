@@ -2,10 +2,10 @@ package com.itubuzz.valueobjects;
 
 public class PostVO {
  
-	public int post_id;
-	public String post_text;
-	public int log_user_id;
-	public String post_user_name;
+	private int post_id;
+	private String post_text;
+	private int log_user_id;
+	private String post_user_name;
 	
 	public int getPost_id() {
 		return post_id;

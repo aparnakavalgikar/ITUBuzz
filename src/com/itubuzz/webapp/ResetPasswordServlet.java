@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.itubuzz.dao.EmailRetrieveDAO;
+import com.itubuzz.dao.EmailandPasswordRetrieveDAO;
 import com.itubuzz.dao.ResetPasswordDAO;
 import com.itubuzz.validators.PasswordValidator;
 
@@ -55,9 +54,10 @@ public class ResetPasswordServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);  
 		
 		if(eMailId != null){
-			if(EmailRetrieveDAO.retrieveEMailForResetPassword(eMailId)){
+			if(EmailandPasswordRetrieveDAO.retrieveEMailForResetPassword(eMailId)){
 				if(new_reset_password.equals(reenter_new_reset_password)){
 					if(PasswordValidator.validateUserPasswords(new_reset_password, reenter_new_reset_password, eMailId)){
+						if(EmailandPasswordRetrieveDAO.retrievePasswordForResetPassword(new_reset_password, eMailId)){
 					 passwordMessage = ResetPasswordDAO.resetPassword(eMailId, new_reset_password, reenter_new_reset_password);
 					 request.setAttribute("passwordSuccessMessage", passwordMessage);
 					 System.out.println(passwordMessage);
@@ -66,14 +66,21 @@ public class ResetPasswordServlet extends HttpServlet {
 					}
 					else{
 					 session.invalidate();
-	                 request.setAttribute("errorMessagePassword", "Passwords do not match ! Please enter valid password with the following specifications :   a) Password must not be the same as your Email-id.    b) Password be of minimum 8 characters and a maximum of 20 characters.   c) Password should contain atleast one upper case alphabet.   d) Password should contain atleast one lower case alphabet.   e) Password should contain atleast one number.   f) Password should contain atleast one special character");
+	                 request.setAttribute("errorMessagePassword", "Password already used ! Please enter a new password ");
 	                 RequestDispatcher rd = request.getRequestDispatcher("ResetPassword.jsp");
 	                 rd.forward(request, response);
 					}
+				   }
+					else{
+						 session.invalidate();
+		                 request.setAttribute("errorMessagePassword", "Passwords do not match ! Please enter valid password with the following specifications :   a) Password must not be the same as your Email-id.    b) Password be of minimum 8 characters and a maximum of 20 characters.   c) Password should contain atleast one upper case alphabet.   d) Password should contain atleast one lower case alphabet.   e) Password should contain atleast one number.   f) Password should contain atleast one special character");
+		                 RequestDispatcher rd = request.getRequestDispatcher("ResetPassword.jsp");
+		                 rd.forward(request, response);
+						}
 				}
 				else {
 					session.invalidate();
-	                 request.setAttribute("errorMessagePassword", "Entered Passwords are not the same ! Please enter same passwords !");
+	                 request.setAttribute("errorMessagePassword", "New password and re-enter password don't match!");
 	                 RequestDispatcher rd = request.getRequestDispatcher("ResetPassword.jsp");
 	                 rd.forward(request, response);
 				}

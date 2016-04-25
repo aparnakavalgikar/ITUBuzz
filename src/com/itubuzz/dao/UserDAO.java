@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 
 
 /**
@@ -15,12 +17,12 @@ This class contains all the Data access related methods related to User Login in
 public class UserDAO {
 
 	
-	public static List<Integer> retrieveUserIdsByEmailIds(String members){
+	public static Set<Integer> retrieveUserIdsByEmailIds(String members){
 		
 	        Connection conn = null;  
 	        PreparedStatement pst = null;  
 	        ResultSet rs = null; 
-	        List<Integer> userIds = new ArrayList<Integer>();
+	        Set<Integer> userIds = new HashSet<Integer>();
 	        String[] member = members.split("\\,");
 	  
 	        final String DB_URL="jdbc:mysql://127.0.0.1:3306/itubuzz"; 

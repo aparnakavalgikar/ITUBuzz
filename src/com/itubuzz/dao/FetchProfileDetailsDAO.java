@@ -23,6 +23,7 @@ package com.itubuzz.dao;
 		 static String role = null;
 		 static String dob = null;
 		 static String yop = null;
+		 static String user_id = null;
 		
 		/**
 		 * @param eMail
@@ -52,7 +53,7 @@ package com.itubuzz.dao;
 			
 			
 			   if (rs != null && rs.next()) {
-			
+				   user_id = rs.getString("user_id");
 			    firstName = rs.getString("first_name");
 			    lastName = rs.getString("last_name");
 			    middleName = rs.getString("middle_name");
@@ -62,6 +63,9 @@ package com.itubuzz.dao;
 			    role = rs.getString("user_type");
 			    dob = rs.getString("date_of_birth");
 			    yop = rs.getString("year_of_passing");
+			    if(null == middleName || "null" == middleName){
+			    	middleName = "";
+			    }
 			    status = true;
 			   }
 			   pst.close();
@@ -115,6 +119,7 @@ package com.itubuzz.dao;
 				   user.put("yop_month", yopList[1]);
 				   user.put("yop_year", yopList[0]);
 			  }
+			  user.put("user_id", user_id);
 			  user.put("firstName", firstName);
 			  user.put("lastName", lastName);
 			  user.put("middleName", middleName);

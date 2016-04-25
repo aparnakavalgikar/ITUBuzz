@@ -37,13 +37,13 @@ public class RetrieveReplyDAO {
 		        {
 		            ReplyVO p = new ReplyVO();
 		            
-		            p.reply_number = rs.getLong(1);
-		            p.reply_id = rs.getLong(2);
-		            p.reply_text = rs.getString(3);
-		            p.immparent_id = rs.getLong(4);
-		            p.post_id = rs.getInt(5);
-		            p.log_user_id = rs.getInt(6);
-		            p.log_reply_name = rs.getString(7);
+		            p.setReply_number(rs.getLong(1));
+		            p.setReply_id(rs.getLong(2));
+		            p.setReply_text(rs.getString(3));
+		            p.setImmparent_id(rs.getLong(4));
+		            p.setPost_id(rs.getInt(5));
+		            p.setLog_user_id(rs.getInt(6));
+		            p.setLog_reply_name(rs.getString(7));
 		        
 		            reply_list.add(p);
 		        }

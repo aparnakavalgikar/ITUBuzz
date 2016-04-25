@@ -7,19 +7,19 @@ package com.itubuzz.valueobjects;
  */
 public class UserVO {
  
-	public int user_id;
-	public String first_name;
-	public String middle_name;
-	public String last_name;
-	public String passwordNew;
-	public String passwordReenter;
-	public String e_mailId;
-	public String dob;
-	public String dept;
-	public String trimester;
-	public String yearOfPassing;
-	public String user_type;
-	public String role;
+	private int user_id;
+	private String first_name;
+	private String middle_name;
+	private String last_name;
+	private String passwordNew;
+	private String passwordReenter;
+	private String e_mailId;
+	private String dob;
+	private String dept;
+	private String trimester;
+	private String yearOfPassing;
+	private String user_type;
+	private String role;
 	
 	public int getUser_id() {
 		return user_id;

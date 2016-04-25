@@ -2,10 +2,21 @@ package com.itubuzz.valueobjects;
 
 public class QuestionVO {
 
-		public int question_id;
-		public String question_text;
-		public int log_user_id;
+	private int question_id;
+	private String question_text;
+	private int log_user_id;
+	private String log_user_name;
 		
+		
+		
+		public String getLog_user_name() {
+			return log_user_name;
+		}
+
+		public void setLog_user_name(String log_user_name) {
+			this.log_user_name = log_user_name;
+		}
+
 		public int getquestion_id() {
 			return question_id;
 		}

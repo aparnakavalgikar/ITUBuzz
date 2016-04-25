@@ -42,6 +42,7 @@ public class LoginServlet extends HttpServlet {
         String password = null;
         
         List<UserVO> user_list= new ArrayList<UserVO>();
+        List<GroupVO> group_list = new ArrayList<GroupVO>();
         
         if(request.getParameter("user_name").isEmpty()){
         	request.setAttribute("errorMessageLogin", "E-mail id cannot be null!");
@@ -75,10 +76,11 @@ public class LoginServlet extends HttpServlet {
         
 		if(session!=null)  {
         	   if(all_post_data != null){
-        		   
+        		   if(!(user_list.isEmpty())){
         		   for(UserVO user : user_list){
         			   session.setAttribute("name", user.getFirst_name());
         			   session.setAttribute("user_id", user.getUser_id());
+        			   long loggedIn_userId = user.getUser_id();
         			   session.setAttribute("log_user_name", user.getFirst_name());
         			   /**
 	            	    * @author Poorvisha
@@ -86,6 +88,15 @@ public class LoginServlet extends HttpServlet {
 	            	    * edited on : 03/26/2016
 	            	    */
 	            	   session.setAttribute("emailId", user.getE_mailId());
+	            	   
+	            	   /**
+	            	    * @author kavya
+	            	    * edited on : 04/19/2016
+	            	    * change added for my registered groups
+	            	    */
+	            	   
+	            	   group_list = MyGroupIdRetrieveDAO.retrievegroupIdforGroup(loggedIn_userId);
+	            	   
 		           }
 
         		   session.setAttribute("all_posts", all_post_data);
@@ -93,11 +104,20 @@ public class LoginServlet extends HttpServlet {
         		   if(all_reply_data != null){
         			   session.setAttribute("all_replies", all_reply_data);
         		   }
+        		   session.setAttribute("all_groups", group_list);
         		   
     			   RequestDispatcher rd=request.getRequestDispatcher("HomePage.jsp");    
     			   rd.forward(request,response);
 
         	   }
+        		   else{
+            		   request.setAttribute("errorMessageLogin", "Enter valid login credentials!");
+           			RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginAndRegister.jsp");
+           		    requestDispatcher.forward(request, response);
+           		    return;
+            	   }
+        	   }
+        	   
 		}
        else	{    
             RequestDispatcher rd=request.getRequestDispatcher("LoginAndRegister.jsp");    
@@ -106,4 +126,6 @@ public class LoginServlet extends HttpServlet {
 		out.close();
 	}
 
+	
+	
 }

@@ -2,10 +2,10 @@ package com.itubuzz.valueobjects;
 
 public class QaforumVO {
 
-		public int question_id;
-		public String question_text;
-		public String answer_id;
-		public int log_user_id;
+	private int question_id;
+	private String question_text;
+	private String answer_id;
+	private int log_user_id;
 		
 		public int getquestion_id() {
 			return question_id;
